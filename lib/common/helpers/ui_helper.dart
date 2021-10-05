@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UiHelper {
@@ -9,6 +10,22 @@ class UiHelper {
 
   static void unFocusScope(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
+  }
+
+  void showViewLoading(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  void hideViewLoading(BuildContext context) {
+    Navigator.of(context).pop(context);
   }
 
   static Future<void> showMyDialog(

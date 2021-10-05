@@ -7,9 +7,9 @@ abstract class UserRepository {
   Future<DataState<User>> postLogin(LoginRequest params);
 
   // Database methods
-  Future<User> getSaveUser();
+  Future<List<User>> getSavedUser();
 
-  Future<void> saveArticle(User user);
+  Future<void> saveUser(User user);
 
-  Future<void> removeArticle(User user);
+  Future<void> removeUser(User user);
 }

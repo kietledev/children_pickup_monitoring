@@ -12,13 +12,16 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final PostLoginUseCase _postLoginUseCase;
-  LoginBloc(this._postLoginUseCase) : super(LoginInitialState());
+  final SaveUserUseCase _saveUserUseCase;
+  LoginBloc(this._postLoginUseCase, this._saveUserUseCase)
+      : super(LoginInitialState());
 
   @override
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
     if (event is PostLoginEvent) {
+      
       yield const LoginLoadingState();
       final dataState = await _postLoginUseCase(
         params: LoginRequest(
@@ -29,6 +32,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final user = dataState.data!;
+        // await _saveUserUseCase(params: user);
+        print('PostLoginEvent');
         yield LoginSuccessState(user: user);
       } else {
         yield LoginFailureState(msg: dataState.error!.message);

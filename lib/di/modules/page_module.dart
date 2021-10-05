@@ -10,6 +10,9 @@ class PageModule extends DIModule {
     injector.registerFactory<Widget>(() => const LaunchPage(),
         instanceName: RouteConstants.launch);
 
+    injector.registerFactory<Widget>(() => const SplashPage(),
+        instanceName: RouteConstants.splash);
+
     injector.registerFactory<Widget>(() => const LoginPage(),
         instanceName: RouteConstants.login);
 

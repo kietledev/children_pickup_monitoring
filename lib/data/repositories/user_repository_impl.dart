@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/params/params.dart';
 import 'package:children_pickup_monitoring/common/core/resources/resources.dart';
+import 'package:children_pickup_monitoring/data/datasources/local/app_database.dart';
 import 'package:children_pickup_monitoring/data/datasources/remote/remote.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
@@ -10,9 +11,9 @@ import 'package:dio/dio.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final LoginApiService _loginApiService;
-  // final AppDatabase _appDatabase;
+  final AppDatabase _appDatabase;
 
-  const UserRepositoryImpl(this._loginApiService);
+  const UserRepositoryImpl(this._loginApiService, this._appDatabase);
 
   @override
   Future<DataState<User>> postLogin(LoginRequest params) async {
@@ -42,20 +43,17 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<User> getSaveUser() {
-    // TODO: implement getSaveUser
-    throw UnimplementedError();
+  Future<List<User>> getSavedUser() {
+    return _appDatabase.appUserDao.getAllUsers();
   }
 
   @override
-  Future<void> removeArticle(User user) {
-    // TODO: implement removeArticle
-    throw UnimplementedError();
+  Future<void> saveUser(User user) {
+    return _appDatabase.appUserDao.insertUser(user);
   }
 
   @override
-  Future<void> saveArticle(User user) {
-    // TODO: implement saveArticle
-    throw UnimplementedError();
+  Future<void> removeUser(User user) {
+    return _appDatabase.appUserDao.deleteUser(user);
   }
 }

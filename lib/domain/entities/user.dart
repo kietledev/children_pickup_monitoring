@@ -5,14 +5,14 @@ import 'package:floor/floor.dart';
 @Entity(tableName: DBConstants.kUserTableName)
 class User extends Equatable {
   @PrimaryKey(autoGenerate: true)
-  final double userId;
-  final double personId;
+  final int userId;
+  final int personId;
   final String currentFirstName;
   final String currentLastName;
   final String? currentMiddleName;
   final String loginTime;
-  final double fromParentId;
-  final double toPupilId;
+  final int fromParentId;
+  final int toPupilId;
 
   const User({
     required this.userId,

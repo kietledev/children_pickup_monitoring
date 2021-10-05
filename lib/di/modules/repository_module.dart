@@ -7,7 +7,7 @@ class RepositoryModule extends DIModule {
   @override
   Future<void> provides() async {
     injector.registerSingleton<UserRepository>(
-      UserRepositoryImpl(injector()),
+      UserRepositoryImpl(injector(), injector()),
     );
   }
 }

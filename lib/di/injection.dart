@@ -1,4 +1,3 @@
-import 'package:children_pickup_monitoring/di/modules/page_module.dart';
 import 'package:get_it/get_it.dart';
 
 import 'modules/module.dart';
@@ -11,7 +10,7 @@ abstract class DIModule {
 
 class Injection {
   static Future<void> inject() async {
-    // await DatabaseModule().provides();
+    await DBModule().provides();
     await ApiModule().provides();
     await RepositoryModule().provides();
     await UseCaseModule().provides();
