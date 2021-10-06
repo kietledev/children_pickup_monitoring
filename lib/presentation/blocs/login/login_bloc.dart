@@ -21,7 +21,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is PostLoginEvent) {
-      
       yield const LoginLoadingState();
       final dataState = await _postLoginUseCase(
         params: LoginRequest(
@@ -33,7 +32,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final user = dataState.data!;
         // await _saveUserUseCase(params: user);
-        print('PostLoginEvent');
         yield LoginSuccessState(user: user);
       } else {
         yield LoginFailureState(msg: dataState.error!.message);

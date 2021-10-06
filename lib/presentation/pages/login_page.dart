@@ -1,68 +1,4 @@
-// import 'package:children_pickup_monitoring/common/constants/constants.dart';
-// import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
-// import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
-// import 'package:children_pickup_monitoring/di/injection.dart';
-// import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
-// import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:get_it/get_it.dart';
-
-// class LoginPage extends StatelessWidget {
-//   const LoginPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: BlocProvider(
-//           create: (context) => injector<LoginBloc>(), child: const LoginBody()),
-//     );
-//   }
-// }
-
-// class LoginBody extends StatelessWidget {
-//   const LoginBody({Key? key}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocConsumer<LoginBloc, LoginState>(
-//       listener: (context, state) {
-//         if (state is LoginLoadingState) {
-//           EasyLoading.show();
-//         } else {
-//           EasyLoading.dismiss();
-//           if (state is LoginSuccessState) {
-//             Navigator.of(context).pushNamed(RouteConstants.home);
-//           } else if (state is LoginFailureState) {
-//             UiHelper.showMyDialog(
-//               context: context,
-//               content: state.msg ?? "This is something wrong",
-//             );
-//           } else {}
-//         }
-//       },
-//       // buildWhen: (previous, current) {
-//       //   return (current is LoginSuccess);
-//       // },
-//       builder: (context, state) {
-//         return Center(
-//           child: TextButton(
-//             child: const Text('Login'),
-//             onPressed: () {
-//               GetIt.I.get<LoginBloc>().add(const PostLoginEvent(
-//                   username: '0949594313', password: '12345678'));
-//             },
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
-import 'package:children_pickup_monitoring/common/core/widgets/app_scaford.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/common/helpers/validators.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
@@ -97,7 +33,7 @@ class LoginBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 24.w),
+        margin: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -162,7 +98,9 @@ class LoginForm extends StatelessWidget {
     } else {
       EasyLoading.dismiss();
       if (state is LoginSuccessState) {
-        Navigator.of(context).pushNamed(RouteConstants.home);
+        Navigator.pushReplacementNamed(context, RouteConstants.bottomBar);
+        Navigator.pushNamedAndRemoveUntil(
+            context, RouteConstants.bottomBar, (route) => false);
       } else if (state is LoginFailureState) {
         UiHelper.showMyDialog(
           context: context,

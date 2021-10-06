@@ -15,11 +15,16 @@ class LaunchPage extends StatefulWidget {
 
 class _LaunchPageState extends State<LaunchPage> {
   late Timer _timer;
+  bool isLogin = true;
 
   @override
   void initState() {
     _timer = Timer(const Duration(seconds: 5), () {
-      Navigator.of(context).pushNamed(RouteConstants.splash);
+      if (isLogin) {
+        Navigator.of(context).pushReplacementNamed(RouteConstants.splash);
+      } else if (isLogin) {
+        Navigator.of(context).pushReplacementNamed(RouteConstants.bottomBar);
+      }
     });
     super.initState();
   }
