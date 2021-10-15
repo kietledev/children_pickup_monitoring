@@ -20,3 +20,12 @@ class ColorConstants {
 
   static const white = Color(0xFFFFFFFF);
 }
+//LinearGradient
+const kMenuGradienColor = LinearGradient(
+    colors: [Color.fromRGBO(247, 147, 26, 0.9), Color.fromRGBO(247, 147, 26, 0.7)],
+    stops: [0.0, 1.0],
+    begin: FractionalOffset.centerLeft,
+    end: FractionalOffset.centerRight,
+    tileMode: TileMode.repeated);
+const kWhiteGradiendColor =
+LinearGradient(colors: [Colors.white, Colors.white]);

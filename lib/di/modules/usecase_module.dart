@@ -14,5 +14,7 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<SaveUserUseCase>(SaveUserUseCase(injector()));
     injector
         .registerSingleton<RemoveUserUseCase>(RemoveUserUseCase(injector()));
+    /* Profile Usecase */
+    injector.registerSingleton<GetProfileUseCase>(GetProfileUseCase(injector()));
   }
 }

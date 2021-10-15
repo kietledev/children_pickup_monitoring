@@ -12,5 +12,7 @@ class BlocModule extends DIModule {
 
     /* Local User */
     injector.registerFactory<LocalUserBloc>(() => LocalUserBloc(injector()));
+    /* Profile User */
+    injector.registerFactory<ProfileBloc>(()=>ProfileBloc(injector()));
   }
 }

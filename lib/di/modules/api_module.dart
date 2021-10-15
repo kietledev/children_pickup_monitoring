@@ -11,5 +11,6 @@ class ApiModule extends DIModule {
 
     /* Dependencies */
     injector.registerSingleton<LoginApiService>(LoginApiService(injector()));
+    injector.registerSingleton<ProfileApiService>(ProfileApiService(injector()));
   }
 }

@@ -9,5 +9,8 @@ class RepositoryModule extends DIModule {
     injector.registerSingleton<UserRepository>(
       UserRepositoryImpl(injector(), injector()),
     );
+    injector.registerSingleton<ProfileRepository>(
+      ProfileRepositoryImpl(injector()),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
+
 import 'package:flutter/material.dart';
 
 import '../injection.dart';
@@ -21,5 +22,7 @@ class PageModule extends DIModule {
 
     injector.registerFactory<Widget>(() => const HomePage(),
         instanceName: RouteConstants.home);
+    injector.registerFactory<Widget>(() => ProfilePage(),
+        instanceName: RouteConstants.profile);
   }
 }

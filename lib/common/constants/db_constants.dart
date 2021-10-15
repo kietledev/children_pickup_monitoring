@@ -1,6 +1,7 @@
 class DBConstants {
   static const String kDatabaseName = 'app_database.db';
   static const String kUserTableName = 'user_table';
+  static const String kPersonTableName = 'person_table';
 }
 
 class SecureStorageKeys {
