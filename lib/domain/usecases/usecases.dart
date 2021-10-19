@@ -4,3 +4,4 @@ export 'post_teachers_usecase.dart';
 export 'post_pupils_usecase.dart';
 export 'post_menus_usecase.dart';
 export 'achievement_usecase.dart';
+export 'get_profile_usercase.dart';

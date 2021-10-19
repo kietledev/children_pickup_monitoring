@@ -23,5 +23,6 @@ class ApiModule extends DIModule {
     /* Fetch Achievement api */
     injector.registerSingleton<PostAchievementsApiService>(
         PostAchievementsApiService(injector()));
+    injector.registerSingleton<ProfileApiService>(ProfileApiService(injector()));
   }
 }

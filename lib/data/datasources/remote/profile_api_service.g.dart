@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'post_teachers_api_services.dart';
+part of 'profile_api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _PostTeachersApiService implements PostTeachersApiService {
-  _PostTeachersApiService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getListTeachersByClassID';
+class _ProfileApiService implements ProfileApiService {
+  _ProfileApiService(this._dio, {this.baseUrl}) {
+    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getUserById';
   }
 
   final Dio _dio;
@@ -16,10 +16,11 @@ class _PostTeachersApiService implements PostTeachersApiService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ResponseModel>> postTeachers(
-      {body, k, dm, tk, ttl}) async {
+  Future<HttpResponse<ResponseModel>> getProfile(
+      {query, k, dm, tk, ttl}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(query ?? <String, dynamic>{});
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{
       r'k': k,
@@ -29,10 +30,9 @@ class _PostTeachersApiService implements PostTeachersApiService {
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body!);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<ResponseModel>>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));

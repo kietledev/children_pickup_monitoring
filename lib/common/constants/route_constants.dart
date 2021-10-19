@@ -1,7 +1,6 @@
 class RouteConstants {
   static const String launch = "/";
   static const String splash = "/splash";
-
   static const String login = "/login";
   static const String bottomBar = "/bottom_bar";
   static const String home = "/home";
@@ -11,4 +10,5 @@ class RouteConstants {
   static const String teacherDetails = "/teacher_details";
   static const String pupilDetails = "/pupil_details";
   static const String achievement = "/achievement";
+  static const String profile = "/profile";
 }

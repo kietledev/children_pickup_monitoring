@@ -9,4 +9,5 @@ class UrlConstatns {
       urlServer + "api/getListMenuForWeekByidClassType";
   static const String apiPostAchievements =
       urlServer + "api/getListAChievementsByIdPupil";
+  static const String apiGetProfile = urlServer + "api/getUserById";
 }

@@ -22,5 +22,10 @@ class RepositoryModule extends DIModule {
     /* Achievement repository */
     injector.registerSingleton<AchievementsRepository>(
         AchievementsRepositoryImpl(injector()));
+
+    /* Profile repository */
+    injector.registerSingleton<ProfileRepository>(
+      ProfileRepositoryImpl(injector()),
+    );
   }
 }
