@@ -21,9 +21,9 @@ class _LaunchPageState extends State<LaunchPage> {
   void initState() {
     _timer = Timer(const Duration(seconds: 5), () {
       if (isLogin) {
-        Navigator.of(context).pushReplacementNamed(RouteConstants.splash);
-      } else if (isLogin) {
         Navigator.of(context).pushReplacementNamed(RouteConstants.bottomBar);
+      } else {
+        Navigator.of(context).pushReplacementNamed(RouteConstants.splash);
       }
     });
     super.initState();

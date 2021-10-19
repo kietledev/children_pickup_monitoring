@@ -11,7 +11,7 @@ abstract class LoginApiService {
 
   @POST('/')
   Future<HttpResponse<ResponseModel>> postLogin({
-    @Body() Map<String, dynamic>? params,
+    @Body() Map<String, dynamic>? body,
     @Header('k') String? k,
     @Header('dm') String? dm,
     @Header('tk') String? tk,

@@ -9,7 +9,19 @@ class ApiModule extends DIModule {
     /* Dio client */
     injector.registerSingleton<Dio>(Dio());
 
-    /* Dependencies */
+    /* Login api */
     injector.registerSingleton<LoginApiService>(LoginApiService(injector()));
+
+    /* Fetch teachers api */
+    injector.registerSingleton<PostTeachersApiService>(
+        PostTeachersApiService(injector()));
+
+    /* Fetch pupils api */
+    injector.registerSingleton<PostPupilsApiService>(
+        PostPupilsApiService(injector()));
+
+    /* Fetch Achievement api */
+    injector.registerSingleton<PostAchievementsApiService>(
+        PostAchievementsApiService(injector()));
   }
 }

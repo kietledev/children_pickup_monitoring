@@ -18,7 +18,6 @@ class LocalUserBloc extends Bloc<LocalUserEvent, LocalUserState> {
       yield const LocalUserLoading();
       final users = await _getSavedUserUseCase();
       if (users.isNotEmpty) {
-        print(users.length);
         final user = users[0];
         yield LocalUserDone(user: user);
       } else {

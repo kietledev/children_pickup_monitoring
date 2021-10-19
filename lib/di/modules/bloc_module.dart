@@ -12,5 +12,15 @@ class BlocModule extends DIModule {
 
     /* Local User */
     injector.registerFactory<LocalUserBloc>(() => LocalUserBloc(injector()));
+
+    /* Fetch Teacher */
+    injector.registerFactory<TeachersBloc>(() => TeachersBloc(injector()));
+
+    /* Fetch Pupil */
+    injector.registerFactory<PupilsBloc>(() => PupilsBloc(injector()));
+
+    /* Fetch Achievement */
+    injector
+        .registerFactory<AchievementBloc>(() => AchievementBloc(injector()));
   }
 }

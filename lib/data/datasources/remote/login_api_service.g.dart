@@ -16,13 +16,12 @@ class _LoginApiService implements LoginApiService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ResponseModel>> postLogin(
-      {params, k, dm, tk, ttl}) async {
+  Future<HttpResponse<ResponseModel>> postLogin({body, k, dm, tk, ttl}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(params!);
+    _data.addAll(body!);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<ResponseModel>>(Options(
                 method: 'POST',

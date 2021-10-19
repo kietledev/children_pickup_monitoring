@@ -162,13 +162,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   dart_style:
     dependency: transitive
     description:
@@ -250,7 +243,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.0"
+    version: "7.3.1"
   flutter_easyloading:
     dependency: "direct main"
     description:
@@ -258,13 +251,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.3"
-  flutter_hooks:
-    dependency: "direct main"
-    description:
-      name: flutter_hooks
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.18.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -292,7 +278,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.22.0"
+    version: "0.23.0+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -359,13 +345,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  ionicons:
-    dependency: "direct main"
-    description:
-      name: ionicons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   js:
     dependency: transitive
     description:
@@ -561,7 +540,7 @@ packages:
       name: retrofit_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1+1"
+    version: "2.0.1+2"
   shared_preferences:
     dependency: "direct main"
     description:
