@@ -4,3 +4,4 @@ export 'api_constants.dart';
 export 'text_constants.dart';
 export 'color_constants.dart';
 export 'route_constants.dart';
+export 'style_constans.dart';

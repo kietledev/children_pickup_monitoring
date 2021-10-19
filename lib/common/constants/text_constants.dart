@@ -4,11 +4,13 @@ class FontsConstants {
 
 class TitlesConstants {
   static const String appTitle = "Dopu";
-
   static const String homeTitle = "Home page";
   static const String apiTitle = "User API page";
   static const String cachedTitle = "User Cached page";
   static const String detailTitle = "Detail page";
+}
+class TitlesAppBar{
+  static const String profileTitle = "Thông tin cá nhân";
 }
 
 class ButtonConstatns {
@@ -25,6 +27,7 @@ class StringConstatns {
   static const String enterUserName = "Nhập tài khoản";
   static const String enterPassword = "Nhập mật khẩu";
   static const String forgetPassword = "Quên mật khẩu?";
+  static const String editText = "Sửa";
 }
 
 class TextfieldConstants {

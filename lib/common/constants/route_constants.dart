@@ -5,4 +5,5 @@ class RouteConstants {
   static const String bottomBar = "/bottom_bar";
   static const String home = "/home";
   static const String profile = "/profile";
+  static const String editProfile ="/edit_profile";
 }
