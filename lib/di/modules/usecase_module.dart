@@ -14,6 +14,18 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<SaveUserUseCase>(SaveUserUseCase(injector()));
     injector
         .registerSingleton<RemoveUserUseCase>(RemoveUserUseCase(injector()));
+
+    /* Post Teachers Usecase */
+    injector.registerSingleton<PostTeachersUseCase>(
+        PostTeachersUseCase(injector()));
+
+    /* Post Pupil Usecase */
+    injector
+        .registerSingleton<PostPupilsUseCase>(PostPupilsUseCase(injector()));
+
+    /* Post Pupil Usecase */
+    injector.registerSingleton<PostAchievementsUseCase>(
+        PostAchievementsUseCase(injector()));
     /* Profile Usecase */
     injector.registerSingleton<GetProfileUseCase>(GetProfileUseCase(injector()));
   }

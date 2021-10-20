@@ -52,6 +52,8 @@ class _SplashBodyState extends State<SplashBody> {
   ];
   @override
   Widget build(BuildContext context) {
+    List<String> a = [];
+    a.clear();
     return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

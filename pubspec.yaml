@@ -32,25 +32,22 @@ dependencies:
 
 
   # Common
-  intl: any
-  floor: any
-  equatable: any
-  page_transition: any
-  shared_preferences: any
+  intl: ^0.17.0
+  floor: ^1.2.0
+  equatable: ^2.0.3
+  page_transition: ^2.0.4
+  shared_preferences: ^2.0.8
 
   # Design pattern
-  flutter_bloc: any
-  get_it: any
+  flutter_bloc: ^7.3.1
+  get_it: ^7.2.0
 
   # Network
-  retrofit: any
+  retrofit: ^2.0.1
 
   # User Interface
-  flutter_hooks: any
-  cupertino_icons: any
-  ionicons: any
-  flutter_svg: any
-  flutter_screenutil: any
+  flutter_svg: ^0.23.0+1
+  flutter_screenutil: ^5.0.0+2
   flutter_easyloading: ^3.0.3
   image_picker: ^0.8.3+2
 
@@ -58,9 +55,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  floor_generator: any
-  retrofit_generator: any
-  build_runner: any
+  floor_generator: ^1.2.0
+  retrofit_generator: ^2.0.1+2
+  build_runner: ^2.1.4
   flutter_lints: any
 
 # For information on the generic Dart part of this file, see the

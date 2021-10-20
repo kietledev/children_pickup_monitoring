@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/helpers/utils.dart';
 import 'package:children_pickup_monitoring/presentation/pages/classroom_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/home_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_page.dart';
@@ -19,7 +20,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
   bool _isParent = false;
   final String _bgAppbar = 'assets/images/bg_appbar_b.png';
 
-  final int _role = 0;
+  final int _role = 1;
   int _currentIndex = 0;
   final _pageController = PageController();
 
@@ -78,14 +79,14 @@ class _BottomBarPageState extends State<BottomBarPage> {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      drawer: Drawer(
+      drawer: const Drawer(
           // child: TransferPuppilScreen(),
           ),
       key: _scaffoldKey,
       body: Builder(
         builder: (BuildContext context) {
           return Scaffold(
-            appBar: appBar(getTitle(_currentIndex)),
+            appBar: appBar(title: getTitle(_currentIndex), isParent: _isParent),
             body: PageView(
               controller: _pageController,
               onPageChanged: (int index) {
@@ -102,7 +103,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
                 if (_role == 0) _profile,
               ],
             ),
-            floatingActionButton: buildFloatingActionButton(showFab, context),
+            floatingActionButton: buildFloatingActionButton(showFab),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: buildBottomNavigationBar(context),
@@ -147,29 +148,26 @@ class _BottomBarPageState extends State<BottomBarPage> {
     );
   }
 
-  Opacity buildFloatingActionButton(bool showFab, BuildContext context) {
+  Opacity buildFloatingActionButton(bool showFab) {
     return Opacity(
       opacity: showFab ? 1 : 0,
       child: Visibility(
         visible: _isParent,
-        child: Container(
-          color: Colors.transparent,
-          child: GestureDetector(
-            onTap: () {
-              // Navigator.pushNamed(context, GeneratedQRCodeScreen.routeName);
-            },
-            child: SvgPicture.asset(
-              'assets/icons/ic_create_qr.svg',
-              width: 36,
-              height: 45,
-            ),
+        child: GestureDetector(
+          onTap: () {
+            // Navigator.pushNamed(context, GeneratedQRCodeScreen.routeName);
+          },
+          child: SvgPicture.asset(
+            'assets/icons/ic_create_qr.svg',
+            width: 36,
+            height: 45,
           ),
         ),
       ),
     );
   }
 
-  AppBar appBar(String tilte) {
+  AppBar appBar({required String title, bool isParent = false}) {
     return AppBar(
       elevation: 0.0,
       flexibleSpace: Container(
@@ -180,30 +178,25 @@ class _BottomBarPageState extends State<BottomBarPage> {
           ),
         ),
       ),
-      leading: _isParent
-          ? Builder(
-              builder: (BuildContext context) {
-                return InkWell(
-                  onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
-                    child: InkWell(
-                      onTap: () => _scaffoldKey.currentState!.openDrawer(),
-                      child: const CircleAvatar(
-                        radius: 32,
-                        backgroundImage:
-                            AssetImage("assets/images/img_avatar.png"),
-                      ),
-                    ),
+      leading: isParent
+          ? InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                child: InkWell(
+                  onTap: () => _scaffoldKey.currentState!.openDrawer(),
+                  child: const CircleAvatar(
+                    radius: 32,
+                    backgroundImage: AssetImage("assets/images/img_avatar.png"),
                   ),
-                );
-              },
+                ),
+              ),
             )
-          : Container(),
+          : const SizedBox.shrink(),
       centerTitle: true,
       actions: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+          padding: const EdgeInsets.only(right: 10),
           child: IconButton(
             onPressed: () {
               // Navigator.pushNamed(context, NotificationScreen.routeName);
@@ -221,12 +214,9 @@ class _BottomBarPageState extends State<BottomBarPage> {
         firstColor: const Color(0xFF1D5CF2),
         secondColor: const Color(0xFF27AFFC),
         child: Text(
-          tilte,
-          style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontFamily: FontsConstants.notoSans,
-              fontSize: 20),
+          title,
+          style: Utils.initTextStyle(
+              color: Colors.white, size: 20, weight: FontWeight.w600),
         ),
       ),
     );
@@ -234,7 +224,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
 
   String getTitle(int index) {
     final List<String> title = [
-      'Trang chủ',
+      _itemHome.label!,
       if (_role == 2) _itemSchool.label! else _itemClassroom.label!,
       if (_role == 0) '' else _itemMessage.label!,
       if (_role == 0) _itemMessage.label! else _itemPersonal.label!,

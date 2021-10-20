@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/params/params.dart';
 import 'package:children_pickup_monitoring/common/core/resources/resources.dart';
@@ -7,7 +8,6 @@ import 'package:children_pickup_monitoring/data/datasources/remote/remote.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/domain/repositories/repositories.dart';
-import 'package:dio/dio.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final LoginApiService _loginApiService;
@@ -23,9 +23,10 @@ class UserRepositoryImpl implements UserRepository {
         'password': getBytes(params.password),
       };
       final httpResponse = await _loginApiService.postLogin(
-          params: body, k: key, dm: dm, tk: getTokenApi(), ttl: ttl);
+          body: body, k: key, dm: dm, tk: getTokenApi(), ttl: ttl);
 
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.ok &&
+          httpResponse.data.data.toString().isNotEmpty) {
         final person = UserModel.fromJson(httpResponse.data.data);
         return DataSuccess(person);
       }

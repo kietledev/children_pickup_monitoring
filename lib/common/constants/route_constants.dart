@@ -4,6 +4,12 @@ class RouteConstants {
   static const String login = "/login";
   static const String bottomBar = "/bottom_bar";
   static const String home = "/home";
+  static const String classInformation = "/class_information";
+  static const String classDetails = "/class_details";
+  static const String teacherInformation = "/teacher_information";
+  static const String teacherDetails = "/teacher_details";
+  static const String pupilDetails = "/pupil_details";
+  static const String achievement = "/achievement";
   static const String profile = "/profile";
   static const String editProfile ="/edit_profile";
 }

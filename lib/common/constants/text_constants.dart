@@ -28,6 +28,23 @@ class StringConstatns {
   static const String enterPassword = "Nhập mật khẩu";
   static const String forgetPassword = "Quên mật khẩu?";
   static const String editText = "Sửa";
+
+  static const String fullName = "Họ và tên";
+  static const String fullNameParent = "Họ và tên";
+
+  static const String yearOfBirth = "Năm sinh";
+  static const String position = "Chức vụ";
+  static const String phoneNumber1 = "Số điện thoại 1";
+  static const String phoneNumber2 = "Số điện thoại 2";
+  static const String email = "Email";
+  static const String introduce = "Giới thiệu";
+  static const String className = "Lớp học";
+  static const String status = "Trạng thái";
+  static const String reason = "Lý do";
+  static const String height = "Chiều cao";
+  static const String weight = "Cân nặng";
+  static const String homeAddress = "Địa chỉ nhà";
+  static const String numberOfPupils = "Sĩ số: ";
 }
 
 class TextfieldConstants {

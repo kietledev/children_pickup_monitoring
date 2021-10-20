@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1077412936723",
+    "project_id": "childrenpickupmonitoringmap",
+    "storage_bucket": "childrenpickupmonitoringmap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077412936723:android:6977e02f11a03db7ab93e6",
+        "android_client_info": {
+          "package_name": "cse.duytan.edu.vn.childrenPickupMonitoring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077412936723-5tg77cqctshuerbvnktf8nquj0r2ama2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqS3n6l8GLs5FZ2LJdu22jdH69j8bO6eU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077412936723-5tg77cqctshuerbvnktf8nquj0r2ama2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1077412936723-2p2e867cfgktktvbi7ktpola9l7cf0g2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cse.duytan.edu.vn.childrenPickupMonitoring"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

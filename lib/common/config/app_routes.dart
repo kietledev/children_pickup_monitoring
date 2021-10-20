@@ -10,7 +10,9 @@ class AppRoutes {
     } catch (e) {
       widget = Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(title: const Text('Không tìm thấy trang'),),
+        appBar: AppBar(
+          title: const Text('Không tìm thấy trang'),
+        ),
         body: const Center(child: Text('Page not found')),
       );
     }
