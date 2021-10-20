@@ -3,7 +3,7 @@ part of 'profile_bloc.dart';
 
 
 abstract class ProfileState extends Equatable {
-  final Person? person;
+  final PersonModel? person;
   final String? msg;
   const ProfileState({this.person, this.msg});
 
@@ -18,7 +18,7 @@ class ProfileLoadingState extends ProfileState {
 }
 
 class ProfileSuccessState extends ProfileState {
-  const ProfileSuccessState({required Person person}) : super(person: person);
+  const ProfileSuccessState({required PersonModel person}) : super(person: person);
 }
 
 class ProfileFailureState extends ProfileState {

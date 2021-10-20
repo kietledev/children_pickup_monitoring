@@ -7,6 +7,7 @@ import 'dart:typed_data';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
+import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
@@ -33,7 +34,7 @@ class ProfilePage extends StatelessWidget{
   }
 }
 class ProfileBody extends StatelessWidget{
-  Person? user;
+  PersonModel? user;
   late ProfileBloc bloc;
   Uint8List? bytesImage;
 

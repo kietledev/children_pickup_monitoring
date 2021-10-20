@@ -16,14 +16,29 @@ class ProfileStyle {
       fontWeight: FontWeight.w600);
 }
 class EditProfileStyle{
-  static const contentStyleEditTrue = TextStyle(
+  static const titleStyleEditTrue = TextStyle(
       color: ColorConstants.secondaryColor2,
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: FontWeight.w600,
       fontFamily: FontsConstants.notoSans);
-  static const contentStyleEditFalse = TextStyle(
+  static const titleStyleEditFalse = TextStyle(
       color: ColorConstants.neutralColor2,
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: FontWeight.w600,
       fontFamily: FontsConstants.notoSans);
+  static const contentStyle = TextStyle(
+      color: ColorConstants.neutralColor1,
+      fontSize: 14,
+      fontFamily:FontsConstants.notoSans);
+  static const contentBottomshowStyle = TextStyle(
+      fontSize: 18,
+      fontFamily:FontsConstants.notoSans,
+      color: ColorConstants.secondaryColor2);
+}
+class AppBarStyle{
+   static const textButtonRightStyle = TextStyle(
+       fontSize: 16,
+       fontFamily: FontsConstants.notoSans,
+       color: ColorConstants.secondaryColor2,
+       fontWeight: FontWeight.w600);
 }
