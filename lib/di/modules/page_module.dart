@@ -2,6 +2,7 @@ import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/achievements_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
+import 'package:children_pickup_monitoring/presentation/pages/pupil_detail_page.dart';
 
 import 'package:flutter/material.dart';
 

@@ -8,6 +8,16 @@ class TitlesConstants {
   static const String apiTitle = "User API page";
   static const String cachedTitle = "User Cached page";
   static const String detailTitle = "Detail page";
+  static const String classInformationTitle = 'Thông tin lớp học';
+  static const String classDetails = 'Chi tiết lớp học';
+  static const String teacherInformationTitle = 'Thông tin giáo viên';
+  static const String teacherDetails = 'Chi tiết giáo viên';
+  static const String pupilDetails = 'Chi tiết trẻ';
+  static const String achievements = 'Thành tích';
+  static const String achievement = "/achievement";
+  static const String classInformation = "/class_information";
+  static const String teacherInformation = "/teacher_information";
+
 }
 class TitlesAppBar{
   static const String profileTitle = "Thông tin cá nhân";

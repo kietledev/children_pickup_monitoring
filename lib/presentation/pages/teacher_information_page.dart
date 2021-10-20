@@ -16,7 +16,7 @@ class TeacherInformationPage extends StatelessWidget {
       create: (_) =>
           injector<TeachersBloc>()..add(const FetchTeaches(classId: 4)),
       child: const Scaffold(
-        appBar: CustomAppBar(title: TitlesConstants.teacherInformationTitle),
+        appBar: CustomAppBar(title: TitlesConstants.teacherInformation),
         body: TeacherInformationBody(),
       ),
     );
