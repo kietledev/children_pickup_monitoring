@@ -19,7 +19,7 @@ class AchievementsPage extends StatelessWidget {
           injector<AchievementBloc>()..add(const FetchAchievements(pupilId: 4)),
       child: const Scaffold(
         appBar: CustomAppBar(
-          title: TitlesConstants.achievements,
+          title: TitlesConstants.achievement,
         ),
         body: AchievementsBody(),
       ),

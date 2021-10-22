@@ -4,18 +4,23 @@ class FontsConstants {
 
 class TitlesConstants {
   static const String appTitle = "Dopu";
-
+  static const String homeTitle = "Home page";
+  static const String apiTitle = "User API page";
+  static const String cachedTitle = "User Cached page";
+  static const String detailTitle = "Detail page";
   static const String classInformationTitle = 'Thông tin lớp học';
   static const String classDetails = 'Chi tiết lớp học';
   static const String teacherInformationTitle = 'Thông tin giáo viên';
   static const String teacherDetails = 'Chi tiết giáo viên';
   static const String pupilDetails = 'Chi tiết trẻ';
   static const String achievements = 'Thành tích';
+  static const String achievement = "/achievement";
+  static const String classInformation = "/class_information";
+  static const String teacherInformation = "/teacher_information";
 
-  static const String homeTitle = "Home page";
-  static const String apiTitle = "User API page";
-  static const String cachedTitle = "User Cached page";
-  static const String detailTitle = "Detail page";
+}
+class TitlesAppBar{
+  static const String profileTitle = "Thông tin cá nhân";
 }
 
 class ButtonConstatns {
@@ -32,6 +37,7 @@ class StringConstatns {
   static const String enterUserName = "Nhập tài khoản";
   static const String enterPassword = "Nhập mật khẩu";
   static const String forgetPassword = "Quên mật khẩu?";
+  static const String editText = "Sửa";
 
   static const String fullName = "Họ và tên";
   static const String fullNameParent = "Họ và tên";

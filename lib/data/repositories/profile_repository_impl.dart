@@ -17,7 +17,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   const ProfileRepositoryImpl(this._profileApiService);
 
   @override
-  Future<DataState<Person>> getprofileUser(ProfileRequest query) async {
+  Future<DataState<PersonModel>> getprofileUser(ProfileRequest query) async {
     try {
       final Map<String, dynamic> body = <String, dynamic>{
         'personId': query.personId,

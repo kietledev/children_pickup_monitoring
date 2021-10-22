@@ -7,6 +7,8 @@ import 'dart:typed_data';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
+import 'package:children_pickup_monitoring/data/models/models.dart';
+import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
@@ -32,20 +34,10 @@ class ProfilePage extends StatelessWidget{
   }
 }
 class ProfileBody extends StatelessWidget{
-  Person? user;
+  PersonModel? user;
   late ProfileBloc bloc;
   Uint8List? bytesImage;
-  static const contentStyle1 = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    color:ColorConstants.neutralColor1 ,
-    fontFamily: FontsConstants.notoSans,
-  );
-  static const contentStyle2 = TextStyle(
-      fontSize: 14,
-      color: ColorConstants.neutralColor2,
-      fontFamily: FontsConstants.notoSans,
-      fontWeight: FontWeight.w600);
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -81,18 +73,18 @@ class ProfileBody extends StatelessWidget{
                         margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                         child: CircleAvatar(
                           backgroundImage:bytesImage != null ? MemoryImage(bytesImage!)
-                              : AssetImage('assets/images/Avatar.png') as ImageProvider,
+                              : AssetImage('assets/images/img_avatar_null.png') as ImageProvider,
                         ),
                       ),
                     ),
                     SizedBox(height: 12.h,),
-                    (user!=null) ?Text("${user!.getFullName()}",style:contentStyle1): Text(""),
+                    (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
                     SizedBox(height: 6.h,),
-                    (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: contentStyle2,): Text(""),
+                    (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
                     SizedBox(height: 24.h,),
                      Container(
                        height: (65 + 24) * listMenuPersonal.length.toDouble(),
-                       child: Menu(),
+                       child: Menu(user: user,),
                      ),
                     SizedBox(height: 48.h,),
                     CustomButtonText(
@@ -137,6 +129,8 @@ class ProfileBody extends StatelessWidget{
 
 
 class Menu extends StatefulWidget {
+  final Person? user;
+  Menu({this.user});
   @override
   State<Menu> createState() => _Menu();
 }
@@ -214,7 +208,7 @@ class _Menu extends State<Menu>{
               _onSelected(index);
               switch (listMenuPersonal[index].id) {
                 case 1:
-                //_navigateToProfileScreen(context);
+                    Navigator.pushNamed(context, RouteConstants.editProfile,arguments: widget.user);
                   break;
                 case 2:
                 // Navigator.pushNamed(
@@ -233,5 +227,4 @@ class _Menu extends State<Menu>{
           );
         });
   }
-
 }

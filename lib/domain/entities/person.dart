@@ -142,6 +142,11 @@ class Person extends Equatable {
       return '${currentLastName!.trim()} ${currentMiddleName!.trim()} ${currentFirstName!.trim()}';
     }
   }
+  static const empty = Person(personId: -1);
+
+  bool get isEmpty => this == Person.empty;
+
+  bool get isNotEmpty => this != Person.empty;
   @override
   List<Object> get props {
     return [
@@ -216,4 +221,70 @@ class Person extends Equatable {
   bool get stringify => true;
 
 
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    "PERSON_ID": personId,
+    "EMPLOYEE_ID_NUMBER":employeeIdNumber,
+    "CURRENT_PERSONAL_TITLE_ID":currentPersonalTitleId,
+    "CURRENT_PERSONAL_TITLE":currentPersonalTitle,
+    "CURRENT_PERSONAL_TITLE_EN":currentPersonalTitleEn,
+    "ACADEMIC_TITLE_ID":academicTitleId,
+    "ACADEMIC_TITLE":academicTitle,
+    "ACADEMIC_TITLE_EN":academicTitleEn,
+    "CURRENT_LAST_NAME":currentLastName,
+    "CURRENT_FIRST_NAME":currentFirstName,
+    "CURRENT_MIDDLE_NAME":currentMiddleName,
+    "CURRENT_NICKNAME":currentNickname,
+    "CURRENT_GENDER_ID":currentGenderId,
+    "CURRENT_GENDER":currentGender,
+    "CURRENT_GENDER_EN":currentGenderEn,
+    "BIRTH_DATE":birthDate,
+    "BIRTH_PLACE":birthPlace,
+    "BIRTH_PLACE_CITY":birthPlaceCity,
+    "BIRTH_PLACE_PROVINCE":birthPlaceProvince,
+    "BIRTH_PLACE_STATE":birthPlaceState,
+    "BIRTH_PLACE_COUNTRY":birthPlaceCountry,
+    "CURRENT_MARITAL_STATUS_ID":currentMaritalStatusId,
+    "CURRENT_MARITAL_STATUS":currentMaritalStatus,
+    "CURRENT_MARITAL_STATUS_EN":currentMaritalStatusEn,
+    "CURRENT_PEOPLE_ID_NUMBER":currentPeopleIdNumber,
+    "CURRENT_PEOPLE_ID_ISSUE_DATE":currentPeopleIdIssueDate,
+    "CURRENT_PEOPLE_ID_ISSUE_PLACE":currentPeopleIdIssuePlace,
+    "CURRENT_SOCIAL_SECURITY_NUMBER":currentSocialSecurityNumber,
+    "CURRENT_MAJOR_CITIZENSHIP":currentMajorCitizenship,
+    "CURRENT_PASSPORT_NUMBER":currentPassportNumber,
+    "CURRENT_PASSPORT_ISSUE_PLACE":currentPassportIssuePlace,
+    "CURRENT_PASSPORT_ISSUE_DATE":currentPassportIssueDate,
+    "CURRENT_PASSPORT_EXPIRATION_DATE":currentPassportExpirationDate,
+    "HOME_ADDRESS_1":homeAddress1,
+    "HOME_ADDRESS_2":homeAddress2,
+    "HOME_WARD":homeWard,
+    "HOME_DISTRICT":homeDistrict,
+    "HOME_CITY":homeCity,
+    "HOME_PROVINCE":homeProvince,
+    "HOME_STATE":homeState,
+    "HOME_COUNTRY":homeCountry,
+    "HOME_POSTAL_CODE":homePostalCode,
+    "CURRENT_ADDRESS_1":currentAddress1,
+    "CURRENT_ADDRESS_2":currentAddress2,
+    "CURRENT_WARD":currentWard,
+    "CURRENT_DISTRICT":currentDistrict,
+    "CURRENT_CITY":currentCity,
+    "CURRENT_PROVINCE":currentProvince,
+    "CURRENT_STATE":currentState,
+    "CURRENT_COUNTRY":currentCountry,
+    "CURRENT_POSTAL_CODE":currentPostalCode,
+    "COMMENTS":comments,
+    "COMMENTS_EN":commentsEn,
+    "CLOSEUP_PICTURE_1":closeupPicture1,
+    "CLOSEUP_PICTURE_2":closeupPicture2,
+    "AVATAR_PICTURE":avatarPicture,
+    "SIGNATURE_IMAGE":signatureImage,
+    "CREATED_DATETIME":createdDatetime,
+    "CREATED_BY_USER_ID":createdByUserId,
+    "UPDATED_DATETIME":updatedDatetime,
+    "UPDATED_BY_USER_ID":updatedByUserId,
+    "CURRENT_EMAIL":currentEmail,
+    "CURRENT_PHONE_NUMBER_1":currentPhoneNumber1,
+    "CURRENT_PHONE_NUMBER_2":currentPhoneNumber2,
+  };
 }

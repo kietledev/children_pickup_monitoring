@@ -1,7 +1,7 @@
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 class PersonModel extends Person {
   const PersonModel(
-      { required personId,
+      { required double  personId,
         String? employeeIdNumber,
         double? currentPersonalTitleId,
         String? currentPersonalTitle,

@@ -52,6 +52,7 @@ dependencies:
   flutter_svg: ^0.23.0+1
   flutter_screenutil: ^5.0.0+2
   flutter_easyloading: ^3.0.3
+  image_picker: ^0.8.3+2
 
   # Notification
   firebase_messaging: ^10.0.8

@@ -27,5 +27,4 @@ const kMenuGradienColor = LinearGradient(
     begin: FractionalOffset.centerLeft,
     end: FractionalOffset.centerRight,
     tileMode: TileMode.repeated);
-const kWhiteGradiendColor =
-LinearGradient(colors: [Colors.white, Colors.white]);
+const kWhiteGradiendColor = LinearGradient(colors: [Colors.white, Colors.white]);
