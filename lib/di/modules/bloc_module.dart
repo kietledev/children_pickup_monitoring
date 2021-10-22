@@ -23,6 +23,6 @@ class BlocModule extends DIModule {
     injector
         .registerFactory<AchievementBloc>(() => AchievementBloc(injector()));
     /* Profile User */
-    injector.registerFactory<ProfileBloc>(()=>ProfileBloc(injector()));
+    injector.registerFactory<ProfileBloc>(()=>ProfileBloc(injector(),injector()));
   }
 }

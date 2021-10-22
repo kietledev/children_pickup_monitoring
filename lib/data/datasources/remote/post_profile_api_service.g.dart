@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_api_service.dart';
+part of 'post_profile_api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _ProfileApiService implements ProfileApiService {
-  _ProfileApiService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getUserByPersonId';
+class _PostProfileApiService implements PostProfileApiService {
+  _PostProfileApiService(this._dio, {this.baseUrl}) {
+    baseUrl ??= 'http://dtuct.ddns.net:9999/updateProfile';
   }
 
   final Dio _dio;
@@ -16,8 +16,8 @@ class _ProfileApiService implements ProfileApiService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ResponseModel>> getProfile(
-      {query, k, dm, tk, ttl}) async {
+  Future<HttpResponse<ResponseModel>> postProfile(
+      {query, body, k, dm, tk, ttl}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(query ?? <String, dynamic>{});
@@ -30,9 +30,10 @@ class _ProfileApiService implements ProfileApiService {
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
+    _data.addAll(body!);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<ResponseModel>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
+            Options(method: 'PUT', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));

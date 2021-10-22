@@ -22,4 +22,10 @@ class Validators {
       return '';
     }
   }
+
+  static bool validateEmail(String value) {
+    final RegExp emailValidatorRegExp =
+    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    return (!emailValidatorRegExp.hasMatch(value)) ? false : true;
+  }
 }
