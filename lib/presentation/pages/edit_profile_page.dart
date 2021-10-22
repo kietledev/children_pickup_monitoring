@@ -209,6 +209,7 @@ class _EditProfileBody extends State<EditProfileBody> {
           _enabled = false;
         });
       } else if (state is ProfileFailureState) {
+        WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Cập nhật không thành công"));
         UiHelper.showMyDialog(
           context: context,
           content: state.msg ?? "This is something wrong",
