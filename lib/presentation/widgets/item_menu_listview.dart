@@ -50,7 +50,7 @@ class _ItemMenuListViewState extends State<ItemMenuListView> {
             SvgPicture.asset(widget.item.icon),
             const SizedBox(width: 24),
             Text(widget.item.title,
-                style: Utils.initTextStyle(
+                style: Utils.setStyle(
                     color: titleColor, weight: FontWeight.w600)),
             const Spacer(),
             SvgPicture.asset(

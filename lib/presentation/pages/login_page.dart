@@ -41,12 +41,12 @@ class LoginBody extends StatelessWidget {
             Text(
               StringConstatns.hello,
               style:
-                  Utils.initTextStyle(color: const Color(0xFFF7931A), size: 32),
+                  Utils.setStyle(color: const Color(0xFFF7931A), size: 32),
             ),
             SizedBox(height: 12.h),
             Text(
               StringConstatns.welcome,
-              style: Utils.initTextStyle(
+              style: Utils.setStyle(
                   color: ColorConstants.secondaryColor2.withOpacity(0.6),
                   size: 14,
                   weight: FontWeight.w600),
@@ -152,7 +152,7 @@ class _UsernameTextFieldState extends State<UsernameTextField> {
         },
         decoration: InputDecoration(
           hintText: StringConstatns.enterUserName,
-          hintStyle: Utils.initTextStyle(color: const Color(0xFFAbA9BC)),
+          hintStyle: Utils.setStyle(color: const Color(0xFFAbA9BC)),
           fillColor: Colors.white,
           filled: true,
           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -213,7 +213,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         },
         decoration: InputDecoration(
           hintText: StringConstatns.enterPassword,
-          hintStyle: Utils.initTextStyle(color: const Color(0xFFAbA9BC)),
+          hintStyle: Utils.setStyle(color: const Color(0xFFAbA9BC)),
           fillColor: Colors.white,
           filled: true,
           floatingLabelBehavior: FloatingLabelBehavior.always,

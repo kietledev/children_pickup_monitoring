@@ -5,6 +5,7 @@ abstract class ProfileState extends Equatable {
   final String? msg;
   const ProfileState({this.person, this.msg});
 
+
   @override
   List<Object> get props => [msg!];
 }

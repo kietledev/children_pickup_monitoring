@@ -11,5 +11,8 @@ class RouteConstants {
   static const String pupilDetails = "/pupil_details";
   static const String achievement = "/achievement";
   static const String profile = "/profile";
+  static const String message = "/message";
+  static const String messageDetail = "/message_detail";
+  static const String camera = "/camera";
   static const String editProfile ="/edit_profile";
 }

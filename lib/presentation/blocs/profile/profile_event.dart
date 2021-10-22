@@ -11,3 +11,12 @@ class GetprofileEvent extends ProfileEvent {
   final int personId;
   const GetprofileEvent({required this.personId});
 }
+class PostProfileEvent extends ProfileEvent {
+  final int personId;
+  Map<String, dynamic> body;
+  PostProfileEvent({required this.personId,required this.body});
+}
+class ReloadProfileEvent extends ProfileEvent{
+ final PersonModel user;
+ ReloadProfileEvent({required this.user});
+}

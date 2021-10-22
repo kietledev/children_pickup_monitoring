@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M6.91923,0.29289 L3.1863,4.02586 L1.70711,2.54666 L1.6129,2.46347 C1.22061,2.15845 0.65338,2.18618 0.29289,2.54666 C-0.09763,2.93719 -0.09763,3.57035 0.29289,3.96088 L2.47919,6.14717 L2.5734,6.23037 C2.96569,6.53537 3.53292,6.50767 3.89341,6.14717 L8.33353,1.7071 L8.41663,1.6129 C8.72173,1.2206 8.69393,0.65337 8.33353,0.29289 C7.94293,-0.09763 7.30983,-0.09763 6.91923,0.29289 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <path d="M8,0 C12.4183,0 16,3.58172 16,8 C16,12.4183 12.4183,16 8,16 C3.58172,16 0,12.4183 0,8 C0,3.58172 3.58172,0 8,0 Z" id="Shape" fill="#2D5ACD"></path>
+            <g id="Rectangle" transform="translate(3.500000, 4.750000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <rect stroke="#979797" fill="#FFFFFF" mask="url(#mask-2)" x="-2.5" y="-0.5" width="14" height="9"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,3 +1,4 @@
+import 'package:children_pickup_monitoring/domain/usecases/post_profile_usercase.dart';
 import 'package:children_pickup_monitoring/domain/usecases/usecases.dart';
 
 import '../injection.dart';
@@ -20,13 +21,13 @@ class UseCaseModule extends DIModule {
         PostTeachersUseCase(injector()));
 
     /* Post Pupil Usecase */
-    injector
-        .registerSingleton<PostPupilsUseCase>(PostPupilsUseCase(injector()));
+    injector.registerSingleton<PostPupilsUseCase>(PostPupilsUseCase(injector()));
 
     /* Post Pupil Usecase */
     injector.registerSingleton<PostAchievementsUseCase>(
         PostAchievementsUseCase(injector()));
     /* Profile Usecase */
     injector.registerSingleton<GetProfileUseCase>(GetProfileUseCase(injector()));
+    injector.registerSingleton<PostProfileUseCase>(PostProfileUseCase(injector()));
   }
 }

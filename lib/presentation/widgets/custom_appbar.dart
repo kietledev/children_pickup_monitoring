@@ -59,7 +59,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         secondColor: const Color(0xFF27AFFC),
         child: Text(
           title,
-          style: Utils.initTextStyle(
+          style: Utils.setStyle(
               color: Colors.white, size: 20, weight: FontWeight.w600),
         ),
       ),
