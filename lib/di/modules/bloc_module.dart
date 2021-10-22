@@ -28,6 +28,6 @@ class BlocModule extends DIModule {
     injector.registerFactory<MessageDetailBloc>(
         () => MessageDetailBloc(MessageDetailState(), injector()));
 
-    injector.registerFactory<ProfileBloc>(() => ProfileBloc());
+    injector.registerFactory<ProfileBloc>(() => ProfileBloc(injector(),injector()));
   }
 }
