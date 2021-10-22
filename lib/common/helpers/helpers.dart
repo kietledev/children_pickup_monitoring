@@ -4,3 +4,4 @@ export 'data_fake.dart';
 export 'keyboard_listener.dart';
 export 'keyboard.dart';
 export 'camera_utils.dart';
+export 'validators.dart';

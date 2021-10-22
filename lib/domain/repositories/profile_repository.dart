@@ -7,6 +7,6 @@ import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 abstract class ProfileRepository {
   // API methods
   Future<DataState<PersonModel>> getprofileUser(ProfileRequest query);
-
+  Future<DataState<PersonModel>> postProfileUser(PostProfileRequest query);
 
 }

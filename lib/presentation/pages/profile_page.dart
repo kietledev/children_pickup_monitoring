@@ -37,15 +37,17 @@ class ProfileBody extends StatelessWidget{
   PersonModel? user;
   late ProfileBloc bloc;
   Uint8List? bytesImage;
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener:(context, state)=>listenerProfileState(context, state),
+      buildWhen: (prevState, currState){
+        return currState is ProfileState && currState.person != null || currState is ProfileSuccessState;
+      },
       builder: (context, state) {
-        return Container(
-          width: double.infinity.w,
+       return Container(
+          width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/bg_body_a.png'),
@@ -82,21 +84,21 @@ class ProfileBody extends StatelessWidget{
                     SizedBox(height: 6.h,),
                     (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
                     SizedBox(height: 24.h,),
-                     Container(
-                       height: (65 + 24) * listMenuPersonal.length.toDouble(),
-                       child: Menu(user: user,),
-                     ),
+                    Container(
+                      height: (65 + 24) * listMenuPersonal.length.toDouble(),
+                      child: Menu(user: user,),
+                    ),
                     SizedBox(height: 48.h,),
                     CustomButtonText(
-                        text: 'Đăng xuất ',
-                        width: 174,
-                        press: () {
-                          // print(state.user!.CURRENT_FIRST_NAME!);
-                          // final prefs = Preferences();
-                          // prefs.clear();
-                          // Navigator.of(context).pushNamedAndRemoveUntil(
-                          //     LoginScreen.routeName, (Route<dynamic> route) => false);
-                        },
+                      text: 'Đăng xuất ',
+                      width: 174,
+                      press: () {
+                        // print(state.user!.CURRENT_FIRST_NAME!);
+                        // final prefs = Preferences();
+                        // prefs.clear();
+                        // Navigator.of(context).pushNamedAndRemoveUntil(
+                        //     LoginScreen.routeName, (Route<dynamic> route) => false);
+                      },
                     ),
                     SizedBox(height: 24.h,)
                   ],
@@ -115,9 +117,14 @@ class ProfileBody extends StatelessWidget{
       EasyLoading.dismiss();
       if (state is ProfileSuccessState) {
         user = state.person;
-        bytesImage = base64.decode('${user?.avatarPicture}');
-        //print('Nhuan success ${user!.currentPhoneNumber1}');
-      } else if (state is ProfileFailureState) {
+        print(state.person!.getFullName());
+        if(user!.avatarPicture == ""){
+          bytesImage = null;
+        }else{
+          bytesImage = base64.decode('${user?.avatarPicture}');
+        }
+      }
+      else if (state is ProfileFailureState) {
         UiHelper.showMyDialog(
           context: context,
           content: state.msg ?? "This is something wrong",
@@ -127,9 +134,8 @@ class ProfileBody extends StatelessWidget{
   }
 }
 
-
 class Menu extends StatefulWidget {
-  final Person? user;
+  final PersonModel? user;
   Menu({this.user});
   @override
   State<Menu> createState() => _Menu();
@@ -208,7 +214,7 @@ class _Menu extends State<Menu>{
               _onSelected(index);
               switch (listMenuPersonal[index].id) {
                 case 1:
-                    Navigator.pushNamed(context, RouteConstants.editProfile,arguments: widget.user);
+                  Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: 2)));
                   break;
                 case 2:
                 // Navigator.pushNamed(

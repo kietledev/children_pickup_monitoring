@@ -15,6 +15,8 @@ class Avatar extends StatelessWidget{
    });
   @override
   Widget build(BuildContext context) {
+    print(enabled);
+    print(bytesImage);
     // TODO: implement build
     return enabled
         ? Center(

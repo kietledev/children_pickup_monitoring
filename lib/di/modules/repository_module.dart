@@ -26,7 +26,7 @@ class RepositoryModule extends DIModule {
 
     /* Profile repository */
     injector.registerSingleton<ProfileRepository>(
-      ProfileRepositoryImpl(injector()),
+      ProfileRepositoryImpl(injector(),injector()),
     );
 
     /* Message repository */
