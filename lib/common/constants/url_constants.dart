@@ -4,9 +4,9 @@ class UrlConstatns {
   static const String apiGetProfile = urlServer + "api/getUserByPersonId";
   static const String apiUpdateProfile = urlServer + "updateProfile";
   static const String apiPostTeachersByClassId =
-      urlServer + "api/getListTeachersByClassID";
+      urlServer + "api/getListTeachersByClassId";
   static const String apiPostPupilsByClassId =
-      urlServer + "api/getListChildrensByIdClass";
+      urlServer + "api/getListChildrensByClassId";
   static const String apiPostMenusByClassTypeId =
       urlServer + "api/getListMenuForWeekByidClassType";
   static const String apiPostAchievements = urlServer + "api/getListAChievementsByIdPupil";

@@ -20,7 +20,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
   bool _isParent = false;
   final String _bgAppbar = 'assets/images/bg_appbar_b.png';
 
-  final int _role = 1;
+  final int _role = 0;
   int _currentIndex = 0;
   final _pageController = PageController();
 

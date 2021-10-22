@@ -76,7 +76,7 @@ class TeacherDetailsBody extends StatelessWidget {
                           style: titleStyle,
                         ),
                         CustomTextField(
-                            value: teacher.birthDate!, style: valueStyle),
+                            value: teacher.personDetail!.birthDate!, style: valueStyle),
                       ],
                     ),
                   ),
@@ -91,7 +91,7 @@ class TeacherDetailsBody extends StatelessWidget {
                           style: titleStyle,
                         ),
                         CustomTextField(
-                            value: teacher.academicTitle!, style: valueStyle),
+                            value: teacher.personDetail!.academicTitle!, style: valueStyle),
                       ],
                     ),
                   )
@@ -117,7 +117,7 @@ class TeacherDetailsBody extends StatelessWidget {
                           style: titleStyle,
                         ),
                         CustomTextField(
-                            value: teacher.currentPhoneNumber1!,
+                            value: teacher.personDetail!.currentPhoneNumber1!,
                             style: valueStyle),
                       ],
                     ),
@@ -133,7 +133,7 @@ class TeacherDetailsBody extends StatelessWidget {
                           style: titleStyle,
                         ),
                         CustomTextField(
-                            value: teacher.currentPhoneNumber2!,
+                            value: teacher.personDetail!.currentPhoneNumber2!,
                             style: valueStyle),
                       ],
                     ),
@@ -144,13 +144,13 @@ class TeacherDetailsBody extends StatelessWidget {
                 StringConstatns.email,
                 style: titleStyle,
               ),
-              CustomTextField(value: teacher.currentEmail!, style: valueStyle),
+              CustomTextField(value: teacher.personDetail!.currentEmail!, style: valueStyle),
               Text(
                 StringConstatns.introduce,
                 style: titleStyle,
               ),
               CustomTextField(
-                  value: teacher.comments!, style: valueStyle, numOfLine: 4),
+                  value: teacher.personDetail!.comments!, style: valueStyle, numOfLine: 4),
             ],
           ),
         ),

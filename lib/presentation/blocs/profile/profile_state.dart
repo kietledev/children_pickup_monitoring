@@ -1,7 +1,5 @@
 part of 'profile_bloc.dart';
 
-
-
 abstract class ProfileState extends Equatable {
   final PersonModel? person;
   final String? msg;
