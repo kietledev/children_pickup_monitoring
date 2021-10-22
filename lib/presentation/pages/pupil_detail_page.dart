@@ -31,10 +31,10 @@ class PupilDetailsBody extends StatelessWidget {
   }) : super(key: key);
   final Pupil pupil;
 
-  final TextStyle titleStyle = Utils.initTextStyle(
+  final TextStyle titleStyle = Utils.setStyle(
       size: 14, color: ColorConstants.neutralColor2, weight: FontWeight.w600);
   final TextStyle valueStyle =
-      Utils.initTextStyle(color: ColorConstants.neutralColor1);
+      Utils.setStyle(color: ColorConstants.neutralColor1);
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Utils {
   Utils._();
 
-  static TextStyle initTextStyle(
+  static TextStyle setStyle(
       {Color? color = Colors.black,
       String? fontFamily = FontsConstants.notoSans,
       FontWeight? weight = FontWeight.w400,
@@ -17,5 +17,4 @@ class Utils {
       fontSize: size,
     );
   }
-
 }

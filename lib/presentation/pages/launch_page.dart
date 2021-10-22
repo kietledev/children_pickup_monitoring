@@ -54,7 +54,7 @@ class _LaunchPageState extends State<LaunchPage> {
           SizedBox(height: 10.h),
           Text(
             TitlesConstants.appTitle,
-            style: Utils.initTextStyle(
+            style: Utils.setStyle(
                 color: const Color(0xFF5330AC),
                 size: 24,
                 weight: FontWeight.w900),

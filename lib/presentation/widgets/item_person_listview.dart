@@ -51,7 +51,7 @@ class _ItemPersonListViewState extends State<ItemPersonListView> {
             ),
             const SizedBox(width: 24),
             Text(widget.fullName,
-                style: Utils.initTextStyle(
+                style: Utils.setStyle(
                     color: titleColor, weight: FontWeight.w600)),
             const Spacer(),
             SvgPicture.asset(

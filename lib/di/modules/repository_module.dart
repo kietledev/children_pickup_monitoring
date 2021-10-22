@@ -1,6 +1,7 @@
 import 'package:children_pickup_monitoring/data/repositories/achievements_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/repositories.dart';
 import 'package:children_pickup_monitoring/domain/repositories/repositories.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 
 import '../injection.dart';
 
@@ -26,6 +27,11 @@ class RepositoryModule extends DIModule {
     /* Profile repository */
     injector.registerSingleton<ProfileRepository>(
       ProfileRepositoryImpl(injector()),
+    );
+
+    /* Message repository */
+    injector.registerSingleton<MessageDetailRepository>(
+      MessageDetailRepository(),
     );
   }
 }

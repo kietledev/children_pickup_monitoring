@@ -1,3 +1,4 @@
+import 'package:children_pickup_monitoring/common/config/local_notification_service.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/utils.dart';
 import 'package:children_pickup_monitoring/presentation/pages/classroom_page.dart';
@@ -6,6 +7,7 @@ import 'package:children_pickup_monitoring/presentation/pages/message_page.dart'
 import 'package:children_pickup_monitoring/presentation/pages/profile_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/school_page.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,7 +22,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
   bool _isParent = false;
   final String _bgAppbar = 'assets/images/bg_appbar_b.png';
 
-  final int _role = 1;
+  final int _role = 0;
   int _currentIndex = 0;
   final _pageController = PageController();
 
@@ -66,6 +68,33 @@ class _BottomBarPageState extends State<BottomBarPage> {
   void initState() {
     super.initState();
     if (_role == 0) _isParent = true;
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    messaging.getInitialMessage();
+
+    messaging.getToken().then((value) {
+      String? token = value;
+      print("Instance ID: $token");
+    });
+
+    //Forground
+    FirebaseMessaging.onMessage.listen((message) {
+      print('sssssss');
+      LocalNotificationService.display(message);
+    });
+
+    //When the app is in background but opened and users taps
+    //on the nofitication
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      // final routeFromMessage = message.data['route'];
+      // if (routeFromMessage == 'verify') {
+      //   final id = message.data['id'];
+      //   Navigator.of(context).push<void>(VerifyPage.route(id));
+      // } else if (routeFromMessage == 'live_stream') {
+      //   Navigator.of(context).push<void>(LiveStreamPage.route());
+      // } else if (routeFromMessage == 'personal_information') {
+      //   Navigator.of(context).push<void>(PersonalInformationsPage.route());
+      // }
+    });
   }
 
   @override
@@ -215,7 +244,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
         secondColor: const Color(0xFF27AFFC),
         child: Text(
           title,
-          style: Utils.initTextStyle(
+          style: Utils.setStyle(
               color: Colors.white, size: 20, weight: FontWeight.w600),
         ),
       ),

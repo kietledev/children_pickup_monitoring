@@ -8,7 +8,7 @@ part of 'post_teachers_api_services.dart';
 
 class _PostTeachersApiService implements PostTeachersApiService {
   _PostTeachersApiService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getListTeachersByClassID';
+    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getListTeachersByClassId';
   }
 
   final Dio _dio;

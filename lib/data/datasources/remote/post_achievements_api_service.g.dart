@@ -8,7 +8,7 @@ part of 'post_achievements_api_service.dart';
 
 class _PostAchievementsApiService implements PostAchievementsApiService {
   _PostAchievementsApiService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getListAChievementsByIdPupil';
+    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getListAChievementsByPupilId';
   }
 
   final Dio _dio;

@@ -55,7 +55,7 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
                 Text(
                   StringConstatns.numberOfPupils + '11/12',
                   style:
-                      Utils.initTextStyle(color: ColorConstants.neutralColor1),
+                      Utils.setStyle(color: ColorConstants.neutralColor1),
                 ),
                 ListView.builder(
                   primary: false,

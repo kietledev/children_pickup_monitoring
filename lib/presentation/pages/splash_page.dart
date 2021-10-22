@@ -79,7 +79,7 @@ class _SplashBodyState extends State<SplashBody> {
                             fit: BoxFit.scaleDown,
                           ),
                           Text(splashData[index]['textheader']!,
-                              style: Utils.initTextStyle(
+                              style: Utils.setStyle(
                                 color: ColorConstants.primaryColor3,
                                 size: 24.sp,
                                 weight: FontWeight.w600,
@@ -87,7 +87,7 @@ class _SplashBodyState extends State<SplashBody> {
                           SizedBox(height: 12.h),
                           Text(splashData[index]['text']!,
                               textAlign: TextAlign.center,
-                              style: Utils.initTextStyle(
+                              style: Utils.setStyle(
                                   color: const Color(0xFF4A4453))),
                         ],
                       ),

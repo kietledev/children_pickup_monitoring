@@ -1,5 +1,7 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/presentation/pages/achievements_page.dart';
+import 'package:children_pickup_monitoring/presentation/pages/camera_page.dart';
+import 'package:children_pickup_monitoring/presentation/pages/message_detail_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pupil_detail_page.dart';
 
@@ -42,7 +44,14 @@ class PageModule extends DIModule {
 
     injector.registerFactory<Widget>(() => const AchievementsPage(),
         instanceName: RouteConstants.achievement);
+
     injector.registerFactory<Widget>(() => ProfilePage(),
         instanceName: RouteConstants.profile);
+
+    injector.registerFactory<Widget>(() => const MessageDetailPage(),
+        instanceName: RouteConstants.messageDetail);
+
+    injector.registerFactory<Widget>(() => const CameraPage(),
+        instanceName: RouteConstants.camera);
   }
 }

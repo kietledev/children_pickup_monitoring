@@ -139,11 +139,11 @@ class _ItemAchievementListViewState extends State<ItemAchievementListView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.item.achievementBriefDescription!,
-                    style: Utils.initTextStyle(
+                    style: Utils.setStyle(
                         color: ColorConstants.neutralColor1,
                         weight: FontWeight.w600)),
                 Text(widget.item.createdDatetime!,
-                    style: Utils.initTextStyle(
+                    style: Utils.setStyle(
                         color: ColorConstants.neutralColor1,
                         weight: FontWeight.w600)),
               ],
