@@ -493,12 +493,12 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
     }
   }
 
-  //////
-
   void openCamera() {
     KeyboardUtil.hideKeyboard(context);
-    Navigator.pushNamed(context, RouteConstants.camera).then(
-        (value) => print(value)); //bloc.add(AddNewMessage(message: value));
+    Navigator.pushNamed(context, RouteConstants.camera).then((value) {
+      bloc.add(AddNewMessage(message: value.toString()));
+      FocusScope.of(context).requestFocus(_focusNode);
+    });
   }
 
   void openGallery() {

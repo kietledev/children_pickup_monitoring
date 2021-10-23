@@ -9,3 +9,4 @@ export 'custom_appbar.dart';
 export 'custom_textfield.dart';
 export 'slide_menu.dart';
 export 'asset_thumbnail.dart';
+export 'custom_timer_painter.dart';
