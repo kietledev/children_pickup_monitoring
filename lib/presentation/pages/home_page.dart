@@ -42,14 +42,14 @@ class _HomePageState extends State<HomePage>
     return MultiBlocProvider(
       providers: [
         BlocProvider<AchievementBloc>(
-            create: (BuildContext context) => injector<AchievementBloc>()
-            // ..add(const FetchAchievements(pupilId: 4)),
-            ),
+          create: (BuildContext context) => injector<AchievementBloc>()
+            ..add(const FetchAchievements(pupilId: 4)),
+        ),
         BlocProvider<SchoolNotificationBloc>(
           create: (BuildContext context) => SchoolNotificationBloc(),
         ),
         BlocProvider<AlarmBloc>(
-          create: (BuildContext context) => injector<AlarmBloc>(),
+          create: (BuildContext context) => AlarmBloc(),
         ),
       ],
       child: const Scaffold(
@@ -83,6 +83,7 @@ class _HomeBodyState extends State<HomeBody> {
   ];
 
   late int _currentPupilId;
+  final int _role = 1;
 
 /* Alarm */
   Timer? _timer;
@@ -96,26 +97,24 @@ class _HomeBodyState extends State<HomeBody> {
   bool fetchSchoolNoti = false;
 
   List<Achievement> _achievements = [];
+  late AlarmBloc _alarmBloc;
 
   @override
   void initState() {
     super.initState();
-
+    _alarmBloc = BlocProvider.of<AlarmBloc>(context);
     _initVariable();
     _currentPupilId = 2;
   }
 
   @override
   void dispose() {
-    injector<AlarmBloc>().close();
-    // _achievementFetchedBloc.close();
-    // _schoolNotificationFetchedBloc.close();
+    _alarmBloc.close();
     _timer?.cancel();
     super.dispose();
   }
 
   Future<void> _pullRefresh() async {
-    print('object');
     // _fetchAchievements(_currentPupilId);
   }
 
@@ -135,13 +134,89 @@ class _HomeBodyState extends State<HomeBody> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                _buildAlarm(),
+                _role == 1 ? buildNumberOfPupils() : const SizedBox.shrink(),
+                _role == 0 ? _buildAlarm() : Container(),
                 _buildFeaturedCards(listFunction),
                 _buildSchoolNotifications(),
                 _buildAchievements(),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildNumberOfPupils() => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          children: [
+            Text('Điểm số tuần qua',
+                style: Utils.setStyle(
+                    color: const Color(0xFF4F3A57), weight: FontWeight.w600)),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                buildItemInScore(),
+                const SizedBox(width: 6),
+                buildItemInScore(),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Row(
+              children: [
+                buildItemInScore(),
+                const SizedBox(width: 6),
+                buildItemInScore(),
+              ],
+            )
+          ],
+        ),
+      );
+
+  Expanded buildItemInScore() {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6.0),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFDEDFE1).withOpacity(0.5),
+              spreadRadius: 6,
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/ic_max_scores.svg',
+              width: 46.w,
+              height: 46.w,
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Thành tích',
+                  style: Utils.setStyle(
+                      color: ColorConstants.neutralColor1,
+                      size: 10,
+                      weight: FontWeight.w600),
+                ),
+                Text(
+                  '50',
+                  style: Utils.setStyle(
+                      color: ColorConstants.neutralColor2, size: 20),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
@@ -163,49 +238,47 @@ class _HomeBodyState extends State<HomeBody> {
 
   Widget _buildTimer() {
     return Expanded(
-        flex: 45,
-        child: BlocBuilder<AlarmBloc, AlarmState>(
-            buildWhen: (previous, current) =>
-                previous.counter != previous.counter,
-            builder: (context, state) {
-              switch (state.status) {
-                case AlarmStatus.before:
-                  print('object, $_stringTime');
-                  _stringTime = state.stringTime;
-                  _counter = state.counter;
-                  break;
-                case AlarmStatus.alarm:
-                  _stringTime = state.stringTime;
-                  _counter = state.counter;
-                  break;
-                case AlarmStatus.after:
-                  _stringTime = state.stringTime;
-                  _counter = state.counter;
-                  break;
-              }
-              print(_stringTime);
-              return Stack(
-                children: [
-                  Container(
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: CustomPaint(
-                      size: Size(96.w, 96.w),
-                      painter: CustomTimerPainter(
-                          totalMinus: _warningMinutes, currentMinus: _counter),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(_stringTime,
-                        textAlign: TextAlign.center,
-                        style: Utils.setStyle(
-                            color: ColorConstants.brandColor,
-                            weight: FontWeight.w600)),
-                  )
-                ],
-              );
-            }));
+      flex: 45,
+      child: BlocBuilder<AlarmBloc, AlarmState>(
+        builder: (context, state) {
+          switch (state.status) {
+            case AlarmStatus.before:
+              _stringTime = state.stringTime;
+              _counter = state.counter;
+              break;
+            case AlarmStatus.alarm:
+              _stringTime = state.stringTime;
+              _counter = state.counter;
+              break;
+            case AlarmStatus.after:
+              _stringTime = state.stringTime;
+              _counter = state.counter;
+              break;
+          }
+          return Stack(
+            children: [
+              Container(
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: CustomPaint(
+                  size: Size(96.w, 96.w),
+                  painter: CustomTimerPainter(
+                      totalMinus: _warningMinutes, currentMinus: _counter),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Text(_stringTime,
+                    textAlign: TextAlign.center,
+                    style: Utils.setStyle(
+                        color: ColorConstants.brandColor,
+                        weight: FontWeight.w600)),
+              )
+            ],
+          );
+        },
+      ),
+    );
   }
 
   Expanded _buildContentAlarm() {
@@ -347,11 +420,6 @@ class _HomeBodyState extends State<HomeBody> {
     return BlocBuilder<AchievementBloc, AchievementState>(
         builder: (context, state) {
       if (state is FetcAchievementFailureState) {
-        // WidgetsBinding.instance!.addPostFrameCallback((_) => createSnackBar(
-        //   'Không có thành tích mới',
-        //   context,
-        //   ColorConstants.neutralColor7,
-        //   "assets/icons/ic_success.svg"));
         return Container(
             margin: const EdgeInsets.symmetric(vertical: 24),
             child: _buildTitleAchievement(
@@ -492,7 +560,7 @@ class _HomeBodyState extends State<HomeBody> {
   Future _initVariable() async {
     // final preferences = Preferences();
     const String stringOfFinishTime =
-        '17:01'; //await preferences.getSchoolFinishTime();
+        '09:55'; //await preferences.getSchoolFinishTime();
     _finishTime = getDateTimeFromString(stringOfFinishTime);
 
     _warningMinutes = 35; //int.parse(await preferences.getWarningTime());
@@ -512,7 +580,7 @@ class _HomeBodyState extends State<HomeBody> {
 
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) async {
       final DateTime now = DateTime.now();
-      print(now);
+
       if (now.isAfter(_targetTime) && now.isBefore(_finishTime)) {
         _counter = (_finishTime.hour * 60 + _finishTime.minute) -
             (now.hour * 60 + now.minute);
@@ -523,20 +591,21 @@ class _HomeBodyState extends State<HomeBody> {
           _stringTime = '00:00s';
           _timer!.cancel();
         }
-        injector<AlarmBloc>().add(NewAlarm(
+        _alarmBloc.add(NewAlarm(
             status: AlarmStatus.alarm,
             stringTime: _stringTime,
             counter: _counter));
       } else if (now.isAfter(_finishTime)) {
         _stringTime = 'Hết giờ';
-        injector<AlarmBloc>().add(NewAlarm(
+        _alarmBloc.add(NewAlarm(
           status: AlarmStatus.after,
           stringTime: _stringTime,
           counter: 1,
         ));
       } else {
         _stringTime = '${_targetTime.hour}:${_targetTime.minute}:00';
-        injector<AlarmBloc>().add(NewAlarm(
+
+        _alarmBloc.add(NewAlarm(
           status: AlarmStatus.before,
           stringTime: _stringTime,
           counter: _warningMinutes,
