@@ -15,4 +15,5 @@ class RouteConstants {
   static const String messageDetail = "/message_detail";
   static const String camera = "/camera";
   static const String editProfile ="/edit_profile";
+  static const String listparent = "/list_parent";
 }

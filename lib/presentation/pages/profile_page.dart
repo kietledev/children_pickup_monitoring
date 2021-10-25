@@ -9,6 +9,7 @@ import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
+import 'package:children_pickup_monitoring/presentation/widgets/avatar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
@@ -19,20 +20,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ProfilePage extends StatelessWidget{
+class ProfilePage extends StatefulWidget{
   const ProfilePage({Key? key}) : super(key: key);
-
+  @override
+  State<ProfilePage> createState() => _ProfilePage();
+}
+class _ProfilePage extends State<ProfilePage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocProvider(
-        create: (context) => injector<ProfileBloc>()..add(GetprofileEvent(personId: 2)),
+      create: (context) => injector<ProfileBloc>()..add(GetprofileEvent(personId: 2)),
       child: Scaffold(
-        body: ProfileBody()
+          body: ProfileBody()
       ),
     );
   }
 }
+
 class ProfileBody extends StatelessWidget{
   PersonModel? user;
   late ProfileBloc bloc;
@@ -61,23 +68,10 @@ class ProfileBody extends StatelessWidget{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 27, 0, 0),
-                      height: 112,
-                      width: 112,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/img_border_avatar.png'),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                        child: CircleAvatar(
-                          backgroundImage:bytesImage != null ? MemoryImage(bytesImage!)
-                              : AssetImage('assets/images/img_avatar_null.png') as ImageProvider,
-                        ),
-                      ),
+                    Avatar(
+                      enabled: false,
+                      bytesImage: bytesImage,
+                      avatarNull:"assets/images/img_avatar_null.png" ,
                     ),
                     SizedBox(height: 12.h,),
                     (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
@@ -117,7 +111,6 @@ class ProfileBody extends StatelessWidget{
       EasyLoading.dismiss();
       if (state is ProfileSuccessState) {
         user = state.person;
-        print(state.person!.getFullName());
         if(user!.avatarPicture == ""){
           bytesImage = null;
         }else{
@@ -217,8 +210,7 @@ class _Menu extends State<Menu>{
                   Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: 2)));
                   break;
                 case 2:
-                // Navigator.pushNamed(
-                //     context, ListParentScreen.routeName);
+                 Navigator.pushNamed(context, RouteConstants.listparent);
                   break;
                 case 3:
                 // Navigator.pushNamed(
