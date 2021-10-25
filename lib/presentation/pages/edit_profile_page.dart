@@ -72,7 +72,7 @@ class _EditProfileBody extends State<EditProfileBody> {
       appBar: WidgetAppBar(
         title: TitlesAppBar.profileTitle,
         menuItem: [itemButtonRightAppBar()],
-        press: () {
+        actionBack: () {
           Navigator.pop(context);
         },
       ),
