@@ -12,7 +12,6 @@ class AlarmBloc extends Bloc<AlarmEvent, AlarmState> {
     AlarmEvent event,
   ) async* {
     if (event is NewAlarm) {
-      print(event.stringTime);
       yield state.copyWith(
           status: event.status,
           stringTime: event.stringTime,
