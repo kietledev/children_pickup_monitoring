@@ -26,12 +26,14 @@ class PupilsRepositoryImpl implements PupilsRepository {
           dm: dm,
           tk: getTokenApi(id: params.classId.toString()),
           ttl: ttl);
+      print(httpResponse);
       if (httpResponse.response.statusCode == HttpStatus.ok &&
           httpResponse.data.data.toString().isNotEmpty) {
         final List<Pupil> pupils = [];
         for (final dynamic item in httpResponse.data.data) {
           if (item is! Map<String, dynamic>) continue;
           final pupil = PupilModel.fromJson(item);
+          print(pupil.className);
           pupils.add(pupil);
         }
         return DataSuccess(pupils);

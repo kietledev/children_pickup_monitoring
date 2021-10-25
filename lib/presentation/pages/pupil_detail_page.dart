@@ -74,7 +74,7 @@ class PupilDetailsBody extends StatelessWidget {
                           style: titleStyle,
                         ),
                         CustomTextField(
-                            value: pupil.birthDate!, style: valueStyle),
+                            value: pupil.personDetail!.birthDate!, style: valueStyle),
                       ],
                     ),
                   ),
@@ -172,7 +172,7 @@ class PupilDetailsBody extends StatelessWidget {
                 style: titleStyle,
               ),
               CustomTextField(
-                  value: pupil.homeAddress1!, style: valueStyle, numOfLine: 4),
+                  value: pupil.personDetail!.homeAddress1!, style: valueStyle, numOfLine: 4),
             ],
           ),
         ),

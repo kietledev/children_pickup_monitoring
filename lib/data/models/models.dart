@@ -5,4 +5,7 @@ export 'teacher_model.dart';
 export 'pupil_model.dart';
 export 'food_menu_model.dart';
 export 'achievement_model.dart';
+export 'pickup_request_model.dart';
+export 'pickup_place_model.dart';
+
 

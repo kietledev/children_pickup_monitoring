@@ -16,7 +16,7 @@ class TeacherInformationPage extends StatelessWidget {
       create: (_) =>
           injector<TeachersBloc>()..add(const FetchTeaches(classId: 4)),
       child: const Scaffold(
-        appBar: CustomAppBar(title: TitlesConstants.teacherInformation),
+        appBar: CustomAppBar(title: TitlesConstants.teacherDetails),
         body: TeacherInformationBody(),
       ),
     );
@@ -53,11 +53,10 @@ class _TeacherInformationBodyState extends State<TeacherInformationBody> {
             itemCount: teachers.length,
             itemBuilder: (context, index) {
               final item = teachers[index];
-
               return ItemPersonListView(
                 index: index,
                 isSelected: currentIndex == index,
-                avatar: item.avatarPicture!,
+                avatar: item.personDetail!.avatarPicture!,
                 fullName: item.getFullName(),
                 onSelect: () {
                   setState(() {

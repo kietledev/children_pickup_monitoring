@@ -68,7 +68,7 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
                     return ItemPersonListView(
                       index: index,
                       isSelected: currentIndex == index,
-                      avatar: item.avatarPicture!,
+                      avatar: item.personDetail!.avatarPicture!,
                       fullName: item.getFullName(),
                       onSelect: () {
                         setState(() {
@@ -87,10 +87,10 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
         );
       } else if (state is FetchPupilsFailureState) {
         EasyLoading.dismiss();
-        UiHelper.showMyDialog(
-          context: context,
-          content: state.msg ?? "This is something wrong",
-        );
+        // UiHelper.showMyDialog(
+        //   context: context,
+        //   content: state.msg ?? "This is something wrong",
+        // );
         return const SizedBox.shrink();
       } else {
         EasyLoading.show();

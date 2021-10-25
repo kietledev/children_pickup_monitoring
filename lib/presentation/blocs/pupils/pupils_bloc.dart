@@ -18,14 +18,17 @@ class PupilsBloc extends Bloc<PupilsEvent, PupilsState> {
     PupilsEvent event,
   ) async* {
     if (event is FetchPupils) {
+
       final dataState = await _postPupilsUseCase(
         params: PostPupilsRequest(
           classId: event.classId,
         ),
       );
 
+      print(dataState.data.toString());
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final pupils = dataState.data!;
+
         yield FetchPupilsSuccessState(pupils: pupils);
       } else {
         yield FetchPupilsFailureState(msg: dataState.error!.message);
