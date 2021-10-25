@@ -25,10 +25,11 @@ class ClassInformationBody extends StatefulWidget {
 
 class _ClassInformationBodyState extends State<ClassInformationBody> {
   final List<ItemMenu> listItemsClassInformation = [
-    ItemMenu(1, "Chi tiết lớp học", "assets/icons/ic_detail_class.svg",
-        RouteConstants.classDetails),
-    ItemMenu(2, "Thông tin giáo viên", "assets/icons/ic_teacher_infomation.svg",
+
+    ItemMenu(1, "Thông tin giáo viên", "assets/icons/ic_teacher_infomation.svg",
         RouteConstants.teacherInformation),
+    ItemMenu(2, "Chi tiết lớp học", "assets/icons/ic_detail_class.svg",
+        RouteConstants.classDetails),
     ItemMenu(3, "Thực đơn của bé", "assets/icons/ic_menu_baby.svg",
         RouteConstants.classInformation),
     ItemMenu(4, "Thành tích", "assets/icons/ic_achievements.svg",

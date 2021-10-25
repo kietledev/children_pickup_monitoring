@@ -2,6 +2,7 @@ import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/local_user/local_user_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/school_nofitication/school_notification_bloc.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 
 import '../injection.dart';
 
@@ -28,9 +29,6 @@ class BlocModule extends DIModule {
     /* Message detail */
     injector.registerFactory<MessageDetailBloc>(
         () => MessageDetailBloc(MessageDetailState(), injector()));
-
-    injector.registerFactory<ProfileBloc>(
-        () => ProfileBloc(injector(), injector()));
 
     /* Home */
     injector.registerFactory<AlarmBloc>(() => AlarmBloc());

@@ -53,7 +53,6 @@ class _TeacherInformationBodyState extends State<TeacherInformationBody> {
             itemCount: teachers.length,
             itemBuilder: (context, index) {
               final item = teachers[index];
-
               return ItemPersonListView(
                 index: index,
                 isSelected: currentIndex == index,
