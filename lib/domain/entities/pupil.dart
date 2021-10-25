@@ -44,4 +44,15 @@ class Pupil extends Equatable {
           personDetail!.currentFirstName!.trim();
     }
   }
+  String getFullNameParent() {
+    if (currentMiddleNameParent!.isEmpty) {
+      return '${currentLastNameParent!.trim()} ${currentFirstNameParent!.trim()}';
+    } else {
+      return currentLastNameParent!.trim() +
+          ' ' +
+         currentMiddleNameParent!.trim() +
+          ' ' +
+          currentFirstNameParent!.trim();
+    }
+  }
 }

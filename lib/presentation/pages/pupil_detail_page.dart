@@ -38,142 +38,150 @@ class PupilDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: SizedBox(
-                  width: 112.w,
-                  height: 112.w,
-                  child: const CircleAvatar(
-                    backgroundColor: Colors.red,
-                    radius: 32,
-                    backgroundImage: AssetImage("assets/images/img_avatar.png"),
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/img_bg_detail_child_B.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: SizedBox(
+                    width: 112.w,
+                    height: 112.w,
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.red,
+                      radius: 32,
+                      backgroundImage: AssetImage("assets/images/img_avatar.png"),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 48.h),
-              Text(
-                StringConstatns.fullName,
-                style: titleStyle,
-              ),
-              CustomTextField(value: pupil.getFullName(), style: valueStyle),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.yearOfBirth,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: pupil.personDetail!.birthDate!, style: valueStyle),
-                      ],
+                SizedBox(height: 48.h),
+                Text(
+                  StringConstatns.fullName,
+                  style: titleStyle,
+                ),
+                CustomTextField(value: pupil.getFullName(), style: valueStyle),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.yearOfBirth,
+                            style: titleStyle,
+                          ),
+                          CustomTextField(
+                              value: Utils.formatDateTime(pupil.personDetail!.birthDate!) , style: valueStyle),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 24.w),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.className,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: pupil.className!, style: valueStyle),
-                      ],
+                    SizedBox(width: 24.w),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.className,
+                            style: titleStyle,
+                          ),
+                          CustomTextField(
+                              value: pupil.className!, style: valueStyle),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.status,
+                            style: titleStyle,
+                          ),
+                          CustomTextField(
+                              value: 'pupil.status!', style: valueStyle),
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.status,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: 'pupil.status!', style: valueStyle),
-                      ],
+                    SizedBox(width: 24.w),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.reason,
+                            style: titleStyle,
+                          ),
+                          CustomTextField(
+                              value: 'pupil.reason!', style: valueStyle),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.height,
+                            style: titleStyle,
+                          ),
+                          CustomTextField(
+                              value: 'pupil.height!', style: valueStyle),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 24.w),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.reason,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: 'pupil.reason!', style: valueStyle),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.height,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: 'pupil.height!', style: valueStyle),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 24.w),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.weight,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: 'pupil.weight!', style: valueStyle),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Text(
-                StringConstatns.fullNameParent,
-                style: titleStyle,
-              ),
-              CustomTextField(
-                  value: 'pupil.getFullNameParent()', style: valueStyle),
-              Text(
-                StringConstatns.homeAddress,
-                style: titleStyle,
-              ),
-              CustomTextField(
-                  value: pupil.personDetail!.homeAddress1!, style: valueStyle, numOfLine: 4),
-            ],
+                    SizedBox(width: 24.w),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.weight,
+                            style: titleStyle,
+                          ),
+                          CustomTextField(
+                              value: 'pupil.weight!', style: valueStyle),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Text(
+                  StringConstatns.fullNameParent,
+                  style: titleStyle,
+                ),
+                CustomTextField(
+                    value: pupil.getFullNameParent(), style: valueStyle),
+                Text(
+                  StringConstatns.homeAddress,
+                  style: titleStyle,
+                ),
+                CustomTextField(
+                    value: pupil.personDetail!.homeAddress1!, style: valueStyle, numOfLine: 4),
+              ],
+            ),
           ),
         ),
       ),

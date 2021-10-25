@@ -53,9 +53,13 @@ class _TeacherInformationBodyState extends State<TeacherInformationBody> {
             itemCount: teachers.length,
             itemBuilder: (context, index) {
               final item = teachers[index];
-              return ItemPersonListView(
+              return ItemTeacherPupilListView(
                 index: index,
                 isSelected: currentIndex == index,
+                position: item.mainResponsibilityTeacher,
+                avtDefaultFemale:"assets/images/img_gv_nu.png" ,
+                avtDefaultMale: "assets/images/img_gv_nam.png",
+                genderId:item.personDetail!.currentGenderId!,
                 avatar: item.personDetail!.avatarPicture!,
                 fullName: item.getFullName(),
                 onSelect: () {

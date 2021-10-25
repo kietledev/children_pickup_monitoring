@@ -55,6 +55,9 @@ class StringConstatns {
   static const String weight = "Cân nặng";
   static const String homeAddress = "Địa chỉ nhà";
   static const String numberOfPupils = "Sĩ số: ";
+  static const String homeroomTeacher = "Chủ nhiệm";
+  static const String teacher = "Giáo viên";
+
 }
 
 class TextfieldConstants {

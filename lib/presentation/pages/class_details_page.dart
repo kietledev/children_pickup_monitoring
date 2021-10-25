@@ -48,41 +48,42 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
               fit: BoxFit.cover,
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 12),
-                Text(
-                  StringConstatns.numberOfPupils + '11/12',
-                  style:
-                      Utils.setStyle(color: ColorConstants.neutralColor1),
-                ),
-                ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: pupils.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final item = pupils[index];
+          child: Column(
+            children: [
+              const SizedBox(height: 12),
+              Text(
+                StringConstatns.numberOfPupils + (pupils.length).toString() + "/"+(pupils.length).toString(),
+                style:
+                    Utils.setStyle(color: ColorConstants.neutralColor1),
+              ),
+              ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemCount: pupils.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final item = pupils[index];
 
-                    return ItemPersonListView(
-                      index: index,
-                      isSelected: currentIndex == index,
-                      avatar: item.personDetail!.avatarPicture!,
-                      fullName: item.getFullName(),
-                      onSelect: () {
-                        setState(() {
-                          currentIndex = index;
-                        });
-                        Navigator.pushNamed(
-                            context, RouteConstants.pupilDetails,
-                            arguments: item);
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
+                  return ItemTeacherPupilListView(
+                    index: index,
+                    genderId: item.personDetail!.currentGenderId!,
+                    avtDefaultMale: 'assets/images/img_child_avt_trai.png',
+                    avtDefaultFemale: 'assets/images/img_child_avt_gai.png',
+                    isSelected: currentIndex == index,
+                    avatar: item.personDetail!.avatarPicture!,
+                    fullName: item.getFullName(),
+                    onSelect: () {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                      Navigator.pushNamed(
+                          context, RouteConstants.pupilDetails,
+                          arguments: item);
+                    },
+                  );
+                },
+              ),
+            ],
           ),
         );
       } else if (state is FetchPupilsFailureState) {
