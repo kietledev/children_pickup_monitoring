@@ -217,8 +217,7 @@ class _Menu extends State<Menu>{
                   Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: 2)));
                   break;
                 case 2:
-                // Navigator.pushNamed(
-                //     context, ListParentScreen.routeName);
+                 Navigator.pushNamed(context, RouteConstants.listparent);
                   break;
                 case 3:
                 // Navigator.pushNamed(
