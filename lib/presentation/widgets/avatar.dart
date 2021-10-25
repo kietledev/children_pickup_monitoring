@@ -8,10 +8,12 @@ class Avatar extends StatelessWidget{
   final bool enabled;
   final Uint8List? bytesImage;
   VoidCallback? callback;
+  final String? avatarNull ;
   Avatar({
    required this.enabled,
    this.bytesImage,
-    this.callback
+    this.callback,
+    this.avatarNull
    });
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class Avatar extends StatelessWidget{
                       child: CircleAvatar(
                           backgroundImage: bytesImage != null
                               ? MemoryImage(bytesImage!)
-                              : AssetImage('assets/images/img_avatar_null.png')
+                              : AssetImage(avatarNull!)
                                   as ImageProvider),
                     ),
                   ),
@@ -87,7 +89,7 @@ class Avatar extends StatelessWidget{
                       child: CircleAvatar(
                           backgroundImage: bytesImage != null
                               ? MemoryImage(bytesImage!)
-                              : AssetImage('assets/images/img_avatar_null.png')
+                              : AssetImage(avatarNull!)
                                   as ImageProvider),
                     )),
               ],

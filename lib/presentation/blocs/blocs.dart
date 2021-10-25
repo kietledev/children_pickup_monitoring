@@ -6,3 +6,4 @@ export 'profile/profile_bloc.dart';
 export 'pickup/pickup_bloc.dart';
 export 'camera/camera_bloc.dart';
 export 'alarm/alarm_bloc.dart';
+export 'parents/parents_bloc.dart';

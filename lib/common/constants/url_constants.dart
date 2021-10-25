@@ -11,5 +11,6 @@ class UrlConstatns {
       urlServer + "api/getListMenuForWeekByidClassType";
   static const String apiPostAchievements =
       urlServer + "api/getListAChievementsByPupilId";
+  static const String apiGetListParentRelationshipByPupilId = urlServer + "api/getListParentRelationshipByPupilId";
 
 }

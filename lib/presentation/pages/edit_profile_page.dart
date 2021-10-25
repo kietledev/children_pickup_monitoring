@@ -97,6 +97,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                     Avatar(
                       enabled: _enabled,
                       bytesImage: bytesImage,
+                      avatarNull: "assets/images/img_avatar_null.png",
                       callback: () => showBottomSheet(),
                     ),
                     Padding(
