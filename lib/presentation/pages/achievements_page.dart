@@ -4,6 +4,7 @@ import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/achievement/achievement_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/custom_appbar.dart';
+import 'package:children_pickup_monitoring/presentation/widgets/item_title_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -18,20 +19,24 @@ class AchievementsPage extends StatelessWidget {
       create: (_) =>
           injector<AchievementBloc>()..add(const FetchAchievements(pupilId: 4)),
       child: const Scaffold(
-        appBar: CustomAppBar(
-          title: TitlesConstants.achievements,
+        appBar: CustomAppBar(title: TitlesConstants.achievements,
         ),
         body: AchievementsBody(),
       ),
     );
   }
 }
-
-class AchievementsBody extends StatelessWidget {
+class AchievementsBody extends StatefulWidget {
   const AchievementsBody({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<AchievementsBody> createState() => _AchievementsBodyState();
+}
+
+class _AchievementsBodyState extends State<AchievementsBody> {
+  int currentIndex = -1;
   @override
   Widget build(BuildContext context) {
     int currentIndex = -1;
@@ -54,32 +59,53 @@ class AchievementsBody extends StatelessWidget {
               itemCount: achievement.length,
               itemBuilder: (context, index) {
                 final item = achievement[index];
-
-                return ItemAchievementListView(
-                  item: item,
+                return ItemTitleDateListView(
                   index: index,
-                  currentIndex: currentIndex,
-                  callback: () {
-                    currentIndex = index;
-                    print(currentIndex);
+                  isSelected: currentIndex == index,
+                  image: "assets/images/img_avatar.png",
+                  date: item.createdDatetime!,
+                  title: item.achievementBriefDescription!,
+                  onSelect: () {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                    Navigator.pushNamed(context, RouteConstants.achievementDetail,
+                        arguments: item);
                   },
                 );
-
-                // return ItemPersonListView(
-                //   index: index,
-                //   isSelected: currentIndex == index,
-                //   avatar: item.avatarPicture!,
-                //   fullName: item.getFullName(),
-                //   onSelect: () {
-                //     setState(() {
-                //       currentIndex = index;
-                //     });
-                //     Navigator.pushNamed(context, RouteConstants.teacherDetails,
-                //         arguments: item);
-                //   },
-                // );
               },
             ),
+            // child: ListView.builder(
+            //   primary: false,
+            //   itemCount: achievement.length,
+            //   itemBuilder: (context, index) {
+            //     final item = achievement[index];
+            //
+            //     return ItemAchievementListView(
+            //       item: item,
+            //       index: index,
+            //       currentIndex: currentIndex,
+            //       callback: () {
+            //         currentIndex = index;
+            //         print(currentIndex);
+            //       },
+            //     );
+            //
+            //     // return ItemPersonListView(
+            //     //   index: index,
+            //     //   isSelected: currentIndex == index,
+            //     //   avatar: item.avatarPicture!,
+            //     //   fullName: item.getFullName(),
+            //     //   onSelect: () {
+            //     //     setState(() {
+            //     //       currentIndex = index;
+            //     //     });
+            //     //     Navigator.pushNamed(context, RouteConstants.teacherDetails,
+            //     //         arguments: item);
+            //     //   },
+            //     // );
+            //   },
+            // ),
           ),
         );
       } else if (state is FetcAchievementFailureState) {
@@ -125,13 +151,14 @@ class _ItemAchievementListViewState extends State<ItemAchievementListView> {
             color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
         child: Row(
           children: [
-            const SizedBox(
-              width: 50,
-              height: 50,
-              child: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 32,
-                backgroundImage: AssetImage("assets/images/img_avatar.png"),
+            Container(
+              width: 50.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover, image: AssetImage("assets/images/img_avatar.png")),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                color: Colors.redAccent,
               ),
             ),
             const SizedBox(width: 24),
@@ -142,10 +169,8 @@ class _ItemAchievementListViewState extends State<ItemAchievementListView> {
                     style: Utils.setStyle(
                         color: ColorConstants.neutralColor1,
                         weight: FontWeight.w600)),
-                Text(widget.item.createdDatetime!,
-                    style: Utils.setStyle(
-                        color: ColorConstants.neutralColor1,
-                        weight: FontWeight.w600)),
+                Text(Utils.formatDateTime(widget.item.createdDatetime!),
+                    style:AchievementsStyle.contentStyle2),
               ],
             ),
             const Spacer(),

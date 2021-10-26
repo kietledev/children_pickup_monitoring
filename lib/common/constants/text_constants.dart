@@ -13,6 +13,7 @@ class TitlesConstants {
   static const String teacherInformationTitle = 'Thông tin giáo viên';
   static const String teacherDetails = 'Chi tiết giáo viên';
   static const String pupilDetails = 'Chi tiết trẻ';
+  static const String details = 'Chi tiết';
   static const String achievements = 'Thành tích';
   static const String achievement = "/achievement";
   static const String classInformation = "/class_information";

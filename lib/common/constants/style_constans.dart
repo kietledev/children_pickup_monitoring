@@ -42,3 +42,11 @@ class AppBarStyle{
        color: ColorConstants.secondaryColor2,
        fontWeight: FontWeight.w600);
 }
+class  AchievementsStyle {
+  static const contentStyle2 = TextStyle(
+      fontSize: 14,
+      color: ColorConstants.neutralColor2,
+      fontFamily: FontsConstants.notoSans,
+      fontWeight: FontWeight.w100);
+
+}

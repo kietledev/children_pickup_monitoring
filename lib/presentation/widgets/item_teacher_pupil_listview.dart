@@ -50,7 +50,7 @@ class _ItemTeacherPupilListViewState extends State<ItemTeacherPupilListView> {
     return GestureDetector(
       onTap: widget.onSelect,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
             color: bgColor, borderRadius: BorderRadius.circular(12.0)),

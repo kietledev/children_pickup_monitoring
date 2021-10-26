@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
+import 'package:children_pickup_monitoring/presentation/widgets/avatar_gender.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/custom_appbar.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,13 +34,15 @@ class PupilDetailsBody extends StatelessWidget {
     required this.pupil,
   }) : super(key: key);
   final Pupil pupil;
-
   final TextStyle titleStyle = Utils.setStyle(
       size: 14, color: ColorConstants.neutralColor2, weight: FontWeight.w600);
   final TextStyle valueStyle =
       Utils.setStyle(color: ColorConstants.neutralColor1);
+
+
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
       child: Container(
         decoration: const BoxDecoration(
@@ -52,17 +58,17 @@ class PupilDetailsBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: SizedBox(
-                    width: 112.w,
-                    height: 112.w,
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.red,
-                      radius: 32,
-                      backgroundImage: AssetImage("assets/images/img_avatar.png"),
+                  Center(
+                    child: AvatarGender(
+                      genderId: pupil.personDetail!.currentGenderId!,
+                      avatar: pupil.personDetail!.avatarPicture!,
+                      avatarFemaleNull: 'assets/images/img_child_avt_gai.png',
+                      avatarMaleNull:'assets/images/img_child_avt_trai.png' ,
+
                     ),
                   ),
-                ),
+
+
                 SizedBox(height: 48.h),
                 Text(
                   StringConstatns.fullName,

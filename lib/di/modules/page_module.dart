@@ -41,6 +41,9 @@ class PageModule extends DIModule {
     injector.registerFactory<Widget>(() => const TeacherDetailsPage(),
         instanceName: RouteConstants.teacherDetails);
 
+    injector.registerFactory<Widget>(() => const AchievementDetailsPage(),
+        instanceName: RouteConstants.achievementDetail);
+
     injector.registerFactory<Widget>(() => const PupilDetailsPage(),
         instanceName: RouteConstants.pupilDetails);
 

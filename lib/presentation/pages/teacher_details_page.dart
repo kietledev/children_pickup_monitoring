@@ -2,6 +2,7 @@ import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/domain/entities/teacher.dart';
+import 'package:children_pickup_monitoring/presentation/widgets/avatar_gender.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -55,16 +56,15 @@ class TeacherDetailsBody extends StatelessWidget {
               children: [
                 // SizedBox(height: 32.h),
                 Center(
-                  child: SizedBox(
-                    width: 112.w,
-                    height: 112.w,
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.red,
-                      radius: 32,
-                      backgroundImage: AssetImage("assets/images/img_avatar.png"),
-                    ),
+                  child: AvatarGender(
+                    genderId: teacher.personDetail!.currentGenderId!,
+                    avatar: teacher.personDetail!.avatarPicture!,
+                    avatarFemaleNull: 'assets/images/img_avt_gv_nu.png',
+                    avatarMaleNull:'assets/images/img_avt_gv_nam.png' ,
+
                   ),
                 ),
+
                 // Image.network(teacher.avatarPicture!),
                 SizedBox(height: 48.h),
                 Text(

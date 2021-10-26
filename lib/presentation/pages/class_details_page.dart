@@ -56,32 +56,35 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
                 style:
                     Utils.setStyle(color: ColorConstants.neutralColor1),
               ),
-              ListView.builder(
-                primary: false,
-                shrinkWrap: true,
-                itemCount: pupils.length,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final item = pupils[index];
+               Padding(
+                padding: const EdgeInsets.fromLTRB(0, 12, 0, 0) ,
+                child: ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: pupils.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final item = pupils[index];
 
-                  return ItemTeacherPupilListView(
-                    index: index,
-                    genderId: item.personDetail!.currentGenderId!,
-                    avtDefaultMale: 'assets/images/img_child_avt_trai.png',
-                    avtDefaultFemale: 'assets/images/img_child_avt_gai.png',
-                    isSelected: currentIndex == index,
-                    avatar: item.personDetail!.avatarPicture!,
-                    fullName: item.getFullName(),
-                    onSelect: () {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                      Navigator.pushNamed(
-                          context, RouteConstants.pupilDetails,
-                          arguments: item);
-                    },
-                  );
-                },
+                    return ItemTeacherPupilListView(
+                      index: index,
+                      genderId: item.personDetail!.currentGenderId!,
+                      avtDefaultMale: 'assets/images/img_child_avt_trai.png',
+                      avtDefaultFemale: 'assets/images/img_child_avt_gai.png',
+                      isSelected: currentIndex == index,
+                      avatar: item.personDetail!.avatarPicture!,
+                      fullName: item.getFullName(),
+                      onSelect: () {
+                        setState(() {
+                          currentIndex = index;
+                        });
+                        Navigator.pushNamed(
+                            context, RouteConstants.pupilDetails,
+                            arguments: item);
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),

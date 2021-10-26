@@ -48,29 +48,32 @@ class _TeacherInformationBodyState extends State<TeacherInformationBody> {
               fit: BoxFit.cover,
             ),
           ),
-          child: ListView.builder(
-            primary: false,
-            itemCount: teachers.length,
-            itemBuilder: (context, index) {
-              final item = teachers[index];
-              return ItemTeacherPupilListView(
-                index: index,
-                isSelected: currentIndex == index,
-                position: item.mainResponsibilityTeacher,
-                avtDefaultFemale:"assets/images/img_gv_nu.png" ,
-                avtDefaultMale: "assets/images/img_gv_nam.png",
-                genderId:item.personDetail!.currentGenderId!,
-                avatar: item.personDetail!.avatarPicture!,
-                fullName: item.getFullName(),
-                onSelect: () {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                  Navigator.pushNamed(context, RouteConstants.teacherDetails,
-                      arguments: item);
-                },
-              );
-            },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 24, 0, 0) ,
+            child: ListView.builder(
+              primary: false,
+              itemCount: teachers.length,
+              itemBuilder: (context, index) {
+                final item = teachers[index];
+                return ItemTeacherPupilListView(
+                  index: index,
+                  isSelected: currentIndex == index,
+                  position: item.mainResponsibilityTeacher,
+                  avtDefaultFemale:"assets/images/img_gv_nu.png" ,
+                  avtDefaultMale: "assets/images/img_gv_nam.png",
+                  genderId:item.personDetail!.currentGenderId!,
+                  avatar: item.personDetail!.avatarPicture!,
+                  fullName: item.getFullName(),
+                  onSelect: () {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                    Navigator.pushNamed(context, RouteConstants.teacherDetails,
+                        arguments: item);
+                  },
+                );
+              },
+            ),
           ),
         );
       } else if (state is FetchTeachersFailureState) {
