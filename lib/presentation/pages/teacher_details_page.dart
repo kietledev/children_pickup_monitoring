@@ -1,7 +1,8 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
-import 'package:children_pickup_monitoring/domain/entities/teacher.dart';
+import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/avatar_gender.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,9 +15,14 @@ class TeacherDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final teacher = ModalRoute.of(context)!.settings.arguments as Teacher;
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: TitlesConstants.teacherDetails,
+      appBar:  WidgetAppBar(
+        title: teacher.getFullName(),
+        menuItem: [],
+        actionBack: () {
+          Navigator.pop(context);
+        },
       ),
+
       body: TeacherDetailsBody(
         teacher: teacher,
       ),
@@ -71,7 +77,8 @@ class TeacherDetailsBody extends StatelessWidget {
                   StringConstatns.fullName,
                   style: titleStyle,
                 ),
-                CustomTextField(value: teacher.getFullName(), style: valueStyle),
+                CustomTextFieldMenu(value: teacher.getFullName(), style: valueStyle),
+                SizedBox(height: 24.h),
                 Row(
                   children: [
                     Expanded(
@@ -83,7 +90,7 @@ class TeacherDetailsBody extends StatelessWidget {
                             StringConstatns.yearOfBirth,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: Utils.formatDateTime( teacher.personDetail!.birthDate!), style: valueStyle),
                         ],
                       ),
@@ -98,13 +105,14 @@ class TeacherDetailsBody extends StatelessWidget {
                             StringConstatns.position,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: teacher.mainResponsibilityTeacher! == true ? StringConstatns.homeroomTeacher: StringConstatns.teacher, style: valueStyle),
                         ],
                       ),
                     )
                   ],
                 ),
+                SizedBox(height: 24.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 72.w),
                   child: const Divider(
@@ -124,7 +132,7 @@ class TeacherDetailsBody extends StatelessWidget {
                             StringConstatns.phoneNumber1,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: teacher.personDetail!.currentPhoneNumber1!,
                               style: valueStyle),
                         ],
@@ -140,7 +148,7 @@ class TeacherDetailsBody extends StatelessWidget {
                             StringConstatns.phoneNumber2,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: teacher.personDetail!.currentPhoneNumber2!,
                               style: valueStyle),
                         ],
@@ -148,11 +156,13 @@ class TeacherDetailsBody extends StatelessWidget {
                     )
                   ],
                 ),
+                SizedBox(height: 24.h),
                 Text(
                   StringConstatns.email,
                   style: titleStyle,
                 ),
-                CustomTextField(value: teacher.personDetail!.currentEmail!, style: valueStyle),
+                CustomTextFieldMenu(value: teacher.personDetail!.currentEmail!, style: valueStyle),
+                SizedBox(height: 24.h),
                 Text(
                   StringConstatns.introduce,
                   style: titleStyle,

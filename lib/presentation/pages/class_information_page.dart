@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -7,8 +8,14 @@ class ClassInformationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(title: TitlesConstants.classInformationTitle),
+    return Scaffold(
+      appBar: WidgetAppBar(
+        title:  TitlesConstants.classInformationTitle,
+        menuItem: [],
+        actionBack: () {
+          Navigator.pop(context);
+        },
+      ),
       body: ClassInformationBody(),
     );
   }

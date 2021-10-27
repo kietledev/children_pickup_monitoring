@@ -1,5 +1,6 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
@@ -11,10 +12,15 @@ class AchievementDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final achievement = ModalRoute.of(context)!.settings.arguments as Achievement;
+
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: TitlesConstants.details,
-      ),
+    appBar:  WidgetAppBar(
+    title: TitlesConstants.details,
+    menuItem: [],
+    actionBack: () {
+    Navigator.pop(context);
+    },
+    ),
       body: AchievementDetailsBody(
         achievement: achievement,
       ),

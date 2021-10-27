@@ -7,6 +7,8 @@ class Pupil extends Equatable {
   final String? currentLastNameParent;
   final String? currentFirstNameParent;
   final String? currentMiddleNameParent;
+  final String? currentPhoneNumber1Parent;
+  final String? currentPhoneNumber2Parent;
   final Person? personDetail;
 
   const Pupil({
@@ -15,6 +17,8 @@ class Pupil extends Equatable {
     this.currentLastNameParent,
     this.currentFirstNameParent,
     this.currentMiddleNameParent,
+    this.currentPhoneNumber1Parent,
+    this.currentPhoneNumber2Parent,
     this.personDetail,
   });
 
@@ -26,6 +30,8 @@ class Pupil extends Equatable {
       currentLastNameParent!,
       currentFirstNameParent!,
       currentMiddleNameParent!,
+      currentPhoneNumber1Parent!,
+      currentPhoneNumber2Parent!,
       personDetail!,
     ];
   }

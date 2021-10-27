@@ -8,6 +8,8 @@ class PupilModel extends Pupil {
     String? currentLastNameParent,
     String? currentFirstNameParent,
     String? currentMiddleNameParent,
+    String? currentPhoneNumber1Parent,
+    String? currentPhoneNumber2Parent,
     PersonModel? personDetail,
   }) : super(
     className: className,
@@ -15,6 +17,8 @@ class PupilModel extends Pupil {
     currentLastNameParent: currentLastNameParent,
     currentFirstNameParent: currentFirstNameParent,
     currentMiddleNameParent: currentMiddleNameParent,
+    currentPhoneNumber1Parent: currentPhoneNumber1Parent,
+    currentPhoneNumber2Parent: currentPhoneNumber2Parent,
     personDetail: personDetail,
         );
 
@@ -27,6 +31,8 @@ class PupilModel extends Pupil {
       currentLastNameParent: json['CURRENT_LAST_NAME_PARENT'] as String? ?? '',
       currentFirstNameParent: json['CURRENT_FIRST_NAME_PARENT'] as String? ?? '',
       currentMiddleNameParent: json['CURRENT_MIDDLE_NAME_PARENT'] as String? ?? '',
+      currentPhoneNumber1Parent: json['CURRENT_PHONE_NUMBER_1_PARENT'] as String? ?? '',
+      currentPhoneNumber2Parent: json['CURRENT_PHONE_NUMBER_2_PARENT'] as String? ?? '',
       personDetail: person
     );
   }

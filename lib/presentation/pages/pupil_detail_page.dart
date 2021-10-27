@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/avatar_gender.dart';
@@ -18,9 +19,30 @@ class PupilDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final pupil = ModalRoute.of(context)!.settings.arguments as Pupil;
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: TitlesConstants.pupilDetails,
-      ),
+      appBar: AppBar(
+        elevation: 0.0,
+        flexibleSpace: Container(
+        decoration: BoxDecoration(
+        image: DecorationImage(
+        image: AssetImage('assets/images/img_bg_detail_child_A.png'),
+        fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        centerTitle: true,
+        title: LinearGradientMask(
+              firstColor: Color(0xFF1D61F2),
+              secondColor: Color(0xFF26ABFB),
+              child: Text(
+                pupil.getFullName(),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: FontsConstants.notoSans,
+                    fontSize: 20),
+              ),
+            ),
+          ),
       body: PupilDetailsBody(
         pupil: pupil,
       ),
@@ -64,17 +86,15 @@ class PupilDetailsBody extends StatelessWidget {
                       avatar: pupil.personDetail!.avatarPicture!,
                       avatarFemaleNull: 'assets/images/img_child_avt_gai.png',
                       avatarMaleNull:'assets/images/img_child_avt_trai.png' ,
-
                     ),
                   ),
-
-
                 SizedBox(height: 48.h),
                 Text(
                   StringConstatns.fullName,
                   style: titleStyle,
                 ),
-                CustomTextField(value: pupil.getFullName(), style: valueStyle),
+                CustomTextFieldMenu(value: pupil.getFullName(), style: valueStyle),
+                SizedBox(height: 24.h),
                 Row(
                   children: [
                     Expanded(
@@ -86,7 +106,7 @@ class PupilDetailsBody extends StatelessWidget {
                             StringConstatns.yearOfBirth,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: Utils.formatDateTime(pupil.personDetail!.birthDate!) , style: valueStyle),
                         ],
                       ),
@@ -101,13 +121,14 @@ class PupilDetailsBody extends StatelessWidget {
                             StringConstatns.className,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: pupil.className!, style: valueStyle),
                         ],
                       ),
                     )
                   ],
                 ),
+                SizedBox(height: 24.h),
                 Row(
                   children: [
                     Expanded(
@@ -119,7 +140,7 @@ class PupilDetailsBody extends StatelessWidget {
                             StringConstatns.status,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: 'pupil.status!', style: valueStyle),
                         ],
                       ),
@@ -134,13 +155,14 @@ class PupilDetailsBody extends StatelessWidget {
                             StringConstatns.reason,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: 'pupil.reason!', style: valueStyle),
                         ],
                       ),
                     )
                   ],
                 ),
+                SizedBox(height: 24.h),
                 Row(
                   children: [
                     Expanded(
@@ -152,7 +174,7 @@ class PupilDetailsBody extends StatelessWidget {
                             StringConstatns.height,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: 'pupil.height!', style: valueStyle),
                         ],
                       ),
@@ -167,23 +189,67 @@ class PupilDetailsBody extends StatelessWidget {
                             StringConstatns.weight,
                             style: titleStyle,
                           ),
-                          CustomTextField(
+                          CustomTextFieldMenu(
                               value: 'pupil.weight!', style: valueStyle),
                         ],
                       ),
                     )
                   ],
                 ),
+                SizedBox(height: 24.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 72.w),
+                  child: const Divider(
+                    color: Color(0xFFA693D9),
+                  ),
+                ),
+                SizedBox(height: 12.h),
                 Text(
                   StringConstatns.fullNameParent,
                   style: titleStyle,
                 ),
-                CustomTextField(
+                CustomTextFieldMenu(
                     value: pupil.getFullNameParent(), style: valueStyle),
+                SizedBox(height: 24.h),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.phoneNumber1,
+                            style: titleStyle,
+                          ),
+                          CustomTextFieldMenu(
+                              value: pupil.currentPhoneNumber1Parent!, style: valueStyle),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 24.w),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.phoneNumber2,
+                            style: titleStyle,
+                          ),
+                          CustomTextFieldMenu(
+                              value: pupil.currentPhoneNumber2Parent!, style: valueStyle),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 24.h),
                 Text(
                   StringConstatns.homeAddress,
                   style: titleStyle,
                 ),
+
                 CustomTextField(
                     value: pupil.personDetail!.homeAddress1!, style: valueStyle, numOfLine: 4),
               ],

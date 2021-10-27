@@ -58,12 +58,12 @@ class MenusStyle {
       fontWeight: FontWeight.w100);
   static const contentStyle = TextStyle(
       color: ColorConstants.neutralColor1,
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: FontWeight.w600,
       fontFamily:FontsConstants.notoSans);
   static const contentStyle1 = TextStyle(
       color: ColorConstants.brandColor,
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: FontWeight.w600,
       fontFamily:FontsConstants.notoSans);
 }

@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
@@ -21,9 +22,14 @@ class MenuPage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
       injector<MenuBloc>()..add(const FetchMenu(classTypeId:1,fromDate:'2021-07-26' ,thruDate: '2021-07-31')),
-      child: const Scaffold(
-        appBar: CustomAppBar(title: TitlesConstants.menu,
-        ),
+      child:  Scaffold(
+      appBar:  WidgetAppBar(
+        title: TitlesConstants.menu,
+        menuItem: [],
+        actionBack: () {
+          Navigator.pop(context);
+        },
+      ),
         body: MenuBody(),
       ),
     );
@@ -111,7 +117,6 @@ class _MenuBodyState extends State<MenuBody> {
                                     foodMenuShow = [];
                                     foodMenuShow = foodMenuDay;
                                     _lengthList = foodMenuShow.length;
-                                    print('foodMenuShow.length'+ foodMenuShow.length.toString());
                                   });
 
                                 },

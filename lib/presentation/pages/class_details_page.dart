@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/pupil.dart';
@@ -15,8 +16,14 @@ class ClassDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => injector<PupilsBloc>()..add(const FetchPupils(classId: 1)),
-      child: const Scaffold(
-        appBar: CustomAppBar(title: TitlesConstants.classDetails),
+      child:  Scaffold(
+        appBar:  WidgetAppBar(
+          title: TitlesConstants.classDetails,
+          menuItem: [],
+          actionBack: () {
+            Navigator.pop(context);
+          },
+        ),
         body: ClassDetailsBody(),
       ),
     );

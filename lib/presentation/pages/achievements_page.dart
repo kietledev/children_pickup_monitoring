@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
@@ -18,9 +19,15 @@ class AchievementsPage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           injector<AchievementBloc>()..add(const FetchAchievements(pupilId: 4)),
-      child: const Scaffold(
-        appBar: CustomAppBar(title: TitlesConstants.achievements,
+      child: Scaffold(
+        appBar:  WidgetAppBar(
+          title: TitlesConstants.achievements,
+          menuItem: [],
+          actionBack: () {
+            Navigator.pop(context);
+          },
         ),
+
         body: AchievementsBody(),
       ),
     );
