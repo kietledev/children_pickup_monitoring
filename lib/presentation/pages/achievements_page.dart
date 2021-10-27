@@ -46,7 +46,7 @@ class _AchievementsBodyState extends State<AchievementsBody> {
   int currentIndex = -1;
   @override
   Widget build(BuildContext context) {
-    int currentIndex = -1;
+
     return BlocBuilder<AchievementBloc, AchievementState>(
         builder: (context, state) {
       if (state is FetchAchievementSuccessState) {

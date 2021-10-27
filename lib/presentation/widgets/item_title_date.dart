@@ -38,7 +38,7 @@ class _ItemTitleDateListViewState extends State<ItemTitleDateListView> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
+            color: bgColor, borderRadius: BorderRadius.circular(12.0)),
         child: Row(
           children: [
             Container(
@@ -56,9 +56,8 @@ class _ItemTitleDateListViewState extends State<ItemTitleDateListView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.title,
-                    style: Utils.setStyle(
-                        color: ColorConstants.neutralColor1,
-                        weight: FontWeight.w600)),
+                style: Utils.setStyle(
+                    color: titleColor, weight: FontWeight.w600)),
                 Text(Utils.formatDateTime(widget.date),
                     style:AchievementsStyle.contentStyle2),
               ],
@@ -66,9 +65,9 @@ class _ItemTitleDateListViewState extends State<ItemTitleDateListView> {
             const Spacer(),
             SvgPicture.asset(
               'assets/icons/ic_arrow_right.svg',
-              color: ColorConstants.brandColor,
+              color: widget.isSelected ? Colors.white: ColorConstants.brandColor,
             ),
-            const SizedBox(width: 20),
+            const SizedBox(width: 10),
           ],
         ),
       ),

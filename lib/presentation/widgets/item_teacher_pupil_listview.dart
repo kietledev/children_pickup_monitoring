@@ -103,7 +103,7 @@ class _ItemTeacherPupilListViewState extends State<ItemTeacherPupilListView> {
             const Spacer(),
             SvgPicture.asset(
               'assets/icons/ic_arrow_right.svg',
-              color: ColorConstants.brandColor,
+              color: widget.isSelected ? Colors.white: ColorConstants.brandColor,
             )
           ],
         ),
