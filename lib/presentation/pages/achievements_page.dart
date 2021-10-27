@@ -75,40 +75,9 @@ class _AchievementsBodyState extends State<AchievementsBody> {
                 );
               },
             ),
-            // child: ListView.builder(
-            //   primary: false,
-            //   itemCount: achievement.length,
-            //   itemBuilder: (context, index) {
-            //     final item = achievement[index];
-            //
-            //     return ItemAchievementListView(
-            //       item: item,
-            //       index: index,
-            //       currentIndex: currentIndex,
-            //       callback: () {
-            //         currentIndex = index;
-            //         print(currentIndex);
-            //       },
-            //     );
-            //
-            //     // return ItemPersonListView(
-            //     //   index: index,
-            //     //   isSelected: currentIndex == index,
-            //     //   avatar: item.avatarPicture!,
-            //     //   fullName: item.getFullName(),
-            //     //   onSelect: () {
-            //     //     setState(() {
-            //     //       currentIndex = index;
-            //     //     });
-            //     //     Navigator.pushNamed(context, RouteConstants.teacherDetails,
-            //     //         arguments: item);
-            //     //   },
-            //     // );
-            //   },
-            // ),
           ),
         );
-      } else if (state is FetcAchievementFailureState) {
+      } else if (state is FetchAchievementFailureState) {
         EasyLoading.dismiss();
         return const SizedBox.shrink();
       } else {
@@ -119,69 +88,3 @@ class _AchievementsBodyState extends State<AchievementsBody> {
   }
 }
 
-class ItemAchievementListView extends StatefulWidget {
-  const ItemAchievementListView({
-    Key? key,
-    required this.item,
-    required this.index,
-    required this.currentIndex,
-    required this.callback,
-  }) : super(key: key);
-
-  final Achievement item;
-  final int index;
-  final int currentIndex;
-  final VoidCallback callback;
-
-  @override
-  State<ItemAchievementListView> createState() =>
-      _ItemAchievementListViewState();
-}
-
-class _ItemAchievementListViewState extends State<ItemAchievementListView> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.callback;
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
-        child: Row(
-          children: [
-            Container(
-              width: 50.0,
-              height: 50.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover, image: AssetImage("assets/images/img_avatar.png")),
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                color: Colors.redAccent,
-              ),
-            ),
-            const SizedBox(width: 24),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.item.achievementBriefDescription!,
-                    style: Utils.setStyle(
-                        color: ColorConstants.neutralColor1,
-                        weight: FontWeight.w600)),
-                Text(Utils.formatDateTime(widget.item.createdDatetime!),
-                    style:AchievementsStyle.contentStyle2),
-              ],
-            ),
-            const Spacer(),
-            SvgPicture.asset(
-              'assets/icons/ic_arrow_right.svg',
-              color: ColorConstants.neutralColor1,
-            ),
-            const SizedBox(width: 20),
-          ],
-        ),
-      ),
-    );
-  }
-}

@@ -68,8 +68,29 @@ class FoodTypeModel extends FoodType {
     required String foodTypeName,
     required List<Food> foods,
   }) : super(foodTypeId: foodTypeId, foodTypeName: foodTypeName, foods: foods);
+  factory FoodTypeModel.fromJson(Map<String, dynamic> json) {
+    var list = json['DETAIL'] as List;
+    List<FoodModel> foods = list.map((i) => FoodModel.fromJson(i)).toList();
+    return FoodTypeModel(
+        foodTypeId: (json['MENU_TYPE_ID'] as double? ?? -1.0).toInt(),
+        foodTypeName: json['MENU_TYPE_NAME'] as String? ?? '',
+        foods: foods
+
+    );
+  }
 }
 
-// class FoodMenuModel extends FoodMenu {
-
-// }
+class FoodMenuModel extends FoodMenu {
+  const FoodMenuModel({
+    required String date,
+    required List<FoodTypeModel> foodTypes,
+  }) : super(date: date, foodTypes: foodTypes);
+  factory FoodMenuModel.fromJson(Map<String, dynamic> json) {
+    var list = json['MENU_TYPE'] as List;
+    List<FoodTypeModel> foodTypes = list.map((i) => FoodTypeModel.fromJson(i)).toList();
+    return FoodMenuModel(
+        date: json["DATE_MENU"]as String? ?? '',
+        foodTypes: foodTypes,
+    );
+  }
+}

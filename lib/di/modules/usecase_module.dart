@@ -24,7 +24,7 @@ class UseCaseModule extends DIModule {
     /* Post Pupil Usecase */
     injector.registerSingleton<PostPupilsUseCase>(PostPupilsUseCase(injector()));
 
-    /* Post Pupil Usecase */
+    /* Post Achievement Usecase */
     injector.registerSingleton<PostAchievementsUseCase>(
         PostAchievementsUseCase(injector()));
     /* Profile Usecase */
@@ -32,5 +32,7 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<PostProfileUseCase>(PostProfileUseCase(injector()));
     /* Parent Usecase */
     injector.registerSingleton<GetParentsUseCase>(GetParentsUseCase(injector()));
+    /*Post menu Usecase */
+    injector.registerSingleton<PostMenusUseCase>(PostMenusUseCase(injector()));
   }
 }

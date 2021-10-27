@@ -15,6 +15,7 @@ class TitlesConstants {
   static const String pupilDetails = 'Chi tiết trẻ';
   static const String details = 'Chi tiết';
   static const String achievements = 'Thành tích';
+  static const String menu = 'Thực đơn';
   static const String achievement = "/achievement";
   static const String classInformation = "/class_information";
   static const String teacherInformation = "/teacher_information";
@@ -58,7 +59,7 @@ class StringConstatns {
   static const String numberOfPupils = "Sĩ số: ";
   static const String homeroomTeacher = "Chủ nhiệm";
   static const String teacher = "Giáo viên";
-
+  static const String day = 'Ngày';
 }
 
 class TextfieldConstants {

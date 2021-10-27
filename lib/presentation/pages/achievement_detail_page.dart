@@ -2,9 +2,7 @@ import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
-import 'package:children_pickup_monitoring/presentation/widgets/avatar_gender.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 class AchievementDetailsPage extends StatelessWidget {

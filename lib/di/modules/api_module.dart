@@ -28,5 +28,7 @@ class ApiModule extends DIModule {
     injector.registerSingleton<PostProfileApiService>(PostProfileApiService(injector()));
     /* Parents api */
     injector.registerSingleton<GetParentsApiService>(GetParentsApiService(injector()));
+    /* Menu api */
+    injector.registerSingleton<PostMenusApiService>(PostMenusApiService(injector()));
   }
 }

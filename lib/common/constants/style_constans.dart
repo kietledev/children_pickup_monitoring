@@ -50,3 +50,21 @@ class  AchievementsStyle {
       fontWeight: FontWeight.w100);
 
 }
+class MenusStyle {
+  static const contentStyle2 = TextStyle(
+      fontSize: 16,
+      color: ColorConstants.SecondarySchool6,
+      fontFamily: FontsConstants.notoSans,
+      fontWeight: FontWeight.w100);
+  static const contentStyle = TextStyle(
+      color: ColorConstants.neutralColor1,
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      fontFamily:FontsConstants.notoSans);
+  static const contentStyle1 = TextStyle(
+      color: ColorConstants.brandColor,
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      fontFamily:FontsConstants.notoSans);
+}
+

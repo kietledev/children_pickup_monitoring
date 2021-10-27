@@ -15,11 +15,11 @@ class MenusRepositoryImpl implements MenusRepository {
   const MenusRepositoryImpl(this._postMenusApiService);
 
   @override
-  Future<DataState<List<Food>>> postMenus(PostMenusRequest params) async {
+  Future<DataState<List<FoodMenu>>> postMenus(PostMenusRequest params) async {
     try {
       final Map<String, dynamic> body = <String, dynamic>{
-        "FROM_DATE": '2021-07-26',
-        "THRU_DATE": '2021-07-31',
+        "FROM_DATE": params.fromDate,
+        "THRU_DATE": params.thruDate,
         'classTypeId': params.classTypeId,
       };
       final httpResponse = await _postMenusApiService.postMenus(
@@ -30,13 +30,13 @@ class MenusRepositoryImpl implements MenusRepository {
           ttl: ttl);
       if (httpResponse.response.statusCode == HttpStatus.ok &&
           httpResponse.data.data.toString().isNotEmpty) {
-        final List<Food> foods = [];
+        final List<FoodMenuModel> listFoodMenu = [];
         for (final dynamic item in httpResponse.data.data) {
           if (item is! Map<String, dynamic>) continue;
-          final food = FoodModel.fromJson(item);
-          foods.add(food);
+          final foodMenu = FoodMenuModel.fromJson(item);
+          listFoodMenu.add(foodMenu);
         }
-        return DataSuccess(foods);
+        return DataSuccess(listFoodMenu);
       }
       return DataFailed(
         DioError(

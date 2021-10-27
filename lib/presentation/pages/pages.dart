@@ -10,4 +10,7 @@ export 'teacher_details_page.dart';
 export 'profile_page.dart';
 export 'list_parent_page.dart';
 export 'achievement_detail_page.dart';
+export 'menu_page.dart';
+export 'menu_detail_page.dart';
+
 

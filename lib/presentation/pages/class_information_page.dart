@@ -31,7 +31,7 @@ class _ClassInformationBodyState extends State<ClassInformationBody> {
     ItemMenu(2, "Chi tiết lớp học", "assets/icons/ic_detail_class.svg",
         RouteConstants.classDetails),
     ItemMenu(3, "Thực đơn của bé", "assets/icons/ic_menu_baby.svg",
-        RouteConstants.classInformation),
+        RouteConstants.menu),
     ItemMenu(4, "Thành tích", "assets/icons/ic_achievements.svg",
         RouteConstants.achievement),
   ];
