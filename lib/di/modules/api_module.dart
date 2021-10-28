@@ -30,5 +30,10 @@ class ApiModule extends DIModule {
     injector.registerSingleton<GetParentsApiService>(GetParentsApiService(injector()));
     /* Menu api */
     injector.registerSingleton<PostMenusApiService>(PostMenusApiService(injector()));
+    injector.registerSingleton<PostParentApiService>(PostParentApiService(injector()));
+    /* Users api */
+    injector.registerSingleton<GetUsersByPersonApiService>(GetUsersByPersonApiService(injector()));
+    /* Relationship Type api */
+    injector.registerSingleton<GetRelationshipTypeApiService>(GetRelationshipTypeApiService(injector()));
   }
 }

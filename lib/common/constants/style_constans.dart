@@ -42,6 +42,10 @@ class AppBarStyle{
        color: ColorConstants.secondaryColor2,
        fontWeight: FontWeight.w600);
 }
+class AddUserToParentStyle{
+  static const contentStyle = TextStyle(fontSize: 14,color: ColorConstants.neutralColor2,fontFamily: FontsConstants.notoSans);
+  static const buttonTextStyle = TextStyle(fontSize: 14,color: ColorConstants.brandColor,fontFamily: FontsConstants.notoSans);
+}
 class  AchievementsStyle {
   static const contentStyle2 = TextStyle(
       fontSize: 14,

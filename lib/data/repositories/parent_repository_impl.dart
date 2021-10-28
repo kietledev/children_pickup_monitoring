@@ -18,8 +18,8 @@ import 'package:children_pickup_monitoring/common/core/resources/resources.dart'
 
 class ParentRepositoryImpl implements ParentsRepository {
   final GetParentsApiService _getParentsApiService;
-
-  const ParentRepositoryImpl(this._getParentsApiService);
+  final PostParentApiService _postParentApiService;
+  const ParentRepositoryImpl(this._getParentsApiService,this._postParentApiService);
   @override
   Future<DataState<List<ParentModel>>> getParents(
       ParentsRequest parentsRequest) async {
@@ -55,5 +55,32 @@ class ParentRepositoryImpl implements ParentsRepository {
       return DataFailed(e);
     }
   }
+
+  @override
+  Future<DataState<String>> postParent(PostParentRequest params) async {
+    try {
+      final Map<String, dynamic> query = <String, dynamic>{
+        'roleId': params.roleId,
+      };
+
+      final httpResponse = await _postParentApiService.postParent(
+          query: query,body: params.body, k: key, dm: dm, tk: getTokenApi(id: ""), ttl: ttl);
+      print('Nhuan---${httpResponse.response.data}');
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess("Success");
+      }
+      return DataFailed(
+        DioError(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          requestOptions: httpResponse.response.requestOptions,
+          type: DioErrorType.response,
+        ),
+      );
+    } on DioError catch (e) {
+      return DataFailed(e);
+    }
+  }
+
 
 }

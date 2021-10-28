@@ -6,4 +6,6 @@ export 'post_menus_usecase.dart';
 export 'achievement_usecase.dart';
 export 'get_profile_usercase.dart';
 export 'post_pickup_usecase.dart';
+export 'get_users_by_person_usercase.dart';
+export 'get_relationship_type_usercase.dart';
 export 'post_menus_usecase.dart';
