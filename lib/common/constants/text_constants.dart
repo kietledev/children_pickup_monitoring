@@ -75,7 +75,6 @@ class ErrorConstants {
   static const String shortPassword = "Mật khẩu quá ngắn";
   static const String nullPassword = "Vui lòng nhập tên mật khẩu";
 }
-
 class NotifyKeys {
   static const String notify = "NOTIFY";
 }
