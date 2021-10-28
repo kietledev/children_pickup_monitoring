@@ -19,7 +19,8 @@ import 'package:children_pickup_monitoring/common/core/resources/resources.dart'
 class ParentRepositoryImpl implements ParentsRepository {
   final GetParentsApiService _getParentsApiService;
   final PostParentApiService _postParentApiService;
-  const ParentRepositoryImpl(this._getParentsApiService,this._postParentApiService);
+  final DeleteParentApiService _deleteParentApiService;
+  const ParentRepositoryImpl(this._getParentsApiService,this._postParentApiService,this._deleteParentApiService);
   @override
   Future<DataState<List<ParentModel>>> getParents(
       ParentsRequest parentsRequest) async {
@@ -65,7 +66,6 @@ class ParentRepositoryImpl implements ParentsRepository {
 
       final httpResponse = await _postParentApiService.postParent(
           query: query,body: params.body, k: key, dm: dm, tk: getTokenApi(id: ""), ttl: ttl);
-      print('Nhuan---${httpResponse.response.data}');
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess("Success");
       }
@@ -82,5 +82,29 @@ class ParentRepositoryImpl implements ParentsRepository {
     }
   }
 
+  @override
+  Future<DataState<String>> deleteParent(DeleteParentRequest params) async {
+    try {
+      final Map<String, dynamic> query = <String, dynamic>{
+        'roleId': params.roleId,
+      };
 
+      final httpResponse = await _deleteParentApiService.deleteParent(
+          query: query,body: params.body, k: key, dm: dm, tk: getTokenApi(id: params.parentID.toString()), ttl: ttl);
+      print('Nhuan---${httpResponse.response.data}');
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess("Success");
+      }
+      return DataFailed(
+        DioError(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          requestOptions: httpResponse.response.requestOptions,
+          type: DioErrorType.response,
+        ),
+      );
+    } on DioError catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

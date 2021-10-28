@@ -34,6 +34,7 @@ class UseCaseModule extends DIModule {
     /* Parent Usecase */
     injector.registerSingleton<GetParentsUseCase>(GetParentsUseCase(injector()));
     injector.registerSingleton<PostParentUseCase>(PostParentUseCase(injector()));
+    injector.registerSingleton<DeleteParentUseCase>(DeleteParentUseCase(injector()));
     /* Users Usecase */
     injector.registerSingleton<GetUsersByPersonUseCase>(GetUsersByPersonUseCase(injector()));
     /* relationship type Usecase */

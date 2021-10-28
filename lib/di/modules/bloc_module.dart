@@ -42,7 +42,7 @@ class BlocModule extends DIModule {
     /* Create a pick up code */
     // injector.registerFactory<Pick>(()=>ProfileBloc(injector()));
     /* Parent */
-    injector.registerFactory<ParentsBloc>(() =>ParentsBloc(injector(),injector()));
+    injector.registerFactory<ParentsBloc>(() =>ParentsBloc(injector(),injector(),injector()));
     /* Users */
     injector.registerFactory<UsersBloc>(() =>UsersBloc(injector()));
     /* Relationship Type */

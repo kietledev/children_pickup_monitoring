@@ -44,75 +44,90 @@ class _ListParentPage extends State<ListParentPage>{
         ),
         child: BlocProvider(
             create: (context) => injector<ParentsBloc>()..add(FetchParents(pupilId: 2, relationshipTypeId: 0)),
-            child:BlocBuilder<ParentsBloc, ParentsState>(
-                builder: (context, state) {
+            child:BlocConsumer<ParentsBloc, ParentsState>(
+                listener: (context, state) {
               if (state is FetchParentsSuccessState) {
                 EasyLoading.dismiss();
                  parents = state.parents!;
-                return  Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/bg_body_a.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  child: ScrollConfiguration(
-                    behavior: MyBehavior(),
-                    child: ListView.builder(
-                        primary:false,
-                        itemCount:parents.length ,
-                        itemBuilder: (context,index){
-                          final item = parents[index];
-                          return SlideMenu(
-                              child:ItemParentListView(
-                                  index: index,
-                                  isSelected: currentIndex == index,
-                                  avatar: item.personDetail!.avatarPicture.toString(),
-                                  fullName: item.getFullName(),
-                                  approved: item.approved!,
-                                  parent: item,
-                                  onSelect: (){
-                                    setState(() {
-                                      currentIndex = index;
-                                    });
-                                  }
-                              ),
-                              menuItems:<Widget>[
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: InkWell(
-                                    child: SizedBox(
-                                      width: 26,
-                                      height: 26,
-                                      child: SvgPicture.asset(
-                                        'assets/icons/ic_delete_circle.svg',
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    onTap: (){
-                                      print(item.parentId);
-                                    },
-                                  ),
-                                )
-                              ]
-                          );
-                        }
-                    ),
-                  ),
-                );
-              } else if (state is FetchParentsFailureState) {
+              } else if(state is DeleteParentSuccessState){
+                WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Xóa thành công"));
+                context.read<ParentsBloc>().add(FetchParents(pupilId: 2, relationshipTypeId: 0));
+              }
+              else if (state is FetchParentsFailureState) {
                 EasyLoading.dismiss();
-                return const SizedBox.shrink();
               } else {
                 EasyLoading.show();
-                return const SizedBox.shrink();
               }
             },
-              buildWhen: (prevState, currState) => prevState != currState && currState is FetchParentsSuccessState
+              buildWhen: (prevState, currState) {
+                  return currState is ParentsState && currState.parents != null ||
+                      currState is FetchParentsSuccessState;
+                },
+                builder: (context,state){
+                  return  Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/bg_body_a.png'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    child: ScrollConfiguration(
+                      behavior: MyBehavior(),
+                      child: ListView.builder(
+                          primary:false,
+                          itemCount:parents.length ,
+                          itemBuilder: (context,index){
+                            final item = parents[index];
+                            return SlideMenu(
+                                child:ItemParentListView(
+                                    index: index,
+                                    isSelected: currentIndex == index,
+                                    avatar: item.personDetail!.avatarPicture.toString(),
+                                    fullName: item.getFullName(),
+                                    approved: item.approved!,
+                                    parent: item,
+                                    onSelect: (){
+                                      setState(() {
+                                        currentIndex = index;
+                                      });
+                                    }
+                                ),
+                                menuItems:<Widget>[
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: InkWell(
+                                      child: SizedBox(
+                                        width: 26,
+                                        height: 26,
+                                        child: SvgPicture.asset(
+                                          'assets/icons/ic_delete_circle.svg',
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      onTap: (){
+                                        deleteParent(item.parentId!, 2, context, 1);
+                                      },
+                                    ),
+                                  )
+                                ]
+                            );
+                          }
+                      ),
+                    ),
+                  );
+            },
             )
         ),
       )
     );
+  }
+  Future deleteParent(int parentID,int userID,BuildContext context,int roleId) async {
+    final Map<String, dynamic> body = <String, dynamic>{
+      "parentId": parentID,
+      "userId": userID
+    };
+    BlocProvider.of<ParentsBloc>(context)
+        .add(DeleteParentEvent(roleId:roleId,body: body,parentId: parentID ));
   }
   Widget itemRight(BuildContext context){
     return TextButton(
