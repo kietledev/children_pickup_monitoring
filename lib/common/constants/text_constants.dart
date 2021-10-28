@@ -45,7 +45,7 @@ class StringConstatns {
 
   static const String fullName = "Họ và tên";
   static const String fullNameParent = "Họ và tên";
-
+  static const String fullNameParent2 = "Họ và tên người đón";
   static const String yearOfBirth = "Năm sinh";
   static const String position = "Chức vụ";
   static const String phoneNumber1 = "Số điện thoại 1";
@@ -59,6 +59,12 @@ class StringConstatns {
   static const String weight = "Cân nặng";
   static const String homeAddress = "Địa chỉ nhà";
   static const String numberOfPupils = "Sĩ số: ";
+  static const String relationship = "Mối quan hệ với bé: ";
+  static const String homeroomTeacher = "Chủ nhiệm";
+  static const String teacher = "Giáo viên";
+  static const String day = "Ngày";
+
+
 }
 
 class TextfieldConstants {
