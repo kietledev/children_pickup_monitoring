@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class CustomTextFieldMenu extends StatelessWidget {
+  const CustomTextFieldMenu({
     Key? key,
     required this.value,
     required this.style,
@@ -14,13 +14,14 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 40.h,
       key: UniqueKey(),
-      margin: const EdgeInsets.only(top: 6, bottom: 24),
+      margin: const EdgeInsets.only(top: 12, bottom: 0),
       decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
-            blurRadius: 10,
+            blurRadius:8,
             offset: Offset(0, 2),
           ),
         ],
@@ -28,10 +29,10 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         initialValue: value,
         style: style,
-        maxLines: numOfLine,
+        maxLines: 1,
         decoration: InputDecoration(
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             disabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.white, width: 0),
               borderRadius: BorderRadius.circular(6.0),

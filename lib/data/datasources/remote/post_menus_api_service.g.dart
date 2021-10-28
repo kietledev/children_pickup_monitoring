@@ -9,7 +9,7 @@ part of 'post_menus_api_service.dart';
 class _PostMenusApiService implements PostMenusApiService {
   _PostMenusApiService(this._dio, {this.baseUrl}) {
     baseUrl ??=
-        'http://dtuct.ddns.net:9999/api/getListMenuForWeekByidClassType';
+        'http://dtuct.ddns.net:9999/api/getListMenuForWeekByClassTypeId';
   }
 
   final Dio _dio;

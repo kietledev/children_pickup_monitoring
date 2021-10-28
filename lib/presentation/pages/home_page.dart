@@ -419,7 +419,7 @@ class _HomeBodyState extends State<HomeBody> {
   Widget _buildAchievements() {
     return BlocBuilder<AchievementBloc, AchievementState>(
         builder: (context, state) {
-      if (state is FetcAchievementFailureState) {
+      if (state is FetchAchievementFailureState) {
         return Container(
             margin: const EdgeInsets.symmetric(vertical: 24),
             child: _buildTitleAchievement(

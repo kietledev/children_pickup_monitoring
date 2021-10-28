@@ -1,9 +1,11 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/achievement/achievement_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/custom_appbar.dart';
+import 'package:children_pickup_monitoring/presentation/widgets/item_title_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -17,24 +19,34 @@ class AchievementsPage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           injector<AchievementBloc>()..add(const FetchAchievements(pupilId: 4)),
-      child: const Scaffold(
-        appBar: CustomAppBar(
+      child: Scaffold(
+        appBar:  WidgetAppBar(
           title: TitlesConstants.achievements,
+          menuItem: [],
+          actionBack: () {
+            Navigator.pop(context);
+          },
         ),
+
         body: AchievementsBody(),
       ),
     );
   }
 }
-
-class AchievementsBody extends StatelessWidget {
+class AchievementsBody extends StatefulWidget {
   const AchievementsBody({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<AchievementsBody> createState() => _AchievementsBodyState();
+}
+
+class _AchievementsBodyState extends State<AchievementsBody> {
+  int currentIndex = -1;
+  @override
   Widget build(BuildContext context) {
-    int currentIndex = -1;
+
     return BlocBuilder<AchievementBloc, AchievementState>(
         builder: (context, state) {
       if (state is FetchAchievementSuccessState) {
@@ -54,35 +66,25 @@ class AchievementsBody extends StatelessWidget {
               itemCount: achievement.length,
               itemBuilder: (context, index) {
                 final item = achievement[index];
-
-                return ItemAchievementListView(
-                  item: item,
+                return ItemTitleDateListView(
                   index: index,
-                  currentIndex: currentIndex,
-                  callback: () {
-                    currentIndex = index;
-                    print(currentIndex);
+                  isSelected: currentIndex == index,
+                  image: "assets/images/img_avatar.png",
+                  date: item.createdDatetime!,
+                  title: item.achievementBriefDescription!,
+                  onSelect: () {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                    Navigator.pushNamed(context, RouteConstants.achievementDetail,
+                        arguments: item);
                   },
                 );
-
-                // return ItemPersonListView(
-                //   index: index,
-                //   isSelected: currentIndex == index,
-                //   avatar: item.avatarPicture!,
-                //   fullName: item.getFullName(),
-                //   onSelect: () {
-                //     setState(() {
-                //       currentIndex = index;
-                //     });
-                //     Navigator.pushNamed(context, RouteConstants.teacherDetails,
-                //         arguments: item);
-                //   },
-                // );
               },
             ),
           ),
         );
-      } else if (state is FetcAchievementFailureState) {
+      } else if (state is FetchAchievementFailureState) {
         EasyLoading.dismiss();
         return const SizedBox.shrink();
       } else {
@@ -93,70 +95,3 @@ class AchievementsBody extends StatelessWidget {
   }
 }
 
-class ItemAchievementListView extends StatefulWidget {
-  const ItemAchievementListView({
-    Key? key,
-    required this.item,
-    required this.index,
-    required this.currentIndex,
-    required this.callback,
-  }) : super(key: key);
-
-  final Achievement item;
-  final int index;
-  final int currentIndex;
-  final VoidCallback callback;
-
-  @override
-  State<ItemAchievementListView> createState() =>
-      _ItemAchievementListViewState();
-}
-
-class _ItemAchievementListViewState extends State<ItemAchievementListView> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.callback;
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
-        child: Row(
-          children: [
-            const SizedBox(
-              width: 50,
-              height: 50,
-              child: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 32,
-                backgroundImage: AssetImage("assets/images/img_avatar.png"),
-              ),
-            ),
-            const SizedBox(width: 24),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.item.achievementBriefDescription!,
-                    style: Utils.setStyle(
-                        color: ColorConstants.neutralColor1,
-                        weight: FontWeight.w600)),
-                Text(widget.item.createdDatetime!,
-                    style: Utils.setStyle(
-                        color: ColorConstants.neutralColor1,
-                        weight: FontWeight.w600)),
-              ],
-            ),
-            const Spacer(),
-            SvgPicture.asset(
-              'assets/icons/ic_arrow_right.svg',
-              color: ColorConstants.neutralColor1,
-            ),
-            const SizedBox(width: 20),
-          ],
-        ),
-      ),
-    );
-  }
-}

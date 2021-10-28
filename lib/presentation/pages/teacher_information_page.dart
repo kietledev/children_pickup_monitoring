@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
@@ -15,8 +16,15 @@ class TeacherInformationPage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           injector<TeachersBloc>()..add(const FetchTeaches(classId: 4)),
-      child: const Scaffold(
-        appBar: CustomAppBar(title: TitlesConstants.teacherDetails),
+      child:  Scaffold(
+        appBar:  WidgetAppBar(
+          title: TitlesConstants.teacherDetails,
+          menuItem: [],
+          actionBack: () {
+            Navigator.pop(context);
+          },
+        ),
+
         body: TeacherInformationBody(),
       ),
     );
@@ -48,25 +56,32 @@ class _TeacherInformationBodyState extends State<TeacherInformationBody> {
               fit: BoxFit.cover,
             ),
           ),
-          child: ListView.builder(
-            primary: false,
-            itemCount: teachers.length,
-            itemBuilder: (context, index) {
-              final item = teachers[index];
-              return ItemPersonListView(
-                index: index,
-                isSelected: currentIndex == index,
-                avatar: item.personDetail!.avatarPicture!,
-                fullName: item.getFullName(),
-                onSelect: () {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                  Navigator.pushNamed(context, RouteConstants.teacherDetails,
-                      arguments: item);
-                },
-              );
-            },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 24, 0, 0) ,
+            child: ListView.builder(
+              primary: false,
+              itemCount: teachers.length,
+              itemBuilder: (context, index) {
+                final item = teachers[index];
+                return ItemTeacherPupilListView(
+                  index: index,
+                  isSelected: currentIndex == index,
+                  position: item.mainResponsibilityTeacher,
+                  avtDefaultFemale:"assets/images/img_gv_nu.png" ,
+                  avtDefaultMale: "assets/images/img_gv_nam.png",
+                  genderId:item.personDetail!.currentGenderId!,
+                  avatar: item.personDetail!.avatarPicture!,
+                  fullName: item.getFullName(),
+                  onSelect: () {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                    Navigator.pushNamed(context, RouteConstants.teacherDetails,
+                        arguments: item);
+                  },
+                );
+              },
+            ),
           ),
         );
       } else if (state is FetchTeachersFailureState) {

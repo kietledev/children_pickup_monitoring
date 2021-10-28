@@ -45,7 +45,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
       activeIcon: SvgPicture.asset('assets/icons/ic_school.svg',
           color: ColorConstants.brandColor));
   final _itemClassroom = BottomNavigationBarItem(
-      label: 'Lớp học',
+      label: StringConstatns.className,
       icon: SvgPicture.asset('assets/icons/ic_class.svg',
           color: ColorConstants.primaryColor3),
       activeIcon: SvgPicture.asset('assets/icons/ic_class.svg',

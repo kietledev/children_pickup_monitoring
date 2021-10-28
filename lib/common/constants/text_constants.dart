@@ -13,7 +13,9 @@ class TitlesConstants {
   static const String teacherInformationTitle = 'Thông tin giáo viên';
   static const String teacherDetails = 'Chi tiết giáo viên';
   static const String pupilDetails = 'Chi tiết trẻ';
+  static const String details = 'Chi tiết';
   static const String achievements = 'Thành tích';
+  static const String menu = 'Thực đơn';
   static const String achievement = "/achievement";
   static const String classInformation = "/class_information";
   static const String teacherInformation = "/teacher_information";
@@ -43,12 +45,11 @@ class StringConstatns {
 
   static const String fullName = "Họ và tên";
   static const String fullNameParent = "Họ và tên";
-  static const String fullNameParent2 = "Họ tên người đón:";
-  static const String relationship = "Mối quan hệ với bé:";
+
   static const String yearOfBirth = "Năm sinh";
   static const String position = "Chức vụ";
-  static const String phoneNumber1 = "Điện thoại";
-  static const String phoneNumber2 = "Điện thoại 2";
+  static const String phoneNumber1 = "Số điện thoại 1";
+  static const String phoneNumber2 = "Số điện thoại 2";
   static const String email = "Email";
   static const String introduce = "Giới thiệu";
   static const String className = "Lớp học";
@@ -56,9 +57,8 @@ class StringConstatns {
   static const String reason = "Lý do";
   static const String height = "Chiều cao";
   static const String weight = "Cân nặng";
-  static const String homeAddress = "Địa chỉ";
+  static const String homeAddress = "Địa chỉ nhà";
   static const String numberOfPupils = "Sĩ số: ";
-
 }
 
 class TextfieldConstants {

@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/pupil.dart';
@@ -15,8 +16,14 @@ class ClassDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => injector<PupilsBloc>()..add(const FetchPupils(classId: 1)),
-      child: const Scaffold(
-        appBar: CustomAppBar(title: TitlesConstants.classDetails),
+      child:  Scaffold(
+        appBar:  WidgetAppBar(
+          title: TitlesConstants.classDetails,
+          menuItem: [],
+          actionBack: () {
+            Navigator.pop(context);
+          },
+        ),
         body: ClassDetailsBody(),
       ),
     );
@@ -48,16 +55,17 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
               fit: BoxFit.cover,
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 12),
-                Text(
-                  StringConstatns.numberOfPupils + '11/12',
-                  style:
-                      Utils.setStyle(color: ColorConstants.neutralColor1),
-                ),
-                ListView.builder(
+          child: Column(
+            children: [
+              const SizedBox(height: 12),
+              Text(
+                StringConstatns.numberOfPupils + (pupils.length).toString() + "/"+(pupils.length).toString(),
+                style:
+                    Utils.setStyle(color: ColorConstants.neutralColor1),
+              ),
+               Padding(
+                padding: const EdgeInsets.fromLTRB(0, 12, 0, 0) ,
+                child: ListView.builder(
                   primary: false,
                   shrinkWrap: true,
                   itemCount: pupils.length,
@@ -65,8 +73,11 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
                   itemBuilder: (context, index) {
                     final item = pupils[index];
 
-                    return ItemPersonListView(
+                    return ItemTeacherPupilListView(
                       index: index,
+                      genderId: item.personDetail!.currentGenderId!,
+                      avtDefaultMale: 'assets/images/img_child_avt_trai.png',
+                      avtDefaultFemale: 'assets/images/img_child_avt_gai.png',
                       isSelected: currentIndex == index,
                       avatar: item.personDetail!.avatarPicture!,
                       fullName: item.getFullName(),
@@ -81,8 +92,8 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
                     );
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       } else if (state is FetchPupilsFailureState) {

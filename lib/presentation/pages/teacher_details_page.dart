@@ -1,7 +1,9 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
-import 'package:children_pickup_monitoring/domain/entities/teacher.dart';
+import 'package:children_pickup_monitoring/domain/entities/entities.dart';
+import 'package:children_pickup_monitoring/presentation/widgets/avatar_gender.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,14 @@ class TeacherDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final teacher = ModalRoute.of(context)!.settings.arguments as Teacher;
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: TitlesConstants.teacherDetails,
+      appBar:  WidgetAppBar(
+        title: teacher.getFullName(),
+        menuItem: [],
+        actionBack: () {
+          Navigator.pop(context);
+        },
       ),
+
       body: TeacherDetailsBody(
         teacher: teacher,
       ),
@@ -38,120 +45,132 @@ class TeacherDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_body_a.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
       child: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // SizedBox(height: 32.h),
-              Center(
-                child: SizedBox(
-                  width: 112.w,
-                  height: 112.w,
-                  child: const CircleAvatar(
-                    backgroundColor: Colors.red,
-                    radius: 32,
-                    backgroundImage: AssetImage("assets/images/img_avatar.png"),
-                  ),
-                ),
-              ),
-              // Image.network(teacher.avatarPicture!),
-              SizedBox(height: 48.h),
-              Text(
-                StringConstatns.fullName,
-                style: titleStyle,
-              ),
-              CustomTextField(value: teacher.getFullName(), style: valueStyle),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.yearOfBirth,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: teacher.personDetail!.birthDate!, style: valueStyle),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 24.w),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.position,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: teacher.personDetail!.academicTitle!, style: valueStyle),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 72.w),
-                child: const Divider(
-                  color: Color(0xFFA693D9),
-                ),
-              ),
-              SizedBox(height: 24.h),
 
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.phoneNumber1,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: teacher.personDetail!.currentPhoneNumber1!,
-                            style: valueStyle),
-                      ],
-                    ),
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // SizedBox(height: 32.h),
+                Center(
+                  child: AvatarGender(
+                    genderId: teacher.personDetail!.currentGenderId!,
+                    avatar: teacher.personDetail!.avatarPicture!,
+                    avatarFemaleNull: 'assets/images/img_avt_gv_nu.png',
+                    avatarMaleNull:'assets/images/img_avt_gv_nam.png' ,
+
                   ),
-                  SizedBox(width: 24.w),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          StringConstatns.phoneNumber2,
-                          style: titleStyle,
-                        ),
-                        CustomTextField(
-                            value: teacher.personDetail!.currentPhoneNumber2!,
-                            style: valueStyle),
-                      ],
+                ),
+
+                // Image.network(teacher.avatarPicture!),
+                SizedBox(height: 48.h),
+                Text(
+                  StringConstatns.fullName,
+                  style: titleStyle,
+                ),
+                CustomTextFieldMenu(value: teacher.getFullName(), style: valueStyle),
+                SizedBox(height: 24.h),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.yearOfBirth,
+                            style: titleStyle,
+                          ),
+                          CustomTextFieldMenu(
+                              value: Utils.formatDateTime( teacher.personDetail!.birthDate!), style: valueStyle),
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              ),
-              Text(
-                StringConstatns.email,
-                style: titleStyle,
-              ),
-              CustomTextField(value: teacher.personDetail!.currentEmail!, style: valueStyle),
-              Text(
-                StringConstatns.introduce,
-                style: titleStyle,
-              ),
-              CustomTextField(
-                  value: teacher.personDetail!.comments!, style: valueStyle, numOfLine: 4),
-            ],
+                    SizedBox(width: 24.w),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.position,
+                            style: titleStyle,
+                          ),
+                          CustomTextFieldMenu(
+                              value: teacher.mainResponsibilityTeacher! == true ? StringConstatns.homeroomTeacher: StringConstatns.teacher, style: valueStyle),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 24.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 72.w),
+                  child: const Divider(
+                    color: Color(0xFFA693D9),
+                  ),
+                ),
+                SizedBox(height: 24.h),
+
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.phoneNumber1,
+                            style: titleStyle,
+                          ),
+                          CustomTextFieldMenu(
+                              value: teacher.personDetail!.currentPhoneNumber1!,
+                              style: valueStyle),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 24.w),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringConstatns.phoneNumber2,
+                            style: titleStyle,
+                          ),
+                          CustomTextFieldMenu(
+                              value: teacher.personDetail!.currentPhoneNumber2!,
+                              style: valueStyle),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 24.h),
+                Text(
+                  StringConstatns.email,
+                  style: titleStyle,
+                ),
+                CustomTextFieldMenu(value: teacher.personDetail!.currentEmail!, style: valueStyle),
+                SizedBox(height: 24.h),
+                Text(
+                  StringConstatns.introduce,
+                  style: titleStyle,
+                ),
+                CustomTextField(
+                    value: teacher.personDetail!.comments!, style: valueStyle, numOfLine: 4),
+              ],
+            ),
           ),
         ),
       ),

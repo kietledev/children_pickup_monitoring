@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -7,8 +8,14 @@ class ClassInformationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(title: TitlesConstants.classInformationTitle),
+    return Scaffold(
+      appBar: WidgetAppBar(
+        title:  TitlesConstants.classInformationTitle,
+        menuItem: [],
+        actionBack: () {
+          Navigator.pop(context);
+        },
+      ),
       body: ClassInformationBody(),
     );
   }
@@ -31,7 +38,7 @@ class _ClassInformationBodyState extends State<ClassInformationBody> {
     ItemMenu(2, "Chi tiết lớp học", "assets/icons/ic_detail_class.svg",
         RouteConstants.classDetails),
     ItemMenu(3, "Thực đơn của bé", "assets/icons/ic_menu_baby.svg",
-        RouteConstants.classInformation),
+        RouteConstants.menu),
     ItemMenu(4, "Thành tích", "assets/icons/ic_achievements.svg",
         RouteConstants.achievement),
   ];

@@ -30,7 +30,7 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
         final achievement = dataState.data!;
         yield FetchAchievementSuccessState(achievement: achievement);
       } else {
-        yield FetcAchievementFailureState(msg: dataState.error!.message);
+        yield FetchAchievementFailureState(msg: dataState.error!.message);
       }
     }
   }

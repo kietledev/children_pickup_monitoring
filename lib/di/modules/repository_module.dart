@@ -49,5 +49,9 @@ class RepositoryModule extends DIModule {
     injector.registerSingleton<RelationshipTypeRepository>(
       RelationshipTypeRepositoryImpl(injector()),
     );
+    /* menu repository */
+    injector.registerSingleton<MenusRepository>(
+      MenusRepositoryImpl(injector()),
+    );
   }
 }

@@ -16,6 +16,6 @@ class FetchAchievementSuccessState extends AchievementState {
       : super(achievements: achievement);
 }
 
-class FetcAchievementFailureState extends AchievementState {
-  const FetcAchievementFailureState({required String msg}) : super(msg: msg);
+class FetchAchievementFailureState extends AchievementState {
+  const FetchAchievementFailureState({required String msg}) : super(msg: msg);
 }

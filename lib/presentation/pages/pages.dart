@@ -11,3 +11,8 @@ export 'profile_page.dart';
 export 'list_parent_page.dart';
 export 'parent_details_page.dart';
 export 'add_user_to_parent.dart';
+export 'achievement_detail_page.dart';
+export 'menu_page.dart';
+export 'menu_detail_page.dart';
+
+

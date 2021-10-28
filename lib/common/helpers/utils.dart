@@ -25,7 +25,7 @@ class Utils {
       DateTime parseDate =
       new DateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(datetime);
       var inputDate = DateTime.parse(parseDate.toString());
-      var outputFormat = DateFormat('dd/MM/yyyy');
+      var outputFormat = DateFormat('dd-MM-yyyy');
       var outputDate = outputFormat.format(inputDate);
       return outputDate;
     }
