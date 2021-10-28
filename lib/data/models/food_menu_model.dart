@@ -83,11 +83,18 @@ class FoodTypeModel extends FoodType {
 class FoodMenuModel extends FoodMenu {
   const FoodMenuModel({
     required String date,
-    required List<FoodTypeModel> foodTypes,
+    required List<FoodTypeModel>? foodTypes,
   }) : super(date: date, foodTypes: foodTypes);
   factory FoodMenuModel.fromJson(Map<String, dynamic> json) {
-    var list = json['MENU_TYPE'] as List;
-    List<FoodTypeModel> foodTypes = list.map((i) => FoodTypeModel.fromJson(i)).toList();
+    var list = json['MENU_TYPE'] as List?;
+    List<FoodTypeModel> foodTypes = [];
+    if(list != null){
+     foodTypes = list.map((i) => FoodTypeModel.fromJson(i)).toList();
+    }else{
+      print(json["DATE_MENU"]as String);
+
+    }
+
     return FoodMenuModel(
         date: json["DATE_MENU"]as String? ?? '',
         foodTypes: foodTypes,

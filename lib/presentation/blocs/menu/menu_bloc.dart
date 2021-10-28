@@ -19,8 +19,8 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
     final dataState = await _menusUseCase(
       params: PostMenusRequest(
         classTypeId:  event.classTypeId,
-        fromDate:  event.fromDate,
-        thruDate:  event.thruDate,
+        currentDate:  event.currentDate,
+
 
       ),
     );

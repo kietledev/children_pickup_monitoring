@@ -72,36 +72,6 @@ class _ItemTitleDateListViewState extends State<ItemTitleDateListView> {
         ),
       ),
 
-
-      // child: Container(
-      //   margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      //   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      //   decoration: BoxDecoration(
-      //       color: bgColor, borderRadius: BorderRadius.circular(12.0)),
-      //   child: Row(
-      //     children: [
-      //       // SvgPicture.asset(widget.item.avatarPicture!),
-      //       const SizedBox(
-      //         width: 36,
-      //         height: 36,
-      //         child: CircleAvatar(
-      //           backgroundColor: Colors.red,
-      //           radius: 32,
-      //           backgroundImage: AssetImage("assets/images/img_avatar.png"),
-      //         ),
-      //       ),
-      //       const SizedBox(width: 24),
-      //       Text(widget.fullName,
-      //           style: Utils.setStyle(
-      //               color: titleColor, weight: FontWeight.w600)),
-      //       const Spacer(),
-      //       SvgPicture.asset(
-      //         'assets/icons/ic_arrow_right.svg',
-      //         color: titleColor,
-      //       )
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

@@ -24,7 +24,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
           child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: widget.foodMenu.foodTypes.length,
+            itemCount: widget.foodMenu.foodTypes!.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 child: Column(
@@ -32,7 +32,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.foodMenu.foodTypes[index].foodTypeName,
+                          widget.foodMenu.foodTypes![index].foodTypeName,
                           style: EditProfileStyle.titleStyleEditTrue,
                         )),
                     Padding(
@@ -40,13 +40,13 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: widget.foodMenu.foodTypes[index].foods.length,
+                        itemCount: widget.foodMenu.foodTypes![index].foods.length,
                         itemBuilder: (BuildContext context, int index1) {
                           return InkWell(
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child:   CustomTextFieldMenu(
-                                  value: widget.foodMenu.foodTypes[index].foods[index1].briefDescription!, style: EditProfileStyle.contentStyle, numOfLine: 1),
+                                  value: widget.foodMenu.foodTypes![index].foods[index1].briefDescription!, style: EditProfileStyle.contentStyle, numOfLine: 1),
                             ),
                           );
                         },

@@ -21,7 +21,7 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-      injector<MenuBloc>()..add(const FetchMenu(classTypeId:1,fromDate:'2021-07-26' ,thruDate: '2021-07-31')),
+      injector<MenuBloc>()..add(const FetchMenu(classTypeId:1,currentDate:"2021-07-26")),
       child:  Scaffold(
       appBar:  WidgetAppBar(
         title: TitlesConstants.menu,

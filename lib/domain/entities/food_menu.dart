@@ -79,7 +79,7 @@ class FoodType extends Equatable {
 
 class FoodMenu extends Equatable {
   final String date;
-  final List<FoodType> foodTypes;
+  final List<FoodType>? foodTypes;
 
   const FoodMenu({required this.date, required this.foodTypes});
 
