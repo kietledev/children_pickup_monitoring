@@ -43,7 +43,7 @@ class _ProfilePage extends State<ProfilePage> with AutomaticKeepAliveClientMixin
 class ProfileBody extends StatelessWidget{
   PersonModel? user;
   late ProfileBloc bloc;
-  Uint8List? bytesImage;
+  String avatar = "";
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -53,54 +53,59 @@ class ProfileBody extends StatelessWidget{
         return currState is ProfileState && currState.person != null || currState is ProfileSuccessState;
       },
       builder: (context, state) {
-       return Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bg_body_a.png'),
-              fit: BoxFit.cover,
+        if (state is ProfileSuccessState){
+          return Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bg_body_a.png'),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: SingleChildScrollView(
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Avatar(
-                      enabled: false,
-                      bytesImage: bytesImage,
-                      avatarNull:"assets/images/img_avatar_null.png" ,
-                    ),
-                    SizedBox(height: 12.h,),
-                    (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
-                    SizedBox(height: 6.h,),
-                    (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
-                    SizedBox(height: 24.h,),
-                    Container(
-                      height: (65 + 24) * listMenuPersonal.length.toDouble(),
-                      child: Menu(user: user,),
-                    ),
-                    SizedBox(height: 48.h,),
-                    CustomButtonText(
-                      text: 'Đăng xuất ',
-                      width: 174,
-                      press: () {
-                        // print(state.user!.CURRENT_FIRST_NAME!);
-                        // final prefs = Preferences();
-                        // prefs.clear();
-                        // Navigator.of(context).pushNamedAndRemoveUntil(
-                        //     LoginScreen.routeName, (Route<dynamic> route) => false);
-                      },
-                    ),
-                    SizedBox(height: 24.h,)
-                  ],
+            child: ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Avatar(
+                        enabled: false,
+                        avatar: avatar,
+                        avatarNull:"assets/images/img_avatar_null.png" ,
+                      ),
+                      SizedBox(height: 12.h,),
+                      (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
+                      SizedBox(height: 6.h,),
+                      (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
+                      SizedBox(height: 24.h,),
+                      Container(
+                        height: (65 + 24) * listMenuPersonal.length.toDouble(),
+                        child: Menu(user: user,),
+                      ),
+                      SizedBox(height: 48.h,),
+                      CustomButtonText(
+                        text: 'Đăng xuất ',
+                        width: 174,
+                        press: () {
+                          // print(state.user!.CURRENT_FIRST_NAME!);
+                          // final prefs = Preferences();
+                          // prefs.clear();
+                          // Navigator.of(context).pushNamedAndRemoveUntil(
+                          //     LoginScreen.routeName, (Route<dynamic> route) => false);
+                        },
+                      ),
+                      SizedBox(height: 24.h,)
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
+          );
+        }else {
+          EasyLoading.show();
+          return const SizedBox.shrink();
+        }
       },
     );
   }
@@ -111,11 +116,7 @@ class ProfileBody extends StatelessWidget{
       EasyLoading.dismiss();
       if (state is ProfileSuccessState) {
         user = state.person;
-        if(user!.avatarPicture == ""){
-          bytesImage = null;
-        }else{
-          bytesImage = base64.decode('${user?.avatarPicture}');
-        }
+        avatar = user!.avatarPicture!;
       }
       else if (state is ProfileFailureState) {
         UiHelper.showMyDialog(

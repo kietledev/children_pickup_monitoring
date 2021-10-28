@@ -4,3 +4,6 @@ export 'pupils_repository.dart';
 export 'menus_repository.dart';
 export 'achievements_repository.dart';
 export 'profile_repository.dart';
+export 'parents_repository.dart';
+export 'users_by_person_repository.dart';
+export 'relationship_type_repository.dart';

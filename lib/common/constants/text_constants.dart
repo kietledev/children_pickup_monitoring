@@ -21,6 +21,8 @@ class TitlesConstants {
 }
 class TitlesAppBar{
   static const String profileTitle = "Thông tin cá nhân";
+  static const String parentDetail = "Chi tiết";
+  static const String addUserToParent = "Thêm mới";
 }
 
 class ButtonConstatns {
@@ -41,11 +43,12 @@ class StringConstatns {
 
   static const String fullName = "Họ và tên";
   static const String fullNameParent = "Họ và tên";
-
+  static const String fullNameParent2 = "Họ tên người đón:";
+  static const String relationship = "Mối quan hệ với bé:";
   static const String yearOfBirth = "Năm sinh";
   static const String position = "Chức vụ";
-  static const String phoneNumber1 = "Số điện thoại 1";
-  static const String phoneNumber2 = "Số điện thoại 2";
+  static const String phoneNumber1 = "Điện thoại";
+  static const String phoneNumber2 = "Điện thoại 2";
   static const String email = "Email";
   static const String introduce = "Giới thiệu";
   static const String className = "Lớp học";
@@ -53,8 +56,9 @@ class StringConstatns {
   static const String reason = "Lý do";
   static const String height = "Chiều cao";
   static const String weight = "Cân nặng";
-  static const String homeAddress = "Địa chỉ nhà";
+  static const String homeAddress = "Địa chỉ";
   static const String numberOfPupils = "Sĩ số: ";
+
 }
 
 class TextfieldConstants {

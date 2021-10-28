@@ -5,6 +5,8 @@ import 'package:children_pickup_monitoring/presentation/pages/camera_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/list_parent_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_detail_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
+import 'package:children_pickup_monitoring/presentation/pages/parent_add_page.dart';
+import 'package:children_pickup_monitoring/presentation/pages/parent_details_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pupil_detail_page.dart';
 
 import 'package:flutter/material.dart';
@@ -59,5 +61,13 @@ class PageModule extends DIModule {
         instanceName: RouteConstants.editProfile);
     injector.registerFactory<Widget>(() => ListParentPage(),
         instanceName: RouteConstants.listparent);
+    injector.registerFactory<Widget>(() => ParentDetailsPage(),
+        instanceName: RouteConstants.parentDetails);
+    injector.registerFactory<Widget>(() => AddUserToParent(),
+        instanceName: RouteConstants.addUserToParent);
+    injector.registerFactory<Widget>(() => FormAddUserToParent(),
+        instanceName: RouteConstants.formAddUserToParent);
+    injector.registerFactory<Widget>(() => ParentAddPage(),
+        instanceName: RouteConstants.parentAdd);
   }
 }

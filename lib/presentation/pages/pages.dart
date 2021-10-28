@@ -9,3 +9,5 @@ export 'teacher_information_page.dart';
 export 'teacher_details_page.dart';
 export 'profile_page.dart';
 export 'list_parent_page.dart';
+export 'parent_details_page.dart';
+export 'add_user_to_parent.dart';

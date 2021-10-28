@@ -1,4 +1,6 @@
 import 'package:children_pickup_monitoring/domain/usecases/get_parents_usercase.dart';
+import 'package:children_pickup_monitoring/domain/usecases/get_users_by_person_usercase.dart';
+import 'package:children_pickup_monitoring/domain/usecases/post_parent_usercase.dart';
 import 'package:children_pickup_monitoring/domain/usecases/post_profile_usercase.dart';
 import 'package:children_pickup_monitoring/domain/usecases/usecases.dart';
 
@@ -32,5 +34,10 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<PostProfileUseCase>(PostProfileUseCase(injector()));
     /* Parent Usecase */
     injector.registerSingleton<GetParentsUseCase>(GetParentsUseCase(injector()));
+    injector.registerSingleton<PostParentUseCase>(PostParentUseCase(injector()));
+    /* Users Usecase */
+    injector.registerSingleton<GetUsersByPersonUseCase>(GetUsersByPersonUseCase(injector()));
+    /* relationship type Usecase */
+    injector.registerSingleton<GetRelationshipTypeUseCase>(GetRelationshipTypeUseCase(injector()));
   }
 }

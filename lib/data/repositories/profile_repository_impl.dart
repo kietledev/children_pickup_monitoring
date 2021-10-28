@@ -54,6 +54,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       final Map<String, dynamic> query = <String, dynamic>{
         'personId': params.personId,
+        'roleId': params.roleId,
       };
       final httpResponse = await _postProfileApiService.postProfile(
           query: query,body: params.body, k: key, dm: dm, tk: getTokenApi(id: "2"), ttl: ttl);

@@ -12,5 +12,8 @@ class UrlConstatns {
   static const String apiPostAchievements =
       urlServer + "api/getListAChievementsByPupilId";
   static const String apiGetListParentRelationshipByPupilId = urlServer + "api/getListParentRelationshipByPupilId";
+  static const String apiGetListUserbyPerson = urlServer + "api/getListUserbyPerson";
+  static const String apiGetListRelationshipType = urlServer + "api/getListRelationshipType";
+  static const String apiPostParent= urlServer + "insertPersonToParent";
 
 }

@@ -6,3 +6,6 @@ export 'post_achievements_request.dart';
 export 'profile_request.dart';
 export 'post_pupils_request.dart';
 export 'post_profile_request.dart';
+export 'get_users_by_person.dart';
+export 'get_relationship_type_request.dart';
+export 'post_parent_request.dart';

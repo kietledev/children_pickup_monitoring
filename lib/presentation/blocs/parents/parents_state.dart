@@ -21,3 +21,7 @@ class FetchParentsSuccessState extends ParentsState {
 class FetchParentsFailureState extends ParentsState {
   const FetchParentsFailureState({required String msg}) : super(msg: msg);
 }
+class PostParentSuccessState extends ParentsState{
+  const PostParentSuccessState({required String msg})
+      : super(msg: msg);
+}

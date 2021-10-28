@@ -82,7 +82,6 @@ class _EditProfileBody extends State<EditProfileBody> {
           return Container(
             width: double.infinity,
             height: double.infinity,
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/bg_body_a.png'),
@@ -96,7 +95,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                   children: [
                     Avatar(
                       enabled: _enabled,
-                      bytesImage: bytesImage,
+                      avatar: avatar,
                       avatarNull: "assets/images/img_avatar_null.png",
                       callback: () => showBottomSheet(),
                     ),
@@ -205,7 +204,7 @@ class _EditProfileBody extends State<EditProfileBody> {
     if (_email.text != "") {
       if (Validators.validateEmail(_email.text) == true) {
         BlocProvider.of<ProfileBloc>(context)
-            .add(PostProfileEvent(personId: personID, body: body));
+            .add(PostProfileEvent(personId: personID, body: body, roleId: 1));
       } else {
         WidgetsBinding.instance!.addPostFrameCallback((_) =>
             CustomWidgetsSnackBar.buildErrorSnackbar(
@@ -213,7 +212,7 @@ class _EditProfileBody extends State<EditProfileBody> {
       }
     } else {
       BlocProvider.of<ProfileBloc>(context)
-          .add(PostProfileEvent(personId: personID, body: body));
+          .add(PostProfileEvent(personId: personID, body: body,roleId: 1));
     }
   }
 
@@ -251,9 +250,7 @@ class _EditProfileBody extends State<EditProfileBody> {
         _yearOfBirth.text =
             Utils.formatDateTime('${state.person?.birthDate ?? ""}');
         _fullName.text = state.person!.getFullName();
-        WidgetsBinding.instance!.addPostFrameCallback((_) =>
-            CustomWidgetsSnackBar.buildSuccessSnackbar(
-                context, "Cập nhật thông tin thành công"));
+        WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Cập nhật thông tin thành công"));
         setState(() {
           _enabled = false;
         });
