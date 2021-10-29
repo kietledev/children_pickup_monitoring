@@ -53,5 +53,13 @@ class RepositoryModule extends DIModule {
     injector.registerSingleton<MenusRepository>(
       MenusRepositoryImpl(injector()),
     );
+    /*pickup place */
+    injector.registerSingleton<PickUpPlacesRepository>(
+      PickUpPlacesRepositoryImpl(injector()),
+    );
+    /*pupil parent place */
+    injector.registerSingleton<PupilByParentRepository>(
+      PupilByParentRepositoryImpl(injector()),
+    );
   }
 }

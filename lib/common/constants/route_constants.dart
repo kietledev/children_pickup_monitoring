@@ -22,4 +22,6 @@ class RouteConstants {
   static const String addUserToParent = "/add_user_to_parent";
   static const String formAddUserToParent = "/form_add_user_to_parent";
   static const String parentAdd= "/parent_add";
+  static const String generatedQCode= "/generated_qr_code";
+
 }

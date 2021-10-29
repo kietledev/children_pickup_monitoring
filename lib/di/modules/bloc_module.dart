@@ -49,5 +49,10 @@ class BlocModule extends DIModule {
     injector.registerFactory<RelationshipTypeBloc>(() =>RelationshipTypeBloc(injector()));
 
     injector.registerFactory<MenuBloc>(() =>MenuBloc(injector()));
+
+    injector.registerFactory<PickUpPlaceBloc>(() =>PickUpPlaceBloc(injector()));
+
+    injector.registerFactory<PupilByParentBloc>(() =>PupilByParentBloc(injector()));
+
   }
 }

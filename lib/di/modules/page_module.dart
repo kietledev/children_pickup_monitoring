@@ -74,5 +74,8 @@ class PageModule extends DIModule {
         instanceName: RouteConstants.formAddUserToParent);
     injector.registerFactory<Widget>(() => ParentAddPage(),
         instanceName: RouteConstants.parentAdd);
+
+    injector.registerFactory<Widget>(() => GeneratedQRCodePage(),
+        instanceName: RouteConstants.generatedQCode);
   }
 }

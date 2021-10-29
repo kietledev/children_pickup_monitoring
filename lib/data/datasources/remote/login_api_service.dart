@@ -8,7 +8,6 @@ part 'login_api_service.g.dart';
 @RestApi(baseUrl: UrlConstatns.apiLogin)
 abstract class LoginApiService {
   factory LoginApiService(Dio dio, {String baseUrl}) = _LoginApiService;
-
   @POST('/')
   Future<HttpResponse<ResponseModel>> postLogin({
     @Body() Map<String, dynamic>? body,

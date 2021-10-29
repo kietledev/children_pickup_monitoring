@@ -16,7 +16,7 @@ class PickUpPlaceModel extends PickUpPlace{
   );
   factory PickUpPlaceModel.fromJson(Map<String, dynamic>json){
     return PickUpPlaceModel(
-      pickUpPlaceId: (json['PICK_UP_PLACE_ID'] as double? ?? -1.0).toInt(),
+      pickUpPlaceId: json['PICK_UP_PLACE_ID'] as int? ?? -1,
       pickUpPlaceName: json['PICK_UP_PLACE_NAME'] as String? ?? '',
       pickUpPlaceNameEn: json['PICK_UP_PLACE_NAME_EN'] as String? ?? '',
       description: json['DESCRIPTION'] as String? ?? '',

@@ -16,5 +16,6 @@ class UrlConstatns {
   static const String apiGetListRelationshipType = urlServer + "api/getListRelationshipType";
   static const String apiPostParent= urlServer + "insertPersonToParent";
   static const String apiGetListPickupPlace = urlServer + "api/getListPickUpPlaces";
+  static const String apiGetPupilByParentId = urlServer + "api/getListPupilByParentId";
 
 }

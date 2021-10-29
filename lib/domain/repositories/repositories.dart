@@ -7,3 +7,5 @@ export 'profile_repository.dart';
 export 'parents_repository.dart';
 export 'users_by_person_repository.dart';
 export 'relationship_type_repository.dart';
+export 'pickup_place_repository.dart';
+export 'pupil_by_parent_repository.dart';
