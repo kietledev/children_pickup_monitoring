@@ -9,6 +9,7 @@ import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
+import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/avatar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
@@ -214,8 +215,7 @@ class _Menu extends State<Menu>{
                  Navigator.pushNamed(context, RouteConstants.listparent);
                   break;
                 case 3:
-                // Navigator.pushNamed(
-                //     context, ChangePasswordScreen.routeName);
+              Navigator.pushNamed(context, RouteConstants.passwordChange);
                   break;
                 case 4:
                 // Navigator.pushNamed(

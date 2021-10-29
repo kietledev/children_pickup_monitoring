@@ -16,4 +16,5 @@ class UrlConstatns {
   static const String apiGetListRelationshipType = urlServer + "api/getListRelationshipType";
   static const String apiPostParent= urlServer + "insertPersonToParent";
   static const String apiDeleteParent= urlServer + "deleteParent";
+  static const String apiPostPassword= urlServer + "changePassWord";
 }

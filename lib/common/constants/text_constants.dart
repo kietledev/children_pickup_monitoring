@@ -25,6 +25,7 @@ class TitlesAppBar{
   static const String profileTitle = "Thông tin cá nhân";
   static const String parentDetail = "Chi tiết";
   static const String addUserToParent = "Thêm mới";
+  static const String changePassword = "Đổi mật khẩu";
 }
 
 class ButtonConstatns {
@@ -32,6 +33,7 @@ class ButtonConstatns {
   static const String cached = "Get Cached Data";
   static const String login = "Đăng nhập";
   static const String sendOtp = "Send OTP";
+  static const String sentPickUp = "Gửi yêu cầu";
 }
 
 class StringConstatns {
@@ -42,7 +44,6 @@ class StringConstatns {
   static const String enterPassword = "Nhập mật khẩu";
   static const String forgetPassword = "Quên mật khẩu?";
   static const String editText = "Sửa";
-
   static const String fullName = "Họ và tên";
   static const String fullNameParent = "Họ và tên";
   static const String fullNameParent2 = "Họ và tên người đón";
@@ -63,6 +64,9 @@ class StringConstatns {
   static const String homeroomTeacher = "Chủ nhiệm";
   static const String teacher = "Giáo viên";
   static const String day = "Ngày";
+  static const String userName = "Tài khoản";
+  static const String currentPassword = "Mật khẩu hiện tại:";
+  static const String newPassword = "Mật khẩu mới:";
 
 
 }

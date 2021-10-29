@@ -41,5 +41,7 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<GetRelationshipTypeUseCase>(GetRelationshipTypeUseCase(injector()));
     /*Post menu Usecase */
     injector.registerSingleton<PostMenusUseCase>(PostMenusUseCase(injector()));
+    /*Post password Usecase */
+    injector.registerSingleton<PostPasswordUseCase>(PostPasswordUseCase(injector()));
   }
 }

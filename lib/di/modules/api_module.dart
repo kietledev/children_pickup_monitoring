@@ -37,5 +37,7 @@ class ApiModule extends DIModule {
     injector.registerSingleton<GetUsersByPersonApiService>(GetUsersByPersonApiService(injector()));
     /* Relationship Type api */
     injector.registerSingleton<GetRelationshipTypeApiService>(GetRelationshipTypeApiService(injector()));
+    /* Password api */
+    injector.registerSingleton<PostPasswordApiService>(PostPasswordApiService(injector()));
   }
 }

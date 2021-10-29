@@ -10,3 +10,4 @@ export 'get_users_by_person_api_services.dart';
 export 'get_relationship_type_api_services.dart';
 export 'post_parent_api_service.dart';
 export 'delete_parent_api_service.dart';
+export 'post_password_api_service.dart';

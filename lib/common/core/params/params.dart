@@ -10,3 +10,5 @@ export 'get_users_by_person.dart';
 export 'get_relationship_type_request.dart';
 export 'post_parent_request.dart';
 export 'delete_parent_request.dart';
+export 'post_password.dart';
+

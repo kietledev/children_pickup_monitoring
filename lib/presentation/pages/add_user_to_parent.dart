@@ -304,7 +304,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                       BlocListener<ParentsBloc, ParentsState>(
                                           listener:(context, state)=> listenerPostParentState(context, state),
                                         child:CustomButtonText(
-                                          text: "Gửi yêu cầu",
+                                          text: ButtonConstatns.sentPickUp,
                                           width: 153,
                                           press: () {
                                             if(isChecked == true){
