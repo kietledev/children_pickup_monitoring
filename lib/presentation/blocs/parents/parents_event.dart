@@ -18,3 +18,9 @@ class PostParentEvent extends ParentsEvent {
   Map<String, dynamic> body;
   PostParentEvent({required this.roleId,required this.body});
 }
+class DeleteParentEvent extends ParentsEvent {
+  final int roleId;
+  final int parentId;
+  Map<String, dynamic> body;
+  DeleteParentEvent({required this.roleId,required this.body,required this.parentId});
+}

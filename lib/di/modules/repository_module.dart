@@ -39,7 +39,7 @@ class RepositoryModule extends DIModule {
     );
     /* Parent repository */
     injector.registerSingleton<ParentsRepository>(
-      ParentRepositoryImpl(injector(),injector()),
+      ParentRepositoryImpl(injector(),injector(),injector()),
     );
     /* users repository */
     injector.registerSingleton<UsersByPersonRepository>(
@@ -60,6 +60,10 @@ class RepositoryModule extends DIModule {
     /*pupil parent place */
     injector.registerSingleton<PupilByParentRepository>(
       PupilByParentRepositoryImpl(injector()),
+    );
+    /* password repository */
+    injector.registerSingleton<PasswordRepository>(
+      PasswordRepositoryImpl(injector()),
     );
   }
 }

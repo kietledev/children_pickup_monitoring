@@ -7,4 +7,5 @@ abstract class ParentsRepository {
   // API methods
   Future<DataState<List<ParentModel>>> getParents(ParentsRequest query);
   Future<DataState<String>> postParent(PostParentRequest query);
+  Future<DataState<String>> deleteParent(DeleteParentRequest query);
 }

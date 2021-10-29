@@ -24,4 +24,5 @@ class RouteConstants {
   static const String parentAdd= "/parent_add";
   static const String generatedQCode= "/generated_qr_code";
 
+  static const String passwordChange= "/password_change";
 }

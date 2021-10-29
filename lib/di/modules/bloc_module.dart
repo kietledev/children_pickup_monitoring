@@ -2,6 +2,7 @@ import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/local_user/local_user_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/parents/parents_bloc.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/password/password_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/relationship_type/relationship_type_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/school_nofitication/school_notification_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
@@ -42,13 +43,15 @@ class BlocModule extends DIModule {
     /* Create a pick up code */
     // injector.registerFactory<Pick>(()=>ProfileBloc(injector()));
     /* Parent */
-    injector.registerFactory<ParentsBloc>(() =>ParentsBloc(injector(),injector()));
+    injector.registerFactory<ParentsBloc>(() =>ParentsBloc(injector(),injector(),injector()));
     /* Users */
     injector.registerFactory<UsersBloc>(() =>UsersBloc(injector()));
     /* Relationship Type */
     injector.registerFactory<RelationshipTypeBloc>(() =>RelationshipTypeBloc(injector()));
 
     injector.registerFactory<MenuBloc>(() =>MenuBloc(injector()));
+    /* Password */
+    injector.registerFactory<PasswordBloc>(() =>PasswordBloc(injector()));
 
     injector.registerFactory<PickUpPlaceBloc>(() =>PickUpPlaceBloc(injector()));
 

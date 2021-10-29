@@ -12,3 +12,6 @@ export 'post_parent_request.dart';
 export 'get_pickup_place_request.dart';
 export 'get_pupil_by_parent_request.dart';
 
+export 'delete_parent_request.dart';
+export 'post_password.dart';
+

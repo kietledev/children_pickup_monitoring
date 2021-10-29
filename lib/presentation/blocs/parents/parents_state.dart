@@ -25,3 +25,7 @@ class PostParentSuccessState extends ParentsState{
   const PostParentSuccessState({required String msg})
       : super(msg: msg);
 }
+class DeleteParentSuccessState extends ParentsState{
+  const DeleteParentSuccessState({required String msg})
+      : super(msg: msg);
+}

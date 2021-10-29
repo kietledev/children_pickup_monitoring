@@ -18,4 +18,6 @@ class UrlConstatns {
   static const String apiGetListPickupPlace = urlServer + "api/getListPickUpPlaces";
   static const String apiGetPupilByParentId = urlServer + "api/getListPupilByParentId";
 
+  static const String apiDeleteParent= urlServer + "deleteParent";
+  static const String apiPostPassword= urlServer + "changePassWord";
 }

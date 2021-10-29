@@ -10,6 +10,7 @@ class ParentModel extends Parent{
     bool? approved,
     int? approvedByUserId,
     String? approvedDatetime,
+    bool? accountUser,
     PersonModel? personDetail
   }) : super(
       parentId: parentId,
@@ -18,6 +19,7 @@ class ParentModel extends Parent{
       approved: approved,
       approvedByUserId: approvedByUserId,
       approvedDatetime: approvedDatetime,
+      accountUser: accountUser,
       personDetail: personDetail
   );
 
@@ -31,6 +33,7 @@ class ParentModel extends Parent{
         approved: json['APPROVED'] as bool? ?? false,
         approvedByUserId: (json['APPROVED_BY_USER_ID'] as double? ?? -1.0).toInt(),
         approvedDatetime: json['APPROVED_DATETIME'] as String? ?? '',
+        accountUser: json['ACCOUNT_USER'] as bool? ?? false,
         personDetail: person
 
     );

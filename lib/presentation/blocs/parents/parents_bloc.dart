@@ -16,9 +16,10 @@ part 'parents_event.dart';
 part 'parents_state.dart';
 
 class ParentsBloc extends Bloc<ParentsEvent, ParentsState> {
-  ParentsBloc(this._getParentsUseCase,this._postParentUseCase) : super(FetchParentsLoadingState());
+  ParentsBloc(this._getParentsUseCase,this._postParentUseCase,this._deleteParentUseCase) : super(FetchParentsLoadingState());
   final GetParentsUseCase _getParentsUseCase;
   final PostParentUseCase _postParentUseCase;
+  final DeleteParentUseCase _deleteParentUseCase;
   @override
   Stream<ParentsState> mapEventToState(
       ParentsEvent event,
@@ -52,6 +53,19 @@ class ParentsBloc extends Bloc<ParentsEvent, ParentsState> {
         yield FetchParentsFailureState(msg: dataState.error!.message);
       }
     }
-
+    if(event is DeleteParentEvent){
+      final dataState = await _deleteParentUseCase(
+        params: DeleteParentRequest(
+          body: event.body,
+          roleId: event.roleId,
+          parentID: event.parentId
+        ),
+      );
+      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
+        yield DeleteParentSuccessState(msg: dataState.data!);
+      } else {
+        yield FetchParentsFailureState(msg: dataState.error!.message);
+      }
+    }
   }
 }

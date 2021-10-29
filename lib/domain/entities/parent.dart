@@ -11,6 +11,7 @@ class Parent extends Equatable {
   final int? approvedByUserId;
   final String? approvedDatetime;
   final Person? personDetail;
+  final bool? accountUser;
 
   const Parent(
       {
@@ -21,6 +22,7 @@ class Parent extends Equatable {
         this.approvedByUserId,
         this.approvedDatetime,
         this.personDetail,
+        this.accountUser
       });
 
   @override
@@ -32,7 +34,8 @@ class Parent extends Equatable {
       approved!,
       approvedByUserId!,
       approvedDatetime!,
-      personDetail!
+      personDetail!,
+      accountUser!,
 
     ];
   }

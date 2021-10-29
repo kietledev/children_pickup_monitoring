@@ -77,5 +77,7 @@ class PageModule extends DIModule {
 
     injector.registerFactory<Widget>(() => GeneratedQRCodePage(),
         instanceName: RouteConstants.generatedQCode);
+    injector.registerFactory<Widget>(() => PasswordChangePage(),
+        instanceName: RouteConstants.passwordChange);
   }
 }

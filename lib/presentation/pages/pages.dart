@@ -15,5 +15,6 @@ export 'achievement_detail_page.dart';
 export 'menu_page.dart';
 export 'menu_detail_page.dart';
 export 'generated_qr_code_page.dart';
+export 'password_change_page.dart';
 
 
