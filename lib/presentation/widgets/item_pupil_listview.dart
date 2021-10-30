@@ -12,6 +12,7 @@ class ItemPupilListView extends StatefulWidget {
   final bool isSelected;
   final String avatar;
   final String fullName;
+  final String className;
   final VoidCallback onSelect;
 
   const ItemPupilListView({
@@ -20,6 +21,7 @@ class ItemPupilListView extends StatefulWidget {
     required this.isSelected,
     required this.avatar, required this.fullName,
     required this.onSelect,
+    required this.className,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,7 @@ class _ItemPupilListViewState extends State<ItemPupilListView> {
       onTap: widget.onSelect,
       child: Container(
         height: 50,
-        margin: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+        margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           color: bgColor,
@@ -72,7 +74,7 @@ class _ItemPupilListViewState extends State<ItemPupilListView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.fullName, style: Utils.setStyle(color: titleColor, weight: FontWeight.w600,size: 14)),
-                Text("Đã xác nhận",style:Utils.setStyle(color: ColorConstants.secondaryColor4,size: 12),)
+                Text(widget.className,style:Utils.setStyle(color: ColorConstants.neutralColor2,size: 10,fontFamily: FontsConstants.notoSans),)
 
               ],
             ),
