@@ -4,7 +4,10 @@ import 'package:children_pickup_monitoring/domain/entities/pupil.dart';
 class PupilModel extends Pupil {
   const PupilModel({
     String? className,
+    int? classId,
     int? pupilId,
+    String? personToPersonPersonalRelationshipTypeName,
+    String? personToPersonPersonalRelationshipTypeNameEn,
     String? currentLastNameParent,
     String? currentFirstNameParent,
     String? currentMiddleNameParent,
@@ -14,6 +17,9 @@ class PupilModel extends Pupil {
   }) : super(
     className: className,
     pupilId: pupilId,
+    classId: classId,
+    personToPersonPersonalRelationshipTypeName: personToPersonPersonalRelationshipTypeName,
+    personToPersonPersonalRelationshipTypeNameEn: personToPersonPersonalRelationshipTypeNameEn,
     currentLastNameParent: currentLastNameParent,
     currentFirstNameParent: currentFirstNameParent,
     currentMiddleNameParent: currentMiddleNameParent,
@@ -28,6 +34,9 @@ class PupilModel extends Pupil {
     return PupilModel(
       className: json['CLASS_NAME'] as String? ?? '',
       pupilId: (json['PUPIL_ID'] as double? ?? -1.0).toInt(),
+      classId: (json['CLASS_ID'] as double? ?? -1.0).toInt(),
+        personToPersonPersonalRelationshipTypeName: json['PERSON_TO_PERSON_PERSONAL_RELATIONSHIP_TYPE_NAME'] as String? ?? '',
+        personToPersonPersonalRelationshipTypeNameEn: json['PERSON_TO_PERSON_PERSONAL_RELATIONSHIP_TYPE_NAME_EN'] as String? ?? '',
       currentLastNameParent: json['CURRENT_LAST_NAME_PARENT'] as String? ?? '',
       currentFirstNameParent: json['CURRENT_FIRST_NAME_PARENT'] as String? ?? '',
       currentMiddleNameParent: json['CURRENT_MIDDLE_NAME_PARENT'] as String? ?? '',

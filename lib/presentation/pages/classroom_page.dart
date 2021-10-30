@@ -33,7 +33,7 @@ class _ClassroomBodyState extends State<ClassroomBody> {
     ItemMenu(2, "Xem Camera", "assets/icons/ic_camera.svg",
         RouteConstants.classInformation),
     ItemMenu(3, "Gửi yêu cầu đón trẻ", "assets/icons/ic_create_qr.svg",
-        RouteConstants.classInformation),
+        RouteConstants.generatedQCode),
     ItemMenu(4, "Lịch sử đón trẻ", "assets/icons/ic_history.svg",
         RouteConstants.classInformation),
   ];

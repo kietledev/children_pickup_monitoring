@@ -52,5 +52,10 @@ class BlocModule extends DIModule {
     injector.registerFactory<MenuBloc>(() =>MenuBloc(injector()));
     /* Password */
     injector.registerFactory<PasswordBloc>(() =>PasswordBloc(injector()));
+
+    injector.registerFactory<PickUpPlaceBloc>(() =>PickUpPlaceBloc(injector()));
+
+    injector.registerFactory<PupilByParentBloc>(() =>PupilByParentBloc(injector()));
+
   }
 }

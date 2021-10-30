@@ -15,6 +15,7 @@ class TitlesConstants {
   static const String pupilDetails = 'Chi tiết trẻ';
   static const String details = 'Chi tiết';
   static const String achievements = 'Thành tích';
+  static const String generated_qr = 'Mã đã tạo';
   static const String menu = 'Thực đơn';
   static const String achievement = "/achievement";
   static const String classInformation = "/class_information";
@@ -87,7 +88,6 @@ class ErrorConstants {
   static const String shortPassword = "Mật khẩu quá ngắn";
   static const String nullPassword = "Vui lòng nhập tên mật khẩu";
 }
-
 class NotifyKeys {
   static const String notify = "NOTIFY";
 }

@@ -4,6 +4,9 @@ import 'package:equatable/equatable.dart';
 class Pupil extends Equatable {
   final String? className;
   final int? pupilId;
+  final int? classId;
+  final String? personToPersonPersonalRelationshipTypeName;
+  final String? personToPersonPersonalRelationshipTypeNameEn;
   final String? currentLastNameParent;
   final String? currentFirstNameParent;
   final String? currentMiddleNameParent;
@@ -14,6 +17,9 @@ class Pupil extends Equatable {
   const Pupil({
     this.className,
     this.pupilId,
+    this.classId,
+    this.personToPersonPersonalRelationshipTypeName,
+    this.personToPersonPersonalRelationshipTypeNameEn,
     this.currentLastNameParent,
     this.currentFirstNameParent,
     this.currentMiddleNameParent,
@@ -27,6 +33,9 @@ class Pupil extends Equatable {
     return [
       className!,
       pupilId!,
+      classId!,
+      personToPersonPersonalRelationshipTypeName!,
+      personToPersonPersonalRelationshipTypeNameEn!,
       currentLastNameParent!,
       currentFirstNameParent!,
       currentMiddleNameParent!,

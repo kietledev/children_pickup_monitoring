@@ -9,3 +9,5 @@ export 'alarm/alarm_bloc.dart';
 export 'parents/parents_bloc.dart';
 export 'users/users_bloc.dart';
 export 'menu/menu_bloc.dart';
+export 'pickup_place/pickup_place_bloc.dart';
+export 'pupil_by_parent/pupil_by_parent_bloc.dart';
