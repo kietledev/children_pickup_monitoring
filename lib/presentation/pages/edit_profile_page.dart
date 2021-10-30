@@ -158,7 +158,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                                         press: () {
                                           setState(() {
                                             _enabled = false;
-                                            // initUser();
+                                            getUserInit();
                                           });
                                         },
                                       ),

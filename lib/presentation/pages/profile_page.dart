@@ -11,6 +11,7 @@ import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/avatar.dart';
+import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
@@ -48,84 +49,62 @@ class ProfileBody extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return BlocConsumer<ProfileBloc, ProfileState>(
-      listener:(context, state)=>listenerProfileState(context, state),
-      buildWhen: (prevState, currState){
-        return currState is ProfileState && currState.person != null || currState is ProfileSuccessState;
-      },
-      builder: (context, state) {
-        if (state is ProfileSuccessState){
-          return Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/bg_body_a.png'),
-                fit: BoxFit.cover,
-              ),
+    return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+      if (state is ProfileSuccessState) {
+        EasyLoading.dismiss();
+        user = state.person;
+        return Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/bg_body_a.png'),
+              fit: BoxFit.cover,
             ),
-            child: ScrollConfiguration(
-              behavior: MyBehavior(),
-              child: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Avatar(
-                        enabled: false,
-                        avatar: avatar,
-                        avatarNull:"assets/images/img_avatar_null.png" ,
-                      ),
-                      SizedBox(height: 12.h,),
-                      (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
-                      SizedBox(height: 6.h,),
-                      (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
-                      SizedBox(height: 24.h,),
-                      Container(
-                        height: (65 + 24) * listMenuPersonal.length.toDouble(),
-                        child: Menu(user: user,),
-                      ),
-                      SizedBox(height: 48.h,),
-                      CustomButtonText(
-                        text: 'Đăng xuất ',
-                        width: 174,
-                        press: () {
-                          // print(state.user!.CURRENT_FIRST_NAME!);
-                          // final prefs = Preferences();
-                          // prefs.clear();
-                          // Navigator.of(context).pushNamedAndRemoveUntil(
-                          //     LoginScreen.routeName, (Route<dynamic> route) => false);
-                        },
-                      ),
-                      SizedBox(height: 24.h,)
-                    ],
-                  ),
+          ),
+          child: ScrollConfiguration(
+            behavior: MyBehavior(),
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Avatar(
+                      enabled: false,
+                      avatar: user!.avatarPicture!,
+                      avatarNull:"assets/images/img_avatar_null.png" ,
+                    ),
+                    SizedBox(height: 12.h,),
+                    (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
+                    SizedBox(height: 6.h,),
+                    (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
+                    SizedBox(height: 24.h,),
+                    Container(
+                      height: (65 + 24) * listMenuPersonal.length.toDouble(),
+                      child: Menu(user: user,),
+                    ),
+                    SizedBox(height: 48.h,),
+                    CustomButtonText(
+                      text: 'Đăng xuất ',
+                      width: 174,
+                      press: () {
+                      },
+                    ),
+                    SizedBox(height: 24.h,)
+                  ],
                 ),
               ),
             ),
-          );
-        }else {
-          EasyLoading.show();
-          return const SizedBox.shrink();
-        }
-      },
-    );
-  }
-  void listenerProfileState(BuildContext context, ProfileState state) {
-    if (state is ProfileLoadingState) {
-      EasyLoading.show();
-    } else {
-      EasyLoading.dismiss();
-      if (state is ProfileSuccessState) {
-        user = state.person;
-        avatar = user!.avatarPicture!;
-      }
-      else if (state is ProfileFailureState) {
-        UiHelper.showMyDialog(
-          context: context,
-          content: state.msg ?? "This is something wrong",
+          ),
         );
-      } else {}
-    }
+      } else if (state is ProfileFailureState) {
+        EasyLoading.dismiss();
+        return const SizedBox.shrink();
+      } else {
+        EasyLoading.show();
+        return const SizedBox.shrink();
+      }
+    });
+
   }
 }
 
@@ -136,93 +115,37 @@ class Menu extends StatefulWidget {
   State<Menu> createState() => _Menu();
 }
 class _Menu extends State<Menu>{
-  int _selectedIndex = 0;
-  void _onSelected(int index) {
-    setState(() => _selectedIndex = index);
-  }
+  final List<ItemMenu> listItemsProfile= [
+    ItemMenu(1, "Thông tin cá nhân", "assets/icons/ic_information_personal.svg", ""),
+    ItemMenu(2, "Danh sách liên quan", "assets/icons/ic_list_order.svg", RouteConstants.listparent),
+    ItemMenu(3, "Đổi mật khẩu", "assets/icons/ic_change_password.svg", RouteConstants.passwordChange),
+    ItemMenu(4, "Cài đặt ứng dụng", "assets/icons/ic_setting.svg", RouteConstants.settingApp),
+  ];
+  int currentIndex = -1;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: listMenuPersonal.length,
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            child: Container(
-              width: 360,
-              height: 65,
-              margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
-              decoration: BoxDecoration(
-                gradient:
-                _selectedIndex != null && _selectedIndex == index
-                    ? kMenuGradienColor
-                    : kWhiteGradiendColor,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xFFF3F5FF).withOpacity(1),
-                    spreadRadius: 3,
-                    blurRadius: 4,
-                    offset: Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(12, 0, 24, 0),
-                            child: SvgPicture.asset(
-                                listMenuPersonal[index].icon),
-                          ),
-                          Text(
-                            listMenuPersonal[index].title,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: _selectedIndex != null &&
-                                    _selectedIndex == index
-                                    ? ColorConstants.neutralColor6
-                                    : ColorConstants.neutralColor1,
-                                fontFamily: FontsConstants.notoSans),
-                          )
-                        ],
-                      )),
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          child: SvgPicture.asset(
-                            'assets/icons/ic_next_arrow_right.svg',
-                            color: _selectedIndex != null &&
-                                _selectedIndex == index
-                                ? Colors.white
-                                : ColorConstants.brandColor,
-                          ))),
-                ],
-              ),
-            ),
-            onTap: () {
-              _onSelected(index);
-              switch (listMenuPersonal[index].id) {
-                case 1:
-                  Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: 2)));
-                  break;
-                case 2:
-                 Navigator.pushNamed(context, RouteConstants.listparent);
-                  break;
-                case 3:
-                 Navigator.pushNamed(context, RouteConstants.passwordChange);
-                  break;
-                case 4:
-                  Navigator.pushNamed(context, RouteConstants.settingApp);
-                  break;
+      return ListView.builder(
+        primary: false,
+        itemCount: listItemsProfile.length,
+        itemBuilder: (context, index) {
+          final item = listItemsProfile[index];
+          return ItemMenuListView(
+            index: index,
+            isSelected: currentIndex == index,
+            item: item,
+            onSelect: () {
+              setState(() {
+                currentIndex = index;
+              });
+              if(listItemsProfile[index].id == 1){
+                Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: 2)));
+              }else{
+                Navigator.pushNamed(context, item.route);
               }
             },
           );
-        });
+        },
+      );
+
   }
 }
