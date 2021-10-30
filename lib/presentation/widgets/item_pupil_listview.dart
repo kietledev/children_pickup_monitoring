@@ -1,53 +1,49 @@
 import 'dart:convert';
+
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
+import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ItemParentListView extends StatefulWidget {
+class ItemPupilListView extends StatefulWidget {
   final int index;
   final bool isSelected;
   final String avatar;
   final String fullName;
   final VoidCallback onSelect;
-  final bool approved;
-  final ParentModel parent;
-  const ItemParentListView({
+
+  const ItemPupilListView({
     Key? key,
     required this.index,
     required this.isSelected,
     required this.avatar, required this.fullName,
     required this.onSelect,
-    required this.approved,
-    required this.parent
   }) : super(key: key);
 
   @override
-  _ItemParentListViewState createState() => _ItemParentListViewState();
+  _ItemPupilListViewState createState() => _ItemPupilListViewState();
 }
 
-class _ItemParentListViewState extends State<ItemParentListView> {
+class _ItemPupilListViewState extends State<ItemPupilListView> {
   @override
   Widget build(BuildContext context) {
     final titleColor =
-    widget.isSelected ? Colors.white : ColorConstants.neutralColor1;
+    widget.isSelected ? ColorConstants.neutralColor1 : ColorConstants.neutralColor1;
     final bgColor =
-    widget.isSelected ? ColorConstants.brandColor : Colors.white;
+    widget.isSelected ? ColorConstants.white : Colors.white;
     final iconColor =
     widget.isSelected ? Colors.white : ColorConstants.brandColor;
     return GestureDetector(
-      onTap: (){
-        widget.onSelect;
-        Navigator.pushNamed(context, RouteConstants.parentDetails,arguments: widget.parent);
-      },
+      onTap: widget.onSelect,
       child: Container(
         height: 50,
         margin: const EdgeInsets.fromLTRB(24, 12, 24, 0),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-            color: bgColor,
-            borderRadius: BorderRadius.circular(12.0),
+          color: bgColor,
+          borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(
               color: Color(0xFFF3F5FF).withOpacity(1),
@@ -61,31 +57,32 @@ class _ItemParentListViewState extends State<ItemParentListView> {
         child: Row(
           children: [
             // SvgPicture.asset(widget.item.avatarPicture!),
-             SizedBox(
+            SizedBox(
               width: 36,
               height: 36,
               child: CircleAvatar(
-                radius: 32,
-               backgroundImage:(widget.avatar != "")
-                   ? MemoryImage(base64.decode(widget.avatar))
-                   : AssetImage("assets/images/img_avatar_null.png") as ImageProvider
+                  radius: 32,
+                  backgroundImage:(widget.avatar != "")
+                      ? MemoryImage(base64.decode(widget.avatar))
+                      : AssetImage("assets/images/img_avatar_null.png") as ImageProvider
               ),
             ),
             const SizedBox(width: 15),
-             Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(widget.fullName, style: Utils.setStyle(color: titleColor, weight: FontWeight.w600,size: 14)),
-                   (widget.approved)
-                      ? Text("Đã xác nhận",style:Utils.setStyle(color: ColorConstants.secondaryColor4,size: 12),)
-                      : Text("Chưa xác nhận",style:Utils.setStyle(color: ColorConstants.neutralColor2,size: 12))
-                ],
-             ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.fullName, style: Utils.setStyle(color: titleColor, weight: FontWeight.w600,size: 14)),
+                Text("Đã xác nhận",style:Utils.setStyle(color: ColorConstants.secondaryColor4,size: 12),)
+
+              ],
+            ),
             const Spacer(),
-            SvgPicture.asset(
-              'assets/icons/ic_arrow_right.svg',
-              color: iconColor,
-            )
+           Padding(
+               padding: EdgeInsets.only(right: 5),
+             child: (widget.isSelected)
+                 ? Icon(Icons.check,color: ColorConstants.brandColor,)
+                 : null,
+           )
           ],
         ),
       ),

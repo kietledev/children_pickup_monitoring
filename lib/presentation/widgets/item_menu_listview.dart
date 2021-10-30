@@ -35,8 +35,8 @@ class _ItemMenuListViewState extends State<ItemMenuListView> {
   Widget build(BuildContext context) {
     final titleColor =
         widget.isSelected ? Colors.white : ColorConstants.neutralColor1;
-    final bgColor =
-        widget.isSelected ? ColorConstants.brandColor : Colors.white;
+    final bgColor = widget.isSelected ? ColorConstants.brandColor : Colors.white;
+    final gradient = widget.isSelected ? kMenuGradienColor: kWhiteGradiendColor;
     return GestureDetector(
       key: UniqueKey(),
       onTap: widget.onSelect,
@@ -44,7 +44,13 @@ class _ItemMenuListViewState extends State<ItemMenuListView> {
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         decoration: BoxDecoration(
-            color: bgColor, borderRadius: BorderRadius.circular(12.0)),
+            gradient: gradient,
+            color: bgColor,
+            borderRadius: BorderRadius.circular(12.0),
+            boxShadow: [BoxShadow(color: Color(0xFFF3F5FF).withOpacity(1), spreadRadius: 3, blurRadius: 4, offset: Offset(0, 3),
+            ),
+          ],
+        ),
         child: Row(
           children: [
             SvgPicture.asset(widget.item.icon),

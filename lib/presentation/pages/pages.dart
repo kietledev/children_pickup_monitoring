@@ -15,5 +15,11 @@ export 'achievement_detail_page.dart';
 export 'menu_page.dart';
 export 'menu_detail_page.dart';
 export 'password_change_page.dart';
+export 'switch_pupil_page.dart';
+export 'setting_app_page.dart';
+export 'app_information_page.dart';
+export 'app_help_page.dart';
+export 'edit_profile_page.dart';
+export 'parent_add_page.dart';
 
 

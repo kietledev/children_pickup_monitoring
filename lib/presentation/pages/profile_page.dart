@@ -215,11 +215,10 @@ class _Menu extends State<Menu>{
                  Navigator.pushNamed(context, RouteConstants.listparent);
                   break;
                 case 3:
-              Navigator.pushNamed(context, RouteConstants.passwordChange);
+                 Navigator.pushNamed(context, RouteConstants.passwordChange);
                   break;
                 case 4:
-                // Navigator.pushNamed(
-                //     context, SettingAppScreen.routeName);
+                  Navigator.pushNamed(context, RouteConstants.settingApp);
                   break;
               }
             },

@@ -151,7 +151,7 @@ class _BodyPasswordChange extends State<BodyPasswordChange>{
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8,horizontal: 12),
-        child: Text('QT123A21'),
+        child: Text('QT123A21',style: TextStyle(fontSize: 16,color: ColorConstants.neutralColor1,fontFamily: FontsConstants.notoSans),),
       ),
     );
   }

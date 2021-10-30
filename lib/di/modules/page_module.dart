@@ -1,14 +1,9 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
-import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/achievements_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/camera_page.dart';
-import 'package:children_pickup_monitoring/presentation/pages/list_parent_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_detail_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
-import 'package:children_pickup_monitoring/presentation/pages/parent_add_page.dart';
-import 'package:children_pickup_monitoring/presentation/pages/parent_details_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pupil_detail_page.dart';
-
 import 'package:flutter/material.dart';
 
 import '../injection.dart';
@@ -76,5 +71,11 @@ class PageModule extends DIModule {
         instanceName: RouteConstants.parentAdd);
     injector.registerFactory<Widget>(() => PasswordChangePage(),
         instanceName: RouteConstants.passwordChange);
+    injector.registerFactory<Widget>(() => SettingAppPage(),
+        instanceName: RouteConstants.settingApp);
+    injector.registerFactory<Widget>(() => AppInformationPage(),
+        instanceName: RouteConstants.informationApp);
+    injector.registerFactory<Widget>(() => AppHelpPage(),
+        instanceName: RouteConstants.helpApp);
   }
 }

@@ -23,4 +23,7 @@ class RouteConstants {
   static const String formAddUserToParent = "/form_add_user_to_parent";
   static const String parentAdd= "/parent_add";
   static const String passwordChange= "/password_change";
+  static const String settingApp= "/setting_app";
+  static const String informationApp= "/infomation_app";
+  static const String helpApp= "/help_app";
 }

@@ -26,6 +26,9 @@ class TitlesAppBar{
   static const String parentDetail = "Chi tiết";
   static const String addUserToParent = "Thêm mới";
   static const String changePassword = "Đổi mật khẩu";
+  static const String settingApp = "Cài đặt ứng dụng";
+  static const String infoApp = "Về ứng dụng";
+  static const String helpApp = "Trợ giúp";
 }
 
 class ButtonConstatns {
