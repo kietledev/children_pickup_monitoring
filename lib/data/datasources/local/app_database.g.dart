@@ -139,16 +139,23 @@ class _$UserDao extends UserDao {
 
   @override
   Future<List<User>> getAllUsers() async {
-    return _queryAdapter.queryList('SELECT * FROM user_table',
-        mapper: (Map<String, Object?> row) => User(
-            userId: row['userId'] as int,
-            personId: row['personId'] as int,
-            currentFirstName: row['currentFirstName'] as String,
-            currentLastName: row['currentLastName'] as String,
-            currentMiddleName: row['currentMiddleName'] as String?,
-            loginTime: row['loginTime'] as String,
-            fromParentId: row['fromParentId'] as int,
-            toPupilId: row['toPupilId'] as int));
+    return _queryAdapter.queryList(
+      'SELECT * FROM user_table',
+      mapper: (Map<String, Object?> row) => User(
+          userId: row['userId'] as int,
+          personId: row['personId'] as int,
+          currentFirstName: row['currentFirstName'] as String,
+          currentLastName: row['currentLastName'] as String,
+          currentMiddleName: row['currentMiddleName'] as String?,
+          loginTime: row['loginTime'] as String,
+          roleId: row['roleId'] as int,
+          roleName: row['roleName'] as String,
+          roleAllowAdd: row['roleAllowAdd'] as bool,
+          roleAllowUpdate: row['roleAllowUpdate'] as bool,
+          roleAllowDelete: row['roleAllowDelete'] as bool,
+          fromParentId: row['fromParentId'] as int,
+          toPupilId: row['toPupilId'] as int),
+    );
   }
 
   @override

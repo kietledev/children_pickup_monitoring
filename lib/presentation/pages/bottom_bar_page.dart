@@ -78,7 +78,6 @@ class _BottomBarPageState extends State<BottomBarPage> {
 
     //Forground
     FirebaseMessaging.onMessage.listen((message) {
-      print('sssssss');
       LocalNotificationService.display(message);
     });
 

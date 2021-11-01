@@ -20,15 +20,101 @@ class MessageDetailPage extends StatelessWidget {
     return BlocProvider<MessageDetailBloc>(
       create: (_) =>
           injector<MessageDetailBloc>()..add(DownloadMessageDetail('1')),
-      child: const Scaffold(
+      child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(
-          title: 'MessageDetail',
-        ),
-        body: MessageDetailBody(),
+        appBar: appBar(context),
+        body: const MessageDetailBody(),
       ),
     );
   }
+}
+
+AppBar appBar(BuildContext context) {
+  return AppBar(
+    leading: Align(
+      alignment: Alignment.centerLeft,
+      child: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: SvgPicture.asset('assets/icons/ic_back_appbar.svg', width: 28),
+      ),
+    ),
+    actions: [
+      Container(
+        height: 36,
+        width: 36,
+        margin: const EdgeInsets.only(left: 55),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Image.asset('assets/images/Avatar.png'),
+      ),
+      Expanded(
+        child: Container(
+          margin: const EdgeInsets.only(left: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Đoàn Ngọc Viên',
+                style: Utils.setStyle(
+                    color: ColorConstants.neutralColor1,
+                    weight: FontWeight.w600),
+              ),
+              const SizedBox(height: 0),
+              Visibility(
+                  child: Row(
+                children: [
+                  Container(
+                    height: 15,
+                    margin: const EdgeInsets.only(right: 6),
+                    width: 15,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF5AD439),
+                      border: Border.all(color: Colors.white, width: 2.5),
+                      borderRadius: BorderRadius.circular(7.5),
+                    ),
+                  ),
+                  Text(
+                    'Trực tuyến',
+                    style: Utils.setStyle(
+                        color: ColorConstants.neutralColor2, size: 12),
+                  ),
+                ],
+              ))
+            ],
+          ),
+        ),
+      ),
+      const SizedBox(width: 16),
+      buildActionAppbar(press: () {}, icon: 'assets/icons/ic_phone.svg'),
+      buildActionAppbar(
+          press: () {
+          },
+          icon: 'assets/icons/ic_gallery.svg'),
+      const SizedBox(width: 16)
+    ],
+  );
+}
+
+GestureDetector buildActionAppbar({
+  required VoidCallback press,
+  required String icon,
+}) {
+  return GestureDetector(
+    onTap: press,
+    child: Container(
+      width: 19,
+      height: 19,
+      margin: const EdgeInsets.only(left: 8, right: 8),
+      child: SvgPicture.asset(
+        icon,
+        color: const Color(0xFF2D5ACD),
+      ),
+    ),
+  );
 }
 
 List<String> listMessagesAll = [

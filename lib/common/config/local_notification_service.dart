@@ -52,7 +52,6 @@ class LocalNotificationService {
         'id': message.data['id'],
         'route': message.data['route']
       };
-      print('display');
 
       await _notificationsPlugin.show(id, message.notification!.title,
           message.notification!.body, platformChannelSpecifics,

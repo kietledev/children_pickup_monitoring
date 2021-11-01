@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,18 +16,24 @@ class LaunchPage extends StatefulWidget {
 
 class _LaunchPageState extends State<LaunchPage> {
   late Timer _timer;
-  bool isLogin = true;
+  bool isLogin = false;
+
+  Future initVariable() async {
+    final preferences = Preferences();
+    isLogin = await preferences.getIsRemember() ?? false;
+  }
 
   @override
   void initState() {
-    _timer = Timer(const Duration(seconds: 5), () {
+    super.initState();
+    initVariable();
+    _timer = Timer(const Duration(seconds: 3), () {
       if (isLogin) {
         Navigator.of(context).pushReplacementNamed(RouteConstants.bottomBar);
       } else {
         Navigator.of(context).pushReplacementNamed(RouteConstants.splash);
       }
     });
-    super.initState();
   }
 
   @override

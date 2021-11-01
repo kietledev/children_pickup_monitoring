@@ -40,8 +40,7 @@ class LoginBody extends StatelessWidget {
             SizedBox(height: 104.h),
             Text(
               StringConstatns.hello,
-              style:
-                  Utils.setStyle(color: const Color(0xFFF7931A), size: 32),
+              style: Utils.setStyle(color: const Color(0xFFF7931A), size: 32),
             ),
             SizedBox(height: 12.h),
             Text(
@@ -74,22 +73,23 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
-        listener: (context, state) => listenerLoginState(context, state),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              UsernameTextField(key: _usernameState),
-              SizedBox(height: 24.h),
-              PasswordTextField(key: _passwordState),
-              SizedBox(height: 48.h),
-              CustomButton(
-                  text: ButtonConstatns.login,
-                  width: 180.w,
-                  press: () => onLogin(context))
-            ],
-          ),
-        ));
+      listener: (context, state) => listenerLoginState(context, state),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            UsernameTextField(key: _usernameState),
+            SizedBox(height: 24.h),
+            PasswordTextField(key: _passwordState),
+            SizedBox(height: 48.h),
+            CustomButton(
+                text: ButtonConstatns.login,
+                width: 180.w,
+                press: () => onLogin(context))
+          ],
+        ),
+      ),
+    );
   }
 
   void listenerLoginState(BuildContext context, LoginState state) {

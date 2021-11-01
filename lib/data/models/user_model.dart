@@ -8,6 +8,11 @@ class UserModel extends User {
       required String currentLastName,
       String? currentMiddleName,
       required String loginTime,
+      required int roleId,
+      required String roleName,
+      required bool roleAllowAdd,
+      required bool roleAllowUpdate,
+      required bool roleAllowDelete,
       required int fromParentId,
       required int toPupilId})
       : super(
@@ -17,6 +22,11 @@ class UserModel extends User {
             currentMiddleName: currentMiddleName,
             currentLastName: currentLastName,
             loginTime: loginTime,
+            roleId: roleId,
+            roleName: roleName,
+            roleAllowAdd: roleAllowAdd,
+            roleAllowUpdate: roleAllowUpdate,
+            roleAllowDelete: roleAllowDelete,
             fromParentId: fromParentId,
             toPupilId: toPupilId);
 
@@ -28,6 +38,11 @@ class UserModel extends User {
         currentLastName: map["CURRENT_LAST_NAME"] as String? ?? "",
         currentMiddleName: map["CURRENT_MIDDLE_NAME"] as String? ?? "",
         loginTime: map["LOGIN_TIME"] as String? ?? "",
+        roleId: (map['ROLE_ID'] as double? ?? 0.0).toInt(),
+        roleName: map["ROLE_NAME"] as String? ?? "",
+        roleAllowAdd: map["ROLE_ALLOW_ADD"] as bool? ?? false,
+        roleAllowUpdate: map["ROLE_ALLOW_UPDATE"] as bool? ?? false,
+        roleAllowDelete: map["ROLE_ALLOW_DELETE"] as bool? ?? false,
         fromParentId: (map["FROM_PARENT_ID"] as double? ?? 0.0).toInt(),
         toPupilId: (map["TO_PUPIL_ID"] as double? ?? 0.0).toInt());
   }
