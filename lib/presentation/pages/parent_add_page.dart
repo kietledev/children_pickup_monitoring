@@ -53,6 +53,7 @@ class _ParentAddPage extends State<ParentAddPage>{
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
+        hideBack: true,
         title: TitlesAppBar.addUserToParent,
         actionBack: ()=>Navigator.pop(context),
       ),

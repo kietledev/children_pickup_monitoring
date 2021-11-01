@@ -21,6 +21,7 @@ class _SettingAppPage extends State<SettingAppPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: WidgetAppBar(
+        hideBack: true,
         actionBack: () => Navigator.pop(context),
         title: TitlesAppBar.settingApp,
       ),

@@ -56,7 +56,6 @@ class CustomWidgetsSnackBar {
             ],
           )
       ),
-
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

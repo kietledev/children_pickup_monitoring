@@ -28,6 +28,7 @@ class _ListParentPage extends State<ListParentPage>{
     return Scaffold(
       appBar: WidgetAppBar(
         title: "Danh sách liên quan",
+        hideBack: true,
         actionBack: (){
           Navigator.pop(context);
         },

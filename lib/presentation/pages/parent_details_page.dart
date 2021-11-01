@@ -48,6 +48,7 @@ class _ParentDetails extends State<ParentDetailsPage> {
     // TODO: implement build
     return Scaffold(
         appBar: WidgetAppBar(
+          hideBack: true,
         title: TitlesAppBar.parentDetail,
         menuItem: [itemButtonRightAppBar()],
         actionBack: () => Navigator.pop(context),

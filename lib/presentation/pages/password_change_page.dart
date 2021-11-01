@@ -16,6 +16,7 @@ class PasswordChangePage extends StatelessWidget{
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
+          hideBack: true,
           title: TitlesAppBar.changePassword,
           actionBack: ()=>Navigator.pop(context)
       ),

@@ -13,6 +13,7 @@ class _AppInformationPage extends State<AppInformationPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WidgetAppBar(
+        hideBack: true,
         title: TitlesAppBar.infoApp,
         actionBack: ()=>Navigator.pop(context),
       ),

@@ -17,6 +17,7 @@ class SwitchPupilPage extends StatelessWidget {
     return Scaffold(
       appBar: WidgetAppBar(
         actionBack: ()=>Navigator.pop(context),
+        hideBack: false,
         title: "Chuyển bé",
       ),
       body: BlocProvider(

@@ -30,6 +30,7 @@ class _AddUserToParent extends State <AddUserToParent>{
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
+        hideBack: true,
         title: 'Thêm mới',
         actionBack: ()=>Navigator.pop(context),
       ),
@@ -192,6 +193,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
+        hideBack: true,
         title: TitlesAppBar.addUserToParent,
         actionBack: ()=>Navigator.pop(context),
       ),

@@ -21,7 +21,7 @@ class BottomBarPage extends StatefulWidget {
 class _BottomBarPageState extends State<BottomBarPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isParent = false;
-  final String _bgAppbar = 'assets/images/bg_appbar_b.png';
+  final String _bgAppbar = 'assets/images/bg_appbar_a.png';
 
   final int _role = 0;
   int _currentIndex = 0;
