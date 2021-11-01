@@ -11,6 +11,11 @@ class User extends Equatable {
   final String currentLastName;
   final String? currentMiddleName;
   final String loginTime;
+  final int roleId;
+  final String roleName;
+  final bool roleAllowAdd;
+  final bool roleAllowUpdate;
+  final bool roleAllowDelete;
   final int fromParentId;
   final int toPupilId;
 
@@ -21,6 +26,11 @@ class User extends Equatable {
     required this.currentLastName,
     this.currentMiddleName,
     required this.loginTime,
+    required this.roleId,
+    required this.roleName,
+    required this.roleAllowAdd,
+    required this.roleAllowUpdate,
+    required this.roleAllowDelete,
     required this.fromParentId,
     required this.toPupilId,
   });
@@ -34,6 +44,11 @@ class User extends Equatable {
       currentLastName,
       currentMiddleName!,
       loginTime,
+      roleId,
+      roleName,
+      roleAllowAdd,
+      roleAllowUpdate,
+      roleAllowDelete,
       fromParentId,
       toPupilId
     ];

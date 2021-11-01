@@ -22,6 +22,8 @@ class UserRepositoryImpl implements UserRepository {
         'username': params.username,
         'password': getBytes(params.password),
       };
+      print(getBytes(params.password));
+
       final httpResponse = await _loginApiService.postLogin(
           body: body, k: key, dm: dm, tk: getTokenApi(), ttl: ttl);
 

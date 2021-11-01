@@ -2,15 +2,13 @@ import 'dart:async';
 
 import 'package:children_pickup_monitoring/common/constants/color_constants.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
-import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
-import 'package:children_pickup_monitoring/presentation/blocs/local_user/local_user_bloc.dart';
-import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/school_nofitication/school_notification_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -135,6 +133,7 @@ class _HomeBodyState extends State<HomeBody> {
             child: Column(
               children: [
                 _role == 1 ? buildNumberOfPupils() : const SizedBox.shrink(),
+                _role == 1 ? buildScores() : const SizedBox.shrink(),
                 _role == 0 ? _buildAlarm() : Container(),
                 _buildFeaturedCards(listFunction),
                 _buildSchoolNotifications(),
@@ -147,77 +146,148 @@ class _HomeBodyState extends State<HomeBody> {
     );
   }
 
-  Widget buildNumberOfPupils() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          children: [
-            Text('Điểm số tuần qua',
-                style: Utils.setStyle(
-                    color: const Color(0xFF4F3A57), weight: FontWeight.w600)),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                buildItemInScore(),
-                const SizedBox(width: 6),
-                buildItemInScore(),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Row(
-              children: [
-                buildItemInScore(),
-                const SizedBox(width: 6),
-                buildItemInScore(),
-              ],
-            )
-          ],
-        ),
+  Container buildNumberOfPupils() {
+    return Container(
+      margin: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6.0),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFDEDFE1).withOpacity(0.5),
+            spreadRadius: 6,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Text('Sĩ số lớp Nhà trẻ 1',
+              style: Utils.setStyle(
+                  color: ColorConstants.brandColor,
+                  weight: FontWeight.w600,
+                  size: 14)),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  CustomPaint(
+                    size: Size(100.w, 100.w),
+                    painter: CustomNumberOfPupilsPainter(
+                        numberOfPupils: 10, absent: 4, allowed: 1),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text('7/10',
+                        textAlign: TextAlign.center,
+                        style: Utils.setStyle(
+                            color: ColorConstants.neutralColor1,
+                            weight: FontWeight.w600,
+                            size: 18)),
+                  )
+                ],
+              ),
+              const SizedBox(width: 24),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 3,
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Row(
+                      children: [
+                        Container(
+                            height: 8,
+                            width: 8,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(4.0),
+                            )),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Hiện diện',
+                          style: Utils.setStyle(
+                              color: ColorConstants.neutralColor1,
+                              weight: FontWeight.w600,
+                              size: 12),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '7',
+                          style: Utils.setStyle(
+                              color: ColorConstants.neutralColor1, size: 12),
+                        ),
+                        const SizedBox(width: 24),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildScores() => Column(
+        children: [
+          const SizedBox(height: 12),
+          Text('Điểm số tuần qua',
+              style: Utils.setStyle(
+                  color: const Color(0xFF4F3A57), weight: FontWeight.w600)),
+          const SizedBox(height: 12),
+          const GridViewScores(),
+        ],
       );
 
-  Expanded buildItemInScore() {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(6.0),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFFDEDFE1).withOpacity(0.5),
-              spreadRadius: 6,
-              blurRadius: 6,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SvgPicture.asset(
-              'assets/icons/ic_max_scores.svg',
-              width: 46.w,
-              height: 46.w,
-            ),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Thành tích',
-                  style: Utils.setStyle(
-                      color: ColorConstants.neutralColor1,
-                      size: 10,
-                      weight: FontWeight.w600),
-                ),
-                Text(
-                  '50',
-                  style: Utils.setStyle(
-                      color: ColorConstants.neutralColor2, size: 20),
-                ),
-              ],
-            )
-          ],
-        ),
+  Widget buildItemInScore() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6.0),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFDEDFE1).withOpacity(0.5),
+            spreadRadius: 6,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/ic_max_scores.svg',
+            width: 46.w,
+            height: 46.w,
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Thành tích',
+                style: Utils.setStyle(
+                    color: ColorConstants.neutralColor1,
+                    size: 10,
+                    weight: FontWeight.w600),
+              ),
+              Text(
+                '50',
+                style: Utils.setStyle(
+                    color: ColorConstants.neutralColor2, size: 20),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
@@ -627,5 +697,82 @@ class _HomeBodyState extends State<HomeBody> {
     final DateTime now = DateTime.now();
     return DateTime(now.year, now.month, now.day,
         int.parse(value.split(":")[0]), int.parse(value.split(":")[1]));
+  }
+}
+
+class GridViewScores extends StatelessWidget {
+  const GridViewScores({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double _crossAxisSpacing = 6;
+    int _crossAxisCount = 2;
+    double cellHeight = 70;
+
+    var _screenWidth = MediaQuery.of(context).size.width;
+    var _width = (_screenWidth - ((_crossAxisCount - 1) * _crossAxisSpacing)) /
+        _crossAxisCount;
+    var _aspectRatio = _width / cellHeight;
+    return OrientationBuilder(builder: (context, orientation) {
+      return GridView.builder(
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: _crossAxisCount,
+            childAspectRatio: _aspectRatio,
+            crossAxisSpacing: _crossAxisSpacing,
+            mainAxisSpacing: 6),
+        physics: const NeverScrollableScrollPhysics(),
+        dragStartBehavior: DragStartBehavior.down,
+        itemCount: 2,
+        itemBuilder: (_, index) {
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(6.0),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFDEDFE1).withOpacity(0.5),
+                  spreadRadius: 6,
+                  blurRadius: 6,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/ic_max_scores.svg',
+                  width: 46.w,
+                  height: 46.w,
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Thành tích',
+                      style: Utils.setStyle(
+                          color: ColorConstants.neutralColor1,
+                          size: 10,
+                          weight: FontWeight.w600),
+                    ),
+                    Text(
+                      '50',
+                      style: Utils.setStyle(
+                          color: ColorConstants.neutralColor2, size: 20),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+      );
+    });
   }
 }
