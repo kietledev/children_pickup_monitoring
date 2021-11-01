@@ -13,7 +13,10 @@ class TitlesConstants {
   static const String teacherInformationTitle = 'Thông tin giáo viên';
   static const String teacherDetails = 'Chi tiết giáo viên';
   static const String pupilDetails = 'Chi tiết trẻ';
+  static const String details = 'Chi tiết';
   static const String achievements = 'Thành tích';
+  static const String generated_qr = 'Mã đã tạo';
+  static const String menu = 'Thực đơn';
   static const String achievement = "/achievement";
   static const String classInformation = "/class_information";
   static const String teacherInformation = "/teacher_information";
@@ -21,6 +24,12 @@ class TitlesConstants {
 }
 class TitlesAppBar{
   static const String profileTitle = "Thông tin cá nhân";
+  static const String parentDetail = "Chi tiết";
+  static const String addUserToParent = "Thêm mới";
+  static const String changePassword = "Đổi mật khẩu";
+  static const String settingApp = "Cài đặt ứng dụng";
+  static const String infoApp = "Về ứng dụng";
+  static const String helpApp = "Trợ giúp";
 }
 
 class ButtonConstatns {
@@ -28,6 +37,7 @@ class ButtonConstatns {
   static const String cached = "Get Cached Data";
   static const String login = "Đăng nhập";
   static const String sendOtp = "Send OTP";
+  static const String sentPickUp = "Gửi yêu cầu";
 }
 
 class StringConstatns {
@@ -38,10 +48,9 @@ class StringConstatns {
   static const String enterPassword = "Nhập mật khẩu";
   static const String forgetPassword = "Quên mật khẩu?";
   static const String editText = "Sửa";
-
   static const String fullName = "Họ và tên";
   static const String fullNameParent = "Họ và tên";
-
+  static const String fullNameParent2 = "Họ và tên người đón";
   static const String yearOfBirth = "Năm sinh";
   static const String position = "Chức vụ";
   static const String phoneNumber1 = "Số điện thoại 1";
@@ -55,6 +64,15 @@ class StringConstatns {
   static const String weight = "Cân nặng";
   static const String homeAddress = "Địa chỉ nhà";
   static const String numberOfPupils = "Sĩ số: ";
+  static const String relationship = "Mối quan hệ với bé: ";
+  static const String homeroomTeacher = "Chủ nhiệm";
+  static const String teacher = "Giáo viên";
+  static const String day = "Ngày";
+  static const String userName = "Tài khoản";
+  static const String currentPassword = "Mật khẩu hiện tại:";
+  static const String newPassword = "Mật khẩu mới:";
+
+
 }
 
 class TextfieldConstants {
@@ -70,7 +88,6 @@ class ErrorConstants {
   static const String shortPassword = "Mật khẩu quá ngắn";
   static const String nullPassword = "Vui lòng nhập tên mật khẩu";
 }
-
 class NotifyKeys {
   static const String notify = "NOTIFY";
 }

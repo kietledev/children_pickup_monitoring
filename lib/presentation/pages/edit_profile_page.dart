@@ -50,8 +50,8 @@ class _EditProfileBody extends State<EditProfileBody> {
   final ImagePicker _picker = ImagePicker();
   File? _image;
   String avatar = "";
-  TextEditingController _fullname = new TextEditingController();
-  TextEditingController _yearofbirth = new TextEditingController();
+  TextEditingController _fullName = new TextEditingController();
+  TextEditingController _yearOfBirth = new TextEditingController();
   TextEditingController _phone1 = new TextEditingController();
   TextEditingController _phone2 = new TextEditingController();
   TextEditingController _email = new TextEditingController();
@@ -72,7 +72,7 @@ class _EditProfileBody extends State<EditProfileBody> {
       appBar: WidgetAppBar(
         title: TitlesAppBar.profileTitle,
         menuItem: [itemButtonRightAppBar()],
-        press: () {
+        actionBack: () {
           Navigator.pop(context);
         },
       ),
@@ -82,7 +82,6 @@ class _EditProfileBody extends State<EditProfileBody> {
           return Container(
             width: double.infinity,
             height: double.infinity,
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/bg_body_a.png'),
@@ -96,7 +95,8 @@ class _EditProfileBody extends State<EditProfileBody> {
                   children: [
                     Avatar(
                       enabled: _enabled,
-                      bytesImage: bytesImage,
+                      avatar: avatar,
+                      avatarNull: "assets/images/img_avatar_null.png",
                       callback: () => showBottomSheet(),
                     ),
                     Padding(
@@ -104,7 +104,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                       child: Column(
                         children: [
                           TextFieldCustom(
-                            controller: _fullname,
+                            controller: _fullName,
                             title: "Họ và Tên",
                             enabled: _enabled,
                             typeTextField: "name",
@@ -113,7 +113,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                             lastNameController: _lastName,
                           ),
                           TextFieldCustom(
-                              controller: _yearofbirth,
+                              controller: _yearOfBirth,
                               title: "Năm sinh",
                               enabled: _enabled,
                               typeTextField: "birthday",
@@ -158,7 +158,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                                         press: () {
                                           setState(() {
                                             _enabled = false;
-                                            // initUser();
+                                            getUserInit();
                                           });
                                         },
                                       ),
@@ -204,7 +204,7 @@ class _EditProfileBody extends State<EditProfileBody> {
     if (_email.text != "") {
       if (Validators.validateEmail(_email.text) == true) {
         BlocProvider.of<ProfileBloc>(context)
-            .add(PostProfileEvent(personId: personID, body: body));
+            .add(PostProfileEvent(personId: personID, body: body, roleId: 1));
       } else {
         WidgetsBinding.instance!.addPostFrameCallback((_) =>
             CustomWidgetsSnackBar.buildErrorSnackbar(
@@ -212,7 +212,7 @@ class _EditProfileBody extends State<EditProfileBody> {
       }
     } else {
       BlocProvider.of<ProfileBloc>(context)
-          .add(PostProfileEvent(personId: personID, body: body));
+          .add(PostProfileEvent(personId: personID, body: body,roleId: 1));
     }
   }
 
@@ -224,15 +224,15 @@ class _EditProfileBody extends State<EditProfileBody> {
         _middleName.text = user!.currentMiddleName!;
         _lastName.text = user!.currentLastName!;
         _firstName.text = user!.currentFirstName!;
-        _fullname.text = user!.getFullName();
+        _fullName.text = user!.getFullName();
         _phone1.text = user!.currentPhoneNumber1!;
-        _yearofbirth.text = user!.birthDate!;
+        _yearOfBirth.text = user!.birthDate!;
         _email.text = user!.currentEmail!;
         _address.text = user!.homeAddress1!;
         day = Utils.formatDay(user!.birthDate!);
         month = Utils.formatMonth(user!.birthDate!);
         year = Utils.formatYear(user!.birthDate!);
-        _yearofbirth.text = Utils.formatDateTime('${user?.birthDate ?? ""}');
+        _yearOfBirth.text = Utils.formatDateTime('${user?.birthDate ?? ""}');
         avatar = user!.avatarPicture!;
         setState(() {
           bytesImage = base64.decode('${user!.avatarPicture!}');
@@ -247,12 +247,10 @@ class _EditProfileBody extends State<EditProfileBody> {
     } else {
       EasyLoading.dismiss();
       if (state is ProfileSuccessState) {
-        _yearofbirth.text =
+        _yearOfBirth.text =
             Utils.formatDateTime('${state.person?.birthDate ?? ""}');
-        _fullname.text = state.person!.getFullName();
-        WidgetsBinding.instance!.addPostFrameCallback((_) =>
-            CustomWidgetsSnackBar.buildSuccessSnackbar(
-                context, "Cập nhật thông tin thành công"));
+        _fullName.text = state.person!.getFullName();
+        WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Cập nhật thông tin thành công"));
         setState(() {
           _enabled = false;
         });

@@ -11,7 +11,7 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? height;
   final List<Widget>? menuItem;
   final bool hideBack;
-  final VoidCallback press;
+  final VoidCallback actionBack;
 
   WidgetAppBar({
     this.backgroundColor = ColorConstants.brandColor,
@@ -21,7 +21,7 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.menuItem,
     this.height: kToolbarHeight,
     this.hideBack = false,
-    required this.press
+    required this.actionBack
   });
 
   @override
@@ -41,7 +41,7 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       leading: IconButton(
-          onPressed: press,
+          onPressed: actionBack,
           icon: SvgPicture.asset('assets/icons/ic_back_appbar.svg')),
       actions: menuItem,
       title: LinearGradientMask(
@@ -57,36 +57,5 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
     );
-    // return AppBar(
-    //   actions: menuItem,
-    //   toolbarHeight: preferredSize.height,
-    //   iconTheme: IconThemeData(
-    //     color: textIconColor,
-    //   ),
-    //   leading: hideBack
-    //       ? Container()
-    //       : icon == null
-    //       ? BackButton()
-    //       : IconButton(
-    //     icon: Image.asset(
-    //       icon!,
-    //       height: 18,
-    //       width: 18,
-    //     ),
-    //     onPressed: () {
-    //       Navigator.pop(context, true);
-    //     },
-    //   ),
-    //   title: Text(
-    //     title!,
-    //     style: TextStyle(
-    //       fontSize: 20,
-    //       fontWeight: FontWeight.bold,
-    //       color: textIconColor,
-    //     ),
-    //   ),
-    //   backgroundColor: backgroundColor,
-    //   centerTitle: true,
-    // );
   }
 }

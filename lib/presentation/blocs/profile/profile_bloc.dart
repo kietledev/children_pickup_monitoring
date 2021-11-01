@@ -41,6 +41,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         params: PostProfileRequest(
           personId: event.personId,
           body: event.body,
+          roleId: event.roleId,
         ),
       );
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {

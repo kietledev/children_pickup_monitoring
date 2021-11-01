@@ -4,6 +4,7 @@ import 'package:children_pickup_monitoring/common/helpers/utils.dart';
 import 'package:children_pickup_monitoring/presentation/pages/classroom_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/home_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_page.dart';
+import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
 import 'package:children_pickup_monitoring/presentation/pages/profile_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/school_page.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
@@ -45,7 +46,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
       activeIcon: SvgPicture.asset('assets/icons/ic_school.svg',
           color: ColorConstants.brandColor));
   final _itemClassroom = BottomNavigationBarItem(
-      label: 'Lớp học',
+      label: StringConstatns.className,
       icon: SvgPicture.asset('assets/icons/ic_class.svg',
           color: ColorConstants.primaryColor3),
       activeIcon: SvgPicture.asset('assets/icons/ic_class.svg',
@@ -107,8 +108,8 @@ class _BottomBarPageState extends State<BottomBarPage> {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
       drawerEdgeDragWidth: 0,
-      drawer: const Drawer(
-          // child: TransferPuppilScreen(),
+      drawer: Drawer(
+          child: SwitchPupilPage(),
           ),
       key: _scaffoldKey,
       body: Builder(

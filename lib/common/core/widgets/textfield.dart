@@ -151,8 +151,7 @@ class TextFieldCustom extends StatelessWidget{
                   color: Colors.grey.withOpacity(0.15),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: Offset(0,
-                      3), // changes position of shadow
+                  offset: Offset(0,3), // changes position of shadow
                 ),
               ],
             ),
@@ -222,7 +221,7 @@ class TextFieldCustom extends StatelessWidget{
                       Expanded(
                         child: Container(
                           height: 40,
-                          margin: EdgeInsets.fromLTRB(0, 6, 0, 0),
+                          margin: EdgeInsets.fromLTRB(0, 6, 12, 0),
                            decoration: shadowtextfield,
                           child: CustomDropdown<int>(
                             child: Text('$day', style: EditProfileStyle.contentStyle,),

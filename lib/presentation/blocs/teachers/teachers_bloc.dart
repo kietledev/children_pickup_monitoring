@@ -26,6 +26,7 @@ class TeachersBloc extends Bloc<TeachersEvent, TeachersState> {
 
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final teachers = dataState.data!;
+        print(teachers[0].className);
         yield FetchTeachersSuccessState(teachers: teachers);
       } else {
         yield FetchTeachersFailureState(msg: dataState.error!.message);

@@ -25,7 +25,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       };
       final httpResponse = await _profileApiService.getProfile(
           query: body, k: key, dm: dm, tk: getTokenApi(id: "2"), ttl: ttl);
-      print(httpResponse.response.data);
+     //  print(httpResponse.response.data);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         final List<PersonModel> listProfile = <PersonModel>[];
         for (final dynamic item in httpResponse.data.data) {
@@ -54,6 +54,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       final Map<String, dynamic> query = <String, dynamic>{
         'personId': params.personId,
+        'roleId': params.roleId,
       };
       final httpResponse = await _postProfileApiService.postProfile(
           query: query,body: params.body, k: key, dm: dm, tk: getTokenApi(id: "2"), ttl: ttl);

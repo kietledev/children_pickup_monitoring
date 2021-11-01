@@ -4,3 +4,7 @@ export 'pupil.dart';
 export 'food_menu.dart';
 export 'achievement.dart';
 export 'person.dart';
+export 'pickup_place.dart';
+export 'pickup_request.dart';
+export 'parent.dart';
+export 'user_by_person.dart';

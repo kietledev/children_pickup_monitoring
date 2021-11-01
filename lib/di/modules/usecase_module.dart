@@ -1,3 +1,5 @@
+import 'package:children_pickup_monitoring/domain/usecases/get_parents_usercase.dart';
+import 'package:children_pickup_monitoring/domain/usecases/post_parent_usercase.dart';
 import 'package:children_pickup_monitoring/domain/usecases/post_profile_usercase.dart';
 import 'package:children_pickup_monitoring/domain/usecases/usecases.dart';
 
@@ -23,11 +25,28 @@ class UseCaseModule extends DIModule {
     /* Post Pupil Usecase */
     injector.registerSingleton<PostPupilsUseCase>(PostPupilsUseCase(injector()));
 
-    /* Post Pupil Usecase */
+    /* Post Achievement Usecase */
     injector.registerSingleton<PostAchievementsUseCase>(
         PostAchievementsUseCase(injector()));
     /* Profile Usecase */
     injector.registerSingleton<GetProfileUseCase>(GetProfileUseCase(injector()));
     injector.registerSingleton<PostProfileUseCase>(PostProfileUseCase(injector()));
+    /* Parent Usecase */
+    injector.registerSingleton<GetParentsUseCase>(GetParentsUseCase(injector()));
+    injector.registerSingleton<PostParentUseCase>(PostParentUseCase(injector()));
+    injector.registerSingleton<DeleteParentUseCase>(DeleteParentUseCase(injector()));
+    /* Users Usecase */
+    injector.registerSingleton<GetUsersByPersonUseCase>(GetUsersByPersonUseCase(injector()));
+    /* relationship type Usecase */
+    injector.registerSingleton<GetRelationshipTypeUseCase>(GetRelationshipTypeUseCase(injector()));
+    /*Post menu Usecase */
+    injector.registerSingleton<PostMenusUseCase>(PostMenusUseCase(injector()));
+    /*Get pickup place Usecase */
+    injector.registerSingleton<GetPickUpPlaceUseCase>(GetPickUpPlaceUseCase(injector()));
+
+    /*Get pupil by parent */
+    injector.registerSingleton<GetPupilByParentUseCase>(GetPupilByParentUseCase(injector()));
+    /*Post password Usecase */
+    injector.registerSingleton<PostPasswordUseCase>(PostPasswordUseCase(injector()));
   }
 }

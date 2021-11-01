@@ -13,8 +13,9 @@ class GetprofileEvent extends ProfileEvent {
 }
 class PostProfileEvent extends ProfileEvent {
   final int personId;
+  final int roleId;
   Map<String, dynamic> body;
-  PostProfileEvent({required this.personId,required this.body});
+  PostProfileEvent({required this.personId,required this.roleId,required this.body});
 }
 class ReloadProfileEvent extends ProfileEvent{
  final PersonModel user;

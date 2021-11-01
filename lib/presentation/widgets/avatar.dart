@@ -1,22 +1,24 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+
 class Avatar extends StatelessWidget{
   final bool enabled;
-  final Uint8List? bytesImage;
+  final String avatar;
   VoidCallback? callback;
+  final String? avatarNull ;
   Avatar({
-   required this.enabled,
-   this.bytesImage,
-    this.callback
+    required this.avatar,
+    required this.enabled,
+    this.callback,
+    this.avatarNull
    });
   @override
   Widget build(BuildContext context) {
-    print(enabled);
-    print(bytesImage);
     // TODO: implement build
     return enabled
         ? Center(
@@ -36,9 +38,9 @@ class Avatar extends StatelessWidget{
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                       child: CircleAvatar(
-                          backgroundImage: bytesImage != null
-                              ? MemoryImage(bytesImage!)
-                              : AssetImage('assets/images/img_avatar_null.png')
+                          backgroundImage: avatar != ""
+                              ? MemoryImage(base64Decode(avatar))
+                              : AssetImage(avatarNull!)
                                   as ImageProvider),
                     ),
                   ),
@@ -85,10 +87,9 @@ class Avatar extends StatelessWidget{
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                       child: CircleAvatar(
-                          backgroundImage: bytesImage != null
-                              ? MemoryImage(bytesImage!)
-                              : AssetImage('assets/images/img_avatar_null.png')
-                                  as ImageProvider),
+                          backgroundImage: avatar != ""
+                              ? MemoryImage(base64Decode(avatar))
+                              : AssetImage(avatarNull!) as ImageProvider),
                     )),
               ],
             ),

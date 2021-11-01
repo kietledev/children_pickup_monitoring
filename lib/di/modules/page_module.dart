@@ -1,11 +1,9 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
-import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/achievements_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/camera_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_detail_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pupil_detail_page.dart';
-
 import 'package:flutter/material.dart';
 
 import '../injection.dart';
@@ -40,6 +38,11 @@ class PageModule extends DIModule {
     injector.registerFactory<Widget>(() => const TeacherDetailsPage(),
         instanceName: RouteConstants.teacherDetails);
 
+    injector.registerFactory<Widget>(() => const AchievementDetailsPage(),
+        instanceName: RouteConstants.achievementDetail);
+    injector.registerFactory<Widget>(() => const MenuPage(),
+        instanceName: RouteConstants.menu);
+
     injector.registerFactory<Widget>(() => const PupilDetailsPage(),
         instanceName: RouteConstants.pupilDetails);
 
@@ -56,5 +59,26 @@ class PageModule extends DIModule {
         instanceName: RouteConstants.camera);
     injector.registerFactory<Widget>(() => EditProfilePage(),
         instanceName: RouteConstants.editProfile);
+    injector.registerFactory<Widget>(() => ListParentPage(),
+        instanceName: RouteConstants.listparent);
+    injector.registerFactory<Widget>(() => ParentDetailsPage(),
+        instanceName: RouteConstants.parentDetails);
+    injector.registerFactory<Widget>(() => AddUserToParent(),
+        instanceName: RouteConstants.addUserToParent);
+    injector.registerFactory<Widget>(() => FormAddUserToParent(),
+        instanceName: RouteConstants.formAddUserToParent);
+    injector.registerFactory<Widget>(() => ParentAddPage(),
+        instanceName: RouteConstants.parentAdd);
+
+    injector.registerFactory<Widget>(() => GeneratedQRCodePage(),
+        instanceName: RouteConstants.generatedQCode);
+    injector.registerFactory<Widget>(() => PasswordChangePage(),
+        instanceName: RouteConstants.passwordChange);
+    injector.registerFactory<Widget>(() => SettingAppPage(),
+        instanceName: RouteConstants.settingApp);
+    injector.registerFactory<Widget>(() => AppInformationPage(),
+        instanceName: RouteConstants.informationApp);
+    injector.registerFactory<Widget>(() => AppHelpPage(),
+        instanceName: RouteConstants.helpApp);
   }
 }

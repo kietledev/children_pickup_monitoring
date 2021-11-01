@@ -5,19 +5,19 @@ import 'package:floor/floor.dart';
 @Entity(tableName: DBConstants.kPersonTableName)
 class Person extends Equatable {
   @PrimaryKey(autoGenerate: true)
-  final double personId;
+  final int personId;
   final String? employeeIdNumber;
-  final double? currentPersonalTitleId;
+  final int? currentPersonalTitleId;
   final String? currentPersonalTitle;
   final String? currentPersonalTitleEn;
-  final double? academicTitleId;
+  final int? academicTitleId;
   final String? academicTitle;
   final String? academicTitleEn;
   final String? currentLastName;
   final String? currentFirstName;
   final String? currentMiddleName;
   final String? currentNickname;
-  final double? currentGenderId;
+  final int? currentGenderId;
   final String? currentGender;
   final String? currentGenderEn;
   final String? birthDate;
@@ -26,7 +26,7 @@ class Person extends Equatable {
   final String? birthPlaceProvince;
   final String? birthPlaceState;
   final String? birthPlaceCountry;
-  final double? currentMaritalStatusId;
+  final int? currentMaritalStatusId;
   final String? currentMaritalStatus;
   final String? currentMaritalStatusEn;
   final String? currentPeopleIdNumber;
@@ -63,9 +63,9 @@ class Person extends Equatable {
   final String? avatarPicture;
   final String? signatureImage;
   final String? createdDatetime;
-  final double? createdByUserId;
+  final int? createdByUserId;
   final String? updatedDatetime;
-  final double? updatedByUserId;
+  final int? updatedByUserId;
   final String? currentEmail;
   final String? currentPhoneNumber1;
   final String? currentPhoneNumber2;
