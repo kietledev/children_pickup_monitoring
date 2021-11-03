@@ -23,6 +23,11 @@ class _ListParentPage extends State<ListParentPage>{
   int currentIndex = -1;
   List<ParentModel> parents = [];
   @override
+  void initState() {
+    getPupilID().then((value) => print(value));
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(

@@ -1,6 +1,8 @@
 import 'package:children_pickup_monitoring/common/config/local_notification_service.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/utils.dart';
+import 'package:children_pickup_monitoring/di/injection.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
 import 'package:children_pickup_monitoring/presentation/pages/classroom_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/home_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_page.dart';
@@ -10,6 +12,7 @@ import 'package:children_pickup_monitoring/presentation/pages/school_page.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomBarPage extends StatefulWidget {
@@ -109,7 +112,9 @@ class _BottomBarPageState extends State<BottomBarPage> {
     return Scaffold(
       drawerEdgeDragWidth: 0,
       drawer: Drawer(
-          child: SwitchPupilPage(),
+          child: BlocProvider(
+            create: (context) => injector<PupilByParentBloc>(),
+            child:  SwitchPupilPage()),
           ),
       key: _scaffoldKey,
       body: Builder(

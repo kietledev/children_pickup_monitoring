@@ -46,4 +46,21 @@ class UserModel extends User {
         fromParentId: (map["FROM_PARENT_ID"] as double? ?? 0.0).toInt(),
         toPupilId: (map["TO_PUPIL_ID"] as double? ?? 0.0).toInt());
   }
+
+  factory UserModel.json(Map<String, dynamic> map) {
+    return UserModel(
+        userId: map['USER_ID'] as int? ?? 0,
+        personId: map['PERSON_ID'] as int? ?? 0,
+        currentFirstName: map['CURRENT_FIRST_NAME'] as String? ?? "",
+        currentLastName: map["CURRENT_LAST_NAME"] as String? ?? "",
+        currentMiddleName: map["CURRENT_MIDDLE_NAME"] as String? ?? "",
+        loginTime: map["LOGIN_TIME"] as String? ?? "",
+        roleId: map['ROLE_ID'] as int? ?? 0,
+        roleName: map["ROLE_NAME"] as String? ?? "",
+        roleAllowAdd: map["ROLE_ALLOW_ADD"] as bool? ?? false,
+        roleAllowUpdate: map["ROLE_ALLOW_UPDATE"] as bool? ?? false,
+        roleAllowDelete: map["ROLE_ALLOW_DELETE"] as bool? ?? false,
+        fromParentId: map["FROM_PARENT_ID"] as int? ?? 0,
+        toPupilId: map["TO_PUPIL_ID"] as int? ?? 0);
+  }
 }

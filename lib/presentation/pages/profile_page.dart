@@ -7,20 +7,18 @@ import 'dart:typed_data';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
-import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
-import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/avatar.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
-import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 
 class ProfilePage extends StatefulWidget{
   const ProfilePage({Key? key}) : super(key: key);
@@ -34,18 +32,33 @@ class _ProfilePage extends State<ProfilePage> with AutomaticKeepAliveClientMixin
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocProvider(
-      create: (context) => injector<ProfileBloc>()..add(GetprofileEvent(personId: 2)),
+      create: (context) => injector<ProfileBloc>(),
       child: Scaffold(
           body: ProfileBody()
       ),
     );
   }
 }
+class ProfileBody extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ProfileBody();
+}
 
-class ProfileBody extends StatelessWidget{
+class _ProfileBody extends State<ProfileBody>{
   PersonModel? user;
-  late ProfileBloc bloc;
+  UserModel? userModel;
   String avatar = "";
+  int personId = -1;
+  @override
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+   getUserId() async {
+    userModel = await getUser();
+    personId = userModel!.personId.toInt();
+    BlocProvider.of<ProfileBloc>(context).add(GetprofileEvent(personId:personId ));
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -87,6 +100,10 @@ class ProfileBody extends StatelessWidget{
                       text: 'Đăng xuất ',
                       width: 174,
                       press: () {
+                        final prefs = Preferences();
+                        prefs.clear();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            RouteConstants.login, (Route<dynamic> route) => false);
                       },
                     ),
                     SizedBox(height: 24.h,)
@@ -138,7 +155,7 @@ class _Menu extends State<Menu>{
                 currentIndex = index;
               });
               if(listItemsProfile[index].id == 1){
-                Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: 2)));
+                Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => getUser().then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: value!.personId))));
               }else{
                 Navigator.pushNamed(context, item.route);
               }

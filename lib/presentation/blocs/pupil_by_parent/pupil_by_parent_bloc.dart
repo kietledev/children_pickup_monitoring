@@ -31,7 +31,6 @@ class PupilByParentBloc extends Bloc<PupilByParentEvent,PupilByParentState> {
 
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final pupils = dataState.data!;
-        print(pupils[0].personDetail!.currentMiddleName);
         yield FetchPupilByParentSuccessState(pupils: pupils);
       } else {
         yield FetchPupilByParentFailureState(msg: dataState.error!.message);

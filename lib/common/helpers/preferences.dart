@@ -54,7 +54,7 @@ class Preferences {
     final String userString = await preferences.getObject(USER_PREFERENCE);
     final Map<String, dynamic> map =
         jsonDecode(userString) as Map<String, dynamic>;
-    return UserModel.fromJson(map);
+    return UserModel.json(map);
   }
 
   /* Login time */
@@ -113,7 +113,7 @@ class Preferences {
 
   Future<int> getIndexPupil() async {
     final prefs = await _prefs;
-    final index = prefs.getInt("indexPulpil") ?? 0;
+    final index = prefs.getInt("indexPulpil") ?? -1;
     return index;
   }
 

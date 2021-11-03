@@ -81,8 +81,7 @@ class _BodyPasswordChange extends State<BodyPasswordChange>{
                       Align(
                         alignment: Alignment.bottomRight,
                         child: CustomButtonText(text: "Xác nhận",width:133,press: (){
-                          //print("${_currentPassword.text} + ${_passwordnew1.text} + ${_passwordnew2.text}");
-                         changePasswordUser(context, 2, 1);
+                         getUser().then((value) => changePasswordUser(context, value!.userId, 1));
                         },),
                       )
                     ],

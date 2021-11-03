@@ -168,7 +168,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                                         text: "Xác nhận",
                                         width: 135,
                                         press: () {
-                                          updateProfile(user!.personId.toInt());
+                                          getUser().then((value) => updateProfile(value!.personId));
                                         },
                                       )
                                     ],
