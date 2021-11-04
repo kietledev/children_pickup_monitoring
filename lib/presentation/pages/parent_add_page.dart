@@ -32,7 +32,7 @@ class _ParentAddPage extends State<ParentAddPage>{
   final ImagePicker _picker = ImagePicker();
   File? _image;
   String avatar = "";
-  int pupilId = 2;
+  int pupilId = -1;
   int relationshipTypeID = -1;
   String relationshipTypeName = "";
   String relationshipTypeNameEN = "";
@@ -203,7 +203,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                           width: 153,
                                           press: () {
                                             if(isChecked == true){
-                                              postUserToParent(context);
+                                              getUser().then((value) => postUserToParent(context,value!.userId,1));
                                             }else{
                                               WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Bạn chưa đồng ý với điều khoản"));
                                             }
@@ -233,7 +233,8 @@ class _ParentAddPage extends State<ParentAddPage>{
       ),
     );
   }
-  Future postUserToParent(BuildContext context) async{
+  Future postUserToParent(BuildContext context, int userId,int roleId) async{
+     pupilId = await getPupilID();
     if(relationshipTypeID == -1){
       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Bạn chưa chọn mối quan hệ"));
     }else if(avatar == "") {
@@ -253,6 +254,7 @@ class _ParentAddPage extends State<ParentAddPage>{
     }
     else{
       final Map<String, dynamic> body = <String, dynamic>{
+        "USER_ID": userId,
         "CURRENT_LAST_NAME": lastName.text.trim(),
         "CURRENT_FIRST_NAME": firstName.text.trim(),
         "CURRENT_MIDDLE_NAME":middleName.text.trim(),
@@ -271,14 +273,14 @@ class _ParentAddPage extends State<ParentAddPage>{
         "NOTE": "",
         "NOTE_EN": ""
       };
-     BlocProvider.of<ParentsBloc>(context).add(PostParentEvent(roleId: 1,body: body));
+      BlocProvider.of<ParentsBloc>(context).add(PostParentEvent(roleId: roleId,body: body));
     }
   }
   void listenerPostParentState(BuildContext context, ParentsState state) {
     if (state is PostParentSuccessState) {
       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Thêm người thân thành công"));
       int count = 0;
-      Navigator.of(context).popUntil((_) => count++ >= 2);
+      Navigator.of(context).popUntil((context) => count++ >= 2);
     } else if (state is FetchParentsFailureState) {
       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Thêm người thân thất bại"));
     } else {}
