@@ -1,6 +1,7 @@
 import 'package:children_pickup_monitoring/common/constants/color_constants.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
+import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
@@ -175,7 +176,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
   String firstName = "";
   String middleName = "";
   String birthday = "";
-  int pupilId = 2 ;
+  int pupilId = -1 ;
   bool isChecked = false;
   String fromDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now());
   List<RelationshipTypeModel> listRelationship = [];
@@ -310,7 +311,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                           width: 153,
                                           press: () {
                                             if(isChecked == true){
-                                              postUserToParent(context);
+                                              getUser().then((value) => postUserToParent(context,value!.userId,1));
                                             }else{
                                               WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Bạn chưa đồng ý với điều khoản"));
                                             }
@@ -340,11 +341,13 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
       );
   }
 
-  Future postUserToParent(BuildContext context) async{
+  Future postUserToParent(BuildContext context,int userId,int roleId) async{
+    pupilId = await getPupilID();
     if(relationshipTypeID == -1){
       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Bạn chưa chọn mối quan hệ"));
     }else{
       final Map<String, dynamic> body = <String, dynamic>{
+        "USER_ID": userId,
         "CURRENT_LAST_NAME": lastName,
         "CURRENT_FIRST_NAME": firstName,
         "CURRENT_MIDDLE_NAME":middleName,
@@ -363,7 +366,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
         "NOTE": "",
         "NOTE_EN": ""
       };
-      BlocProvider.of<ParentsBloc>(context).add(PostParentEvent(roleId: 1,body: body));
+      BlocProvider.of<ParentsBloc>(context).add(PostParentEvent(roleId: roleId,body: body));
     }
   }
   void listenerPostParentState(BuildContext context, ParentsState state) {

@@ -31,6 +31,7 @@ class ParentsBloc extends Bloc<ParentsEvent, ParentsState> {
           relationshipTypeId: event.relationshipTypeId
         ),
       );
+
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final parents = dataState.data!;
 
