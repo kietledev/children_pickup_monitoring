@@ -277,13 +277,17 @@ class _ParentAddPage extends State<ParentAddPage>{
     }
   }
   void listenerPostParentState(BuildContext context, ParentsState state) {
-    if (state is PostParentSuccessState) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Thêm người thân thành công"));
-      int count = 0;
-      Navigator.of(context).popUntil((context) => count++ >= 2);
-    } else if (state is FetchParentsFailureState) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Thêm người thân thất bại"));
-    } else {}
+   if(state is FetchParentsLoadingState){
+     EasyLoading.show();
+   }else{
+     if (state is PostParentSuccessState) {
+       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Thêm người thân thành công"));
+       int count = 0;
+       Navigator.of(context).popUntil((context) => count++ >= 2);
+     } else if (state is FetchParentsFailureState) {
+       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Thêm người thân thất bại"));
+     } else {}
+   }
   }
   Future showBottomSheet() {
     final decoration = BoxDecoration(

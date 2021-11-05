@@ -59,4 +59,53 @@ class CustomWidgetsSnackBar {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+  static buildWaringSnackbar(BuildContext context, String message,VoidCallback actionOk) {
+    final snackBar = new SnackBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      duration: Duration(seconds: 3),
+      content: Container(
+          height: 48,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.orange,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 12),
+                child: SvgPicture.asset( "assets/icons/ic_exclamation.svg"),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left:12),
+                child:Text(message),
+              ),
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 60,
+                    child: SnackBarAction(
+                      label: "Undo",
+                      onPressed: (){},
+                    ),
+                  ),
+                  SizedBox(
+                    width: 50,
+                    child: TextButton(
+                      child: Text('Ok'),
+                      onPressed:actionOk,
+                    ),
+                  )
+                ],
+              )
+            ],
+          )
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
   }

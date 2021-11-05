@@ -1,6 +1,7 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/parents/parents_bloc.dart';
@@ -21,19 +22,21 @@ class ListParentPage extends StatelessWidget {
     );
   }
 }
-class BodyListParentPage extends StatefulWidget {
+class BodyListParentPage extends StatefulWidget  {
   const BodyListParentPage({
     Key? key,
   }) : super(key: key);
-
   @override
   State<BodyListParentPage> createState() => _BodyListParentPage();
 }
 
-class _BodyListParentPage extends State<BodyListParentPage>{
+class _BodyListParentPage extends State<BodyListParentPage> with AutomaticKeepAliveClientMixin {
   int currentIndex = -1;
   List<ParentModel> parents = [];
   int pupilId = -1;
+  final preferences = Preferences();
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     initBloc();
@@ -65,22 +68,27 @@ class _BodyListParentPage extends State<BodyListParentPage>{
           ),
         ),
         child: BlocConsumer<ParentsBloc, ParentsState>(
+          bloc: BlocProvider.of(context),
           listener: (context, state) {
-            if (state is FetchParentsSuccessState) {
-              EasyLoading.dismiss();
-              parents = state.parents!;
-            } else if(state is DeleteParentSuccessState){
-              WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Xóa thành công"));
-              getPupilID().then((value) => context.read<ParentsBloc>().add(FetchParents(pupilId: value, relationshipTypeId: 0)));
-            }
-            else if (state is FetchParentsFailureState) {
-              EasyLoading.dismiss();
-            } else {
+            if(state is FetchParentsLoadingState){
               EasyLoading.show();
+            }else {
+              if (state is FetchParentsSuccessState) {
+                EasyLoading.dismiss();
+                parents = state.parents!;
+              } else if(state is DeleteParentSuccessState){
+                WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Xóa thành công"));
+                getPupilID().then((value) => context.read<ParentsBloc>().add(FetchParents(pupilId: value, relationshipTypeId: 0)));
+              }
+              else if (state is FetchParentsFailureState) {
+                EasyLoading.dismiss();
+              } else {
+                EasyLoading.show();
+              }
             }
           },
           buildWhen: (prevState, currState) {
-            return currState is ParentsState && currState.parents != null ||
+            return currState != prevState && currState.parents != null ||
                 currState is FetchParentsSuccessState;
           },
           builder: (context,state){
@@ -118,7 +126,8 @@ class _BodyListParentPage extends State<BodyListParentPage>{
                                 ),
                               ),
                               onTap: (){
-                                getUser().then((value) => deleteParent(item.parentId!, value!.userId,context, 1));
+                                CustomWidgetsSnackBar.buildWaringSnackbar(context, "Bạn có muốn xóa dữ liệu?", ()=>getUser().then((value) => deleteParent(item.parentId!, value!.userId,context, 1))
+                                );
                               },
                             ),
                           )

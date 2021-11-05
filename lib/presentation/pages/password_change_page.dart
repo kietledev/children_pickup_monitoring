@@ -37,6 +37,7 @@ class _BodyPasswordChange extends State<BodyPasswordChange>{
   TextEditingController _currentPassword = new TextEditingController();
   TextEditingController _newPassword1 = new TextEditingController();
   TextEditingController _newPassword2 = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

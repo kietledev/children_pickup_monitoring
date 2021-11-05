@@ -116,8 +116,8 @@ class _ProfileBody extends State<ProfileBody>{
       } else if (state is ProfileFailureState) {
         EasyLoading.dismiss();
         return const SizedBox.shrink();
-      } else { EasyLoading.show();
-
+      } else {
+        EasyLoading.show();
         return const SizedBox.shrink();
       }
     });

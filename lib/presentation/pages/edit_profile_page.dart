@@ -168,7 +168,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                                         text: "Xác nhận",
                                         width: 135,
                                         press: () {
-                                          getUser().then((value) => updateProfile(value!.personId));
+                                          getUser().then((value) => updateProfile(value!.personId,value.userId));
                                         },
                                       )
                                     ],
@@ -190,8 +190,9 @@ class _EditProfileBody extends State<EditProfileBody> {
     );
   }
 
-  void updateProfile(int personID) {
+  void updateProfile(int personID,int userId) {
     final Map<String, dynamic> body = <String, dynamic>{
+      "USER_ID": userId,
       "CURRENT_LAST_NAME": _lastName.text.trim(),
       "CURRENT_FIRST_NAME": _firstName.text.trim(),
       "CURRENT_MIDDLE_NAME": _middleName.text.trim(),
