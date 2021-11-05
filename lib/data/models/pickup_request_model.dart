@@ -92,4 +92,5 @@ class PickUpRequestModel extends PickUpRequest{
       pickUpPlace: json['PICK_UP_PLACE'] as String? ?? '',
     );
   }
+
 }

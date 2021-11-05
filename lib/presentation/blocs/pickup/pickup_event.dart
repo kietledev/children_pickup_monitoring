@@ -10,12 +10,6 @@ abstract class PickUpEvent extends Equatable {
 class InsertPickUpRequestEvent extends PickUpEvent {
   Map<String, dynamic> body;
   InsertPickUpRequestEvent({required this.body});
-
-  @override
-  PickUpEventEvent() {
-    // TODO: implement PickUpEventEvent
-    throw UnimplementedError();
-  }
 }
 class UpdatePickUpRequestEvent extends PickUpEvent {
   final String requestId;

@@ -29,8 +29,7 @@ class PupilByParentBloc extends Bloc<PupilByParentEvent,PupilByParentState> {
             parentId: event.parentId,
         ),
       );
-
-      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
+      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty)  {
         final pupils = dataState.data!;
         print("pupils data ==> "+pupils.toString());
         yield FetchPupilByParentSuccessState(pupils: pupils);

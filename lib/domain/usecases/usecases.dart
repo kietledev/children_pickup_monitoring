@@ -13,3 +13,4 @@ export 'get_pickup_place_usercase.dart';
 export 'get_pupil_by_parent_usercase.dart';
 export 'delete_parent_usecase.dart';
 export 'post_password_usercase.dart';
+export 'post_pickup_usecase.dart';

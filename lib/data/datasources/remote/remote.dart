@@ -14,3 +14,4 @@ export 'get_pupil_by_parent_api_service.dart';
 
 export 'delete_parent_api_service.dart';
 export 'post_password_api_service.dart';
+export 'post_pickup_card_service.dart';

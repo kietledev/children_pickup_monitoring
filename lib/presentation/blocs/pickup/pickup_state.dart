@@ -1,7 +1,7 @@
 part of 'pickup_bloc.dart';
 
 abstract class PickUpState extends Equatable {
-  final PickUpRequestModel? pickUpRequest;
+  final PickUpRequest? pickUpRequest;
   final String? msg;
   const PickUpState({this.pickUpRequest, this.msg});
 
@@ -11,7 +11,7 @@ abstract class PickUpState extends Equatable {
 class FetchPickUpLoadingState extends PickUpState {}
 
 class PickUpSuccessState extends PickUpState {
-  const PickUpSuccessState({required PickUpRequestModel pickUpRequest}) : super(pickUpRequest: pickUpRequest);
+  const PickUpSuccessState({required PickUpRequest pickUpRequest}) : super(pickUpRequest: pickUpRequest);
 }
 
 class PickUpFailureState extends PickUpState {

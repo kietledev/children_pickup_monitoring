@@ -49,6 +49,9 @@ class _CreateQRCodeState extends State<CreateQRCodePage> {
             create: (BuildContext context) => injector<ParentsBloc>()
               ..add(const FetchParents(pupilId: 1, relationshipTypeId: 0),)
         ),
+        BlocProvider<PickUpBloc>(
+            create: (BuildContext context) => injector<PickUpBloc>()
+        ),
 
 
       ],
@@ -73,6 +76,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
   UserModel? userModel;
   //format ngày
   final formatDate = new DateFormat('dd-MM-yyyy');
+  DateTime now = DateTime.now();
   //TIME
   TextEditingController pin1 = TextEditingController();
   TextEditingController pin2 = TextEditingController();
@@ -87,7 +91,9 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
   String? locationSelected;
   String? locationNameSelected;
   //parent pickup
-  String? parentIDSelected =  '16';
+  String? currentParentName = '';
+  String? parentIDSelected =  '0';
+  String? parentID =  '-1';
   String? parentNameSelected;
   List<Parent>? _parentPickUps = [];
   //pupil pickup
@@ -95,22 +101,59 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
   List<Pupil> _pupils = [];
   List<PupilCheck> _pupilsPickUp = [];
   List<int?> _pupilIDs = [];
-
-
-
-
+ //Request
+  PickUpRequest _pickUpRequest = new PickUpRequest();
+  String? dateTimeRequest = '';
   int _timeIndex = 1;
   int isselected = 0;
+  int userID = 0;
   @override
   void initState() {
     super.initState();
-    getParentId();
-    getUser().then((value) => parentIDSelected = value!.fromParentId.toString());
+    getParentId(parentID!);
     pin2FocusNode = FocusNode();
   }
-   getParentId() async {
+  getParentId(String? parentId) async {
     userModel = await getUser();
-    parentIDSelected = userModel!.fromParentId.toString();
+      if (parentId == "-1"){
+        parentIDSelected = userModel!.fromParentId.toString();
+        parentID = userModel!.fromParentId.toString();
+        userID = userModel!.userId;
+        setState(() {
+          currentParentName = userModel!.currentLastName+ " "+ userModel!.currentMiddleName! + " "+ userModel!.currentFirstName;
+        });
+        BlocProvider.of<PupilByParentBloc>(context).add(FetchPupilByParent(parentId: userModel!.fromParentId));
+      }else{
+        BlocProvider.of<PupilByParentBloc>(context).add(FetchPupilByParent(parentId: int.parse(parentId!)));
+      }
+  }
+  Future createQR() async {
+    int? pupil_1 = 0;
+    int? pupil_2 = 0;
+    int? pupil_3 = 0;
+    dateTimeRequest = formatDate.format(now) + ' ' + timeString + ":00";
+    if (_pupilIDs.length == 1) {
+      pupil_1 = _pupilIDs[0];
+    } else if (_pupilIDs.length == 2) {
+      pupil_1 = _pupilIDs[0];
+      pupil_2 = _pupilIDs[1];
+    } else if (_pupilIDs.length == 3) {
+      pupil_1 = _pupilIDs[0];
+      pupil_2 = _pupilIDs[1];
+      pupil_3 = _pupilIDs[2];
+    }
+    print("USER ID --> "+userID.toString());
+    final Map<String, dynamic> body = <String, dynamic>{
+      "REQUEST_BY_USER_ID": userID,
+      "REQUEST_BY_PARENT_ID": int.parse(parentIDSelected!),
+      "REQUEST_DATETIME": dateTimeRequest,
+      "PICK_UP_PLACE_ID":  int.parse(locationSelected!),
+      "PICK_UP_PUPIL_ID_1": pupil_1,
+      "PICK_UP_PUPIL_ID_2": pupil_2,
+      "PICK_UP_PUPIL_ID_3": pupil_3,
+    };
+    print(body);
+    BlocProvider.of<PickUpBloc>(context).add(InsertPickUpRequestEvent(body: body));
   }
   @override
   Widget build(BuildContext context) {
@@ -240,35 +283,39 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                   height: 12.0,
                 ),
                 isselected == 0?
-                Container(
-                  decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        contentPadding:
-                        const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                        disabledBorder:
-                        OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 0),
-                          borderRadius:
-                          BorderRadius.circular(6.0),
-                        ),
-                        filled: true,
-                        hintStyle: QRCodeStyle.contentStyle4,
-                        hintText: "Trần Phú Nhuận",
-                        fillColor: Colors.white),
-                    enabled: false,
-                  ),
-                ):
+                // Container(
+                //   decoration: const BoxDecoration(
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Colors.black12,
+                //         blurRadius: 10,
+                //         offset: const Offset(0, 2),
+                //       ),
+                //     ],
+                //   ),
+                //   child: TextField(
+                //
+                //     decoration: InputDecoration(
+                //         contentPadding:
+                //         const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                //         disabledBorder:
+                //         OutlineInputBorder(
+                //           borderSide: BorderSide(
+                //               color: Colors.white,
+                //               width: 0),
+                //           borderRadius:
+                //           BorderRadius.circular(6.0),
+                //         ),
+                //         filled: true,
+                //         hintStyle: QRCodeStyle.contentStyle4,
+                //         hintText: currentParentName,
+                //         fillColor: Colors.white),
+                //     enabled: false,
+                //   ),
+                // ):
+                CustomTextFieldMenu(
+                    value: currentParentName!,
+                    style: QRCodeStyle.contentStyle2):
                 _buildParents(),
                 SizedBox(
                   height: 12.0,
@@ -289,7 +336,8 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                 SizedBox(
                   height: 12.0,
                 ),
-                _buildPupilsCheckBox(int.parse(parentIDSelected!)),
+
+                _buildPupilsCheckBox(),
                 // PupilPickUp(parentID:int.parse(parentIDSelected!)),
             // getUser().then((value) => _buildPupilsCheckBox(value!.fromParentId));
 
@@ -531,14 +579,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
         });
 
   }
-  Future getPupilByParent(int parentID) async {
-    int pID = -1;
-    pID = parentID;
-    print("ID-------"+ pID.toString());
-     BlocProvider.of<PupilByParentBloc>(context).add(await FetchPupilByParent(parentId: pID));
 
-
-  }
   Widget _buildParents() {
     return BlocBuilder<ParentsBloc, ParentsState>(
         builder: (context, state) {
@@ -569,9 +610,10 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                             parentNameSelected = i.getFullName();
                             }
                             }
-
-
+                        print("parentIDSelected  -> "+parentIDSelected!);
+                        getParentId(parentIDSelected!);
                       });
+
                     },
                     items: _parents.map((Parent value) {
                       return DropdownMenuItem<String>(
@@ -604,44 +646,55 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
           }
         });
   }
-  Widget _buildPupilsCheckBox(int pID ) {
-    BlocProvider.of<PupilByParentBloc>(context).add(FetchPupilByParent(parentId: pID));
-    return BlocListener<PupilByParentBloc, PupilByParentState>(
-        listener: (context, state) {
-          if (state is FetchPupilByParentLoadingState) {
-            EasyLoading.show();
-          } else if (state is FetchPupilByParentSuccessState) {
-            _pupilsCheckbox = [];
-            print("_pupils length ==>>  "+_pupils.length.toString());
-            _pupils = state.pupils!;
-            print("_pupils length ==>>  "+_pupils.length.toString());
-            for (Pupil pupil in _pupils){
-              _pupilsCheckbox.add(new PupilCheck(isCheck: false,pupil: pupil));
-            }
-            print("_pupilsCheckbox ==>>     "+_pupilsCheckbox[0].pupil!.personToPersonPersonalRelationshipTypeName!);
+  Widget _buildPupilsCheckBox() {
+    print("VAO HÀM----");
+    return  BlocBuilder<PupilByParentBloc, PupilByParentState>(
+      builder: (context, state) {
+        if (state is FetchPupilByParentFailureState) {
+          return Text("khong co dl");
+        } else if (state is FetchPupilByParentSuccessState) {
+          _pupilsCheckbox = [];
+          _pupils = state.pupils!;
+          print("_pupils length ==>>  "+_pupils.length.toString());
+          for (Pupil pupil in _pupils){
+            _pupilsCheckbox.add(new PupilCheck(isCheck: false,pupil: pupil));
+          }
+          print("_pupilsCheckbox ==>>     "+_pupilsCheckbox[0].pupil!.personToPersonPersonalRelationshipTypeName!);
+          return SizedBox(
+              height: 60 * _pupilsCheckbox.length.toDouble(),
+              child: ListView(
 
-
-          }else if (state is FetchPupilByParentFailureState) {
-            UiHelper.showMyDialog(
-              context: context,
-              content: state.msg ?? "This is something wrong",
-            );
-
-          }else {}
-        },
-      child: SizedBox(
-          height: 60 * _pupilsCheckbox.length.toDouble(),
-          child: ListView(
-
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: _pupilsCheckbox.map((PupilCheck pupil) {
-              return new ItemPupilCheckBox(
-                pupil: pupil,
-              );
-            }).toList(),
-          )),);
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: _pupilsCheckbox.map((PupilCheck pupil) {
+                  return new ItemPupilCheckBox(
+                    pupil: pupil,
+                  );
+                }).toList(),
+              )
+          );
+        }else{
+          print("LỖI");
+          return const SizedBox.shrink();
+        }
+      },
+    );
   }
+  Widget _saveData(){
+    return BlocBuilder<PickUpBloc,PickUpState>(
+      builder: (context, state) {
+        if (state is PickUpFailureState) {
+          return Text("khong co dl");
+        } else if (state is PickUpSuccessState) {
+          _pickUpRequest = state.pickUpRequest!;
+          return const SizedBox.shrink();
+        }else{
+          return const SizedBox.shrink();
+        }
+      },
+    );
+
+}
   Widget _buildButtonNext() {
     return Align(
         alignment: Alignment.center,
@@ -649,13 +702,28 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
             text: 'Tiếp tục',
             press: () {
               _pupilsPickUp = [];
+              _pupilIDs = [];
               for (PupilCheck pupil in _pupilsCheckbox) {
                 if (pupil.isCheck! == true) {
                   _pupilsPickUp.add(pupil);
                   _pupilIDs.add(pupil.pupil!.pupilId);
                 }
               }
-              _showAlert(context, _pupilsPickUp);
+              if (_pupilIDs.length <= 3 &&
+                  _pupilIDs.length > 0) {
+                if (locationSelected != null) {
+                  _showAlert(context, _pupilsPickUp);
+                } else {
+                  _showError(context,
+                      'Bạn chưa chọn địa điểm đón');
+                }
+              } else if (_pupilIDs.length == 0) {
+                _showError(context, 'Bạn chưa chọn bé đón');
+              } else {
+                _showError(context,
+                    'Bạn chỉ được đón tối đa 3 bé');
+              }
+
             },
             width: 156)
     );
@@ -669,7 +737,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
         context: context,
         builder: (context) => AlertDialog(
           content: Container(
-            height: 200,
+            height: 150,
             child: Column(
               children: [
                 Text(
@@ -742,12 +810,33 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                 child: CustomButtonText(
                     text: 'Xác nhận',
                     press: () {
-                      Navigator.of(context).pushNamed(RouteConstants.qrInformation);
+                      createQR();
+                      // Navigator.of(context).pushNamed(RouteConstants.qrInformation);
+
                     },
                     width: 117),
               ),
             ])
           ],
         ));
+  }
+  void _showError(BuildContext context, String title) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Container( height: 50,child:Center(child: Text(title,style:QRCodeStyle.contentStyle2))),
+            actions: <Widget>[
+              Center(
+                child: CustomButtonBorder(
+                    text: 'Đóng',
+                    press: () {
+                      Navigator.pop(context);
+                    },
+                    width: 117),
+              ),
+            ],
+          );
+        });
   }
 }

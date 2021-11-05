@@ -57,5 +57,7 @@ class BlocModule extends DIModule {
 
     injector.registerFactory<PupilByParentBloc>(() =>PupilByParentBloc(injector()));
 
+    injector.registerFactory<PickUpBloc>(() =>PickUpBloc(injector()));
+
   }
 }

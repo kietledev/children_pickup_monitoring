@@ -65,5 +65,10 @@ class RepositoryModule extends DIModule {
     injector.registerSingleton<PasswordRepository>(
       PasswordRepositoryImpl(injector()),
     );
+    /* pickup card repository */
+    injector.registerSingleton<PickUpRepository>(
+      PickUpCardRepositoryImpl(injector()),
+    );
+
   }
 }

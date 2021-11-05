@@ -51,5 +51,9 @@ class ApiModule extends DIModule {
     /* pupil parent api */
     injector.registerSingleton<GetPupilByParentApiService>(GetPupilByParentApiService(injector()));
 
+    /* POST card api */
+    injector.registerSingleton<PostPickUpCardApiService>(PostPickUpCardApiService(injector()));
+
+
   }
 }
