@@ -304,7 +304,7 @@ class _HomeBodyState extends State<HomeBody> {
         ),
       ),
     );
-  }
+}
 
   Widget _buildTimer() {
     return Expanded(

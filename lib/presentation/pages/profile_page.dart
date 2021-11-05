@@ -1,7 +1,4 @@
 
-
-
-
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';

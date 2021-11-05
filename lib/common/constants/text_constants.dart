@@ -16,6 +16,7 @@ class TitlesConstants {
   static const String details = 'Chi tiết';
   static const String achievements = 'Thành tích';
   static const String generated_qr = 'Mã đã tạo';
+  static const String send_request_pickup = 'Gửi yêu cầu đón trẻ';
   static const String menu = 'Thực đơn';
   static const String achievement = "/achievement";
   static const String classInformation = "/class_information";
