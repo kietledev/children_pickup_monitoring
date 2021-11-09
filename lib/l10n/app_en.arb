@@ -1,4 +1,9 @@
 {
+  "school": "School",
+  "profileBottom": "Profile",
+  "home": "Home",
+  "classRoom": "Class Room",
+  "message": "Message",
   "switchPupil": "Switch Pupil",
   "chooseRelationship": "Choose relationship",
   "sendRequire": "Send Require",

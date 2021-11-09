@@ -1,4 +1,9 @@
 {
+  "school": "Trường học",
+  "profileBottom": "Cá nhân",
+  "home": "Trang chủ",
+  "classRoom": "Lớp học",
+  "message": "Tin nhắn",
   "switchPupil": "Chuyển bé",
   "chooseRelationship": "chọn mối quan hệ",
   "sendRequire": "Gửi yêu cầu",
