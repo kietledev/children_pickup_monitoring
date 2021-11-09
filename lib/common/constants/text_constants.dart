@@ -1,3 +1,4 @@
+
 class FontsConstants {
   static const notoSans = 'NotoSans';
 }
@@ -30,6 +31,7 @@ class TitlesAppBar{
   static const String settingApp = "Cài đặt ứng dụng";
   static const String infoApp = "Về ứng dụng";
   static const String helpApp = "Trợ giúp";
+  static const String switchPupil = "Chuyển bé";
 }
 
 class ButtonConstatns {
@@ -38,6 +40,7 @@ class ButtonConstatns {
   static const String login = "Đăng nhập";
   static const String sendOtp = "Send OTP";
   static const String sentPickUp = "Gửi yêu cầu";
+  static const String logout = "Đăng xuất";
 }
 
 class StringConstatns {

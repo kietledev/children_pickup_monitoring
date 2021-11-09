@@ -1,9 +1,4 @@
 
-
-
-
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
@@ -18,7 +13,7 @@ import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilePage extends StatefulWidget{
   const ProfilePage({Key? key}) : super(key: key);
@@ -97,7 +92,7 @@ class _ProfileBody extends State<ProfileBody>{
                     ),
                     SizedBox(height: 48.h,),
                     CustomButtonText(
-                      text: 'Đăng xuất ',
+                      text: (AppLocalizations.of(context)!.logout),
                       width: 174,
                       press: () {
                         final prefs = Preferences();
@@ -132,15 +127,16 @@ class Menu extends StatefulWidget {
   State<Menu> createState() => _Menu();
 }
 class _Menu extends State<Menu>{
-  final List<ItemMenu> listItemsProfile= [
-    ItemMenu(1, "Thông tin cá nhân", "assets/icons/ic_information_personal.svg", ""),
-    ItemMenu(2, "Danh sách liên quan", "assets/icons/ic_list_order.svg", RouteConstants.listparent),
-    ItemMenu(3, "Đổi mật khẩu", "assets/icons/ic_change_password.svg", RouteConstants.passwordChange),
-    ItemMenu(4, "Cài đặt ứng dụng", "assets/icons/ic_setting.svg", RouteConstants.settingApp),
-  ];
+
   int currentIndex = -1;
   @override
   Widget build(BuildContext context) {
+    final List<ItemMenu> listItemsProfile= [
+      ItemMenu(1, (AppLocalizations.of(context)!.profile), "assets/icons/ic_information_personal.svg", ""),
+      ItemMenu(2, (AppLocalizations.of(context)!.listOfRelatives), "assets/icons/ic_list_order.svg", RouteConstants.listparent),
+      ItemMenu(3, (AppLocalizations.of(context)!.changePassword), "assets/icons/ic_change_password.svg", RouteConstants.passwordChange),
+      ItemMenu(4, (AppLocalizations.of(context)!.setting), "assets/icons/ic_setting.svg", RouteConstants.settingApp),
+    ];
       return ListView.builder(
         primary: false,
         itemCount: listItemsProfile.length,

@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/language/language_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/local_user/local_user_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/parents/parents_bloc.dart';
@@ -56,6 +57,7 @@ class BlocModule extends DIModule {
     injector.registerFactory<PickUpPlaceBloc>(() =>PickUpPlaceBloc(injector()));
 
     injector.registerFactory<PupilByParentBloc>(() =>PupilByParentBloc(injector()));
+    //injector.registerFactory<LanguageBloc>(() =>LanguageBloc(injector()));
 
   }
 }

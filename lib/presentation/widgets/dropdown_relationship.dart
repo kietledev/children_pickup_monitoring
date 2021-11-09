@@ -1,9 +1,11 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DropdownRelationship extends StatefulWidget{
   List<RelationshipTypeModel> listRelationship;
   int? relationshipTypeId;
@@ -19,6 +21,17 @@ class DropdownRelationship extends StatefulWidget{
   State<StatefulWidget> createState() => _DropdownRelationship();
 }
 class _DropdownRelationship extends State<DropdownRelationship>{
+  int language = 0;
+  final preferences = Preferences();
+  @override
+  void initState() {
+    preferences.getLanguage().then((value){
+      setState(() {
+        language = value;
+      });
+    });
+    super.initState();
+  }
   final shadowtextfield = BoxDecoration(
     boxShadow: [
       BoxShadow(
@@ -44,7 +57,7 @@ class _DropdownRelationship extends State<DropdownRelationship>{
           decoration: shadowtextfield,
           child: CustomDropdown<int>(
             child: (widget.relationshipTypeId == null)
-                ? Text('chọn mối quan hệ', style: EditProfileStyle.contentStyle,)
+                ? Text((AppLocalizations.of(context)!.chooseRelationship), style: EditProfileStyle.contentStyle,)
                 : Text('${widget.relationshipTypeId}', style: EditProfileStyle.contentStyle,),
             onChange:widget.returnRelationShip!,
             dropdownButtonStyle: DropdownButtonStyle(
@@ -65,14 +78,11 @@ class _DropdownRelationship extends State<DropdownRelationship>{
                       padding: const EdgeInsets.all(8.0),
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
-                        child: Text(
-                            item.value
-                                .personToPersonPersonalRelationshipTypeName!,
-                            style: TextStyle(
-                                color: ColorConstants.neutralColor1,
-                                fontSize: 14,
-                                fontFamily: FontsConstants.notoSans)),
+                        child: (language == 0) ?
+                        Text(item.value.personToPersonPersonalRelationshipTypeName!, style: TextStyle(color: ColorConstants.neutralColor1, fontSize: 14, fontFamily: FontsConstants.notoSans))
+                        : Text(item.value.personToPersonPersonalRelationshipTypeNameEn!, style: TextStyle(color: ColorConstants.neutralColor1, fontSize: 14, fontFamily: FontsConstants.notoSans))
                       ),
+
                     ),
                   ),
                 )

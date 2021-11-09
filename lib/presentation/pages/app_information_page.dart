@@ -25,7 +25,7 @@ class _AppInformationPage extends State<AppInformationPage>{
           ),
         ),
         child: Center(
-          child: const Text('Mô tả chi tiết'),
+          child: Text("Nội dung")
         ),
       ) ,
     );
