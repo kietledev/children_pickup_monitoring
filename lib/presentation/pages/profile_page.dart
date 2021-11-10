@@ -4,6 +4,7 @@ import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
 import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
+import 'package:children_pickup_monitoring/presentation/pages/warning_page.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/avatar.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -112,8 +113,7 @@ class _ProfileBody extends State<ProfileBody>{
         EasyLoading.dismiss();
         return const SizedBox.shrink();
       } else {
-        EasyLoading.show();
-        return const SizedBox.shrink();
+        return WarningPage(type: 1,);
       }
     });
 
