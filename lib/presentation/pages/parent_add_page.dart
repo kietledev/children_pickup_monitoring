@@ -19,7 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ParentAddPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _ParentAddPage();
@@ -54,7 +54,7 @@ class _ParentAddPage extends State<ParentAddPage>{
     return Scaffold(
       appBar: WidgetAppBar(
         hideBack: true,
-        title: TitlesAppBar.addUserToParent,
+        title: (AppLocalizations.of(context)!.addRelatives),
         actionBack: ()=>Navigator.pop(context),
       ),
       body: MultiBlocProvider(
@@ -93,7 +93,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                 ),
                                 TextFieldCustom(
                                   controller: fullName,
-                                  title: StringConstatns.fullNameParent2,
+                                  title: (AppLocalizations.of(context)!.fullName),
                                   enabled: _enabled,
                                   typeTextField: "name",
                                   firstNameController: firstName,
@@ -102,7 +102,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                 ),
                                 DropdownRelationship(
                                   listRelationship: listRelationship,
-                                  title: StringConstatns.relationship,
+                                  title: (AppLocalizations.of(context)!.relationship),
                                   returnRelationShip: (int value, int index) {
                                     relationshipTypeID = listRelationship[index].personToPersonPersonalRelationshipTypeId!;
                                     relationshipTypeName = listRelationship[index].personToPersonPersonalRelationshipTypeName!;
@@ -111,7 +111,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                 ),
                                 TextFieldCustom(
                                     controller: birthday,
-                                    title: "Năm sinh",
+                                    title: (AppLocalizations.of(context)!.birthday),
                                     enabled: _enabled,
                                     typeTextField: "birthday",
                                     day: "$day",
@@ -125,7 +125,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     Expanded(
                                       child: Container(
                                         child: TextFieldCustom(
-                                            title: StringConstatns.phoneNumber1,
+                                            title: (AppLocalizations.of(context)!.phone1),
                                             controller: phoneNumber1,
                                             keyboarType: "phone",
                                             enabled: _enabled),
@@ -135,7 +135,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     Expanded(
                                       child: Container(
                                         child: TextFieldCustom(
-                                            title: StringConstatns.phoneNumber2,
+                                            title: (AppLocalizations.of(context)!.phone2),
                                             controller: phoneNumber2,
                                             keyboarType: "phone",
                                             enabled: _enabled),
@@ -156,7 +156,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     enabled: _enabled),
                                 TextFieldCustom(
                                   controller: homeAddress,
-                                  title: "Địa chỉ",
+                                  title: (AppLocalizations.of(context)!.address),
                                   enabled: _enabled,
                                   typeTextField: "address",
                                 ),
@@ -191,7 +191,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       CustomButtonBorder(
-                                          text: "Hủy",
+                                          text: (AppLocalizations.of(context)!.cancle),
                                           width: 133,
                                           press: () {}
                                       ),
@@ -199,7 +199,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                       BlocListener<ParentsBloc, ParentsState>(
                                         listener:(context, state)=> listenerPostParentState(context, state),
                                         child:CustomButtonText(
-                                          text: "Gửi yêu cầu",
+                                          text: (AppLocalizations.of(context)!.sendRequire),
                                           width: 153,
                                           press: () {
                                             if(isChecked == true){

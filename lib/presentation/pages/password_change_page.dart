@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PasswordChangePage extends StatelessWidget{
   @override
@@ -17,7 +17,7 @@ class PasswordChangePage extends StatelessWidget{
     return Scaffold(
       appBar: WidgetAppBar(
           hideBack: true,
-          title: TitlesAppBar.changePassword,
+          title: (AppLocalizations.of(context)!.changePassword),
           actionBack: ()=>Navigator.pop(context)
       ),
       body: BlocProvider(
@@ -59,29 +59,29 @@ class _BodyPasswordChange extends State<BodyPasswordChange>{
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tài khoản", style:EditProfileStyle.titleStyleEditTrue,),
+                  Text((AppLocalizations.of(context)!.account), style:EditProfileStyle.titleStyleEditTrue,),
                   userName(),
                   SizedBox(height: 24.h,),
-                  TextFieldPasswordChange(controller:_currentPassword , passwordVisible: _passwordVisible,title: StringConstatns.currentPassword,),
+                  TextFieldPasswordChange(controller:_currentPassword , passwordVisible: _passwordVisible,title: (AppLocalizations.of(context)!.currentPassword),),
                   TextButton(
-                      child: Text("Quyên mật khẩu ?",
+                      child: Text((AppLocalizations.of(context)!.forgotPassword),
                         style: AddUserToParentStyle.buttonTextStyle,
                       ),
                     onPressed: (){},
                   ),
-                  TextFieldPasswordChange(controller:_newPassword1 , passwordVisible: _passwordVisible,title: StringConstatns.newPassword,),
+                  TextFieldPasswordChange(controller:_newPassword1 , passwordVisible: _passwordVisible,title: (AppLocalizations.of(context)!.newPassword),),
                   SizedBox(height: 24.h,),
-                  TextFieldPasswordChange(controller:_newPassword2 , passwordVisible: _passwordVisible,title: StringConstatns.newPassword,),
+                  TextFieldPasswordChange(controller:_newPassword2 , passwordVisible: _passwordVisible,title: (AppLocalizations.of(context)!.newPassword),),
                   SizedBox(height: 24.h,),
                   Stack(
                     children: [
                       Align(
                           alignment: Alignment.topLeft,
-                          child: CustomButtonBorder(width: 133,text: 'Hủy',press: (){Navigator.pop(context);},)
+                          child: CustomButtonBorder(width: 133,text: (AppLocalizations.of(context)!.cancle),press: (){Navigator.pop(context);},)
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: CustomButtonText(text: "Xác nhận",width:133,press: (){
+                        child: CustomButtonText(text: (AppLocalizations.of(context)!.confirm),width:133,press: (){
                          getUser().then((value) => changePasswordUser(context, value!.userId, 1));
                         },),
                       )

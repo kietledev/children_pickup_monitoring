@@ -1,3 +1,4 @@
+import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SwitchPupilPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SwitchPupilPage();
@@ -24,7 +25,7 @@ class _SwitchPupilPage extends State<SwitchPupilPage> {
       appBar: WidgetAppBar(
         actionBack: ()=>Navigator.pop(context),
         hideBack: false,
-        title: "Chuyển bé",
+        title: (AppLocalizations.of(context)!.switchPupil),
       ),
       body: BodySwitchPupilPage()
     );

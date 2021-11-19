@@ -15,6 +15,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AddUserToParent extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _AddUserToParent();
@@ -32,7 +33,7 @@ class _AddUserToParent extends State <AddUserToParent>{
     return Scaffold(
       appBar: WidgetAppBar(
         hideBack: true,
-        title: 'Thêm mới',
+        title: (AppLocalizations.of(context)!.addRelatives),
         actionBack: ()=>Navigator.pop(context),
       ),
       body: BlocProvider(
@@ -79,13 +80,13 @@ class _AddUserToParent extends State <AddUserToParent>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                                 (searchController.text.isNotEmpty)
-                                    ? Text('Chúng tôi không tìm thấy kết quả?',style:AddUserToParentStyle.contentStyle)
-                                    :Text('Nhập vào số điện thoại tìm kiếm hoặc',style: AddUserToParentStyle.contentStyle ),
+                                    ? Text((AppLocalizations.of(context)!.noSearchPhone),style:AddUserToParentStyle.contentStyle)
+                                    :Text((AppLocalizations.of(context)!.enterPhone),style: AddUserToParentStyle.contentStyle ),
                                 TextButton(
                                     onPressed: (){
                                       Navigator.pushNamed(context, RouteConstants.parentAdd);
                                     },
-                                    child: Text('Thêm mới',style: AddUserToParentStyle.buttonTextStyle)
+                                    child: Text((AppLocalizations.of(context)!.addRelatives),style: AddUserToParentStyle.buttonTextStyle)
                                 )
                               ],
                             ),
@@ -145,7 +146,7 @@ class _AddUserToParent extends State <AddUserToParent>{
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: ColorConstants.neutralColor4, width: 2),
           ),
-          hintText: "Tìm theo số điện thoại",
+          hintText: (AppLocalizations.of(context)!.searchPhone),
           hintStyle: TextStyle(color: ColorConstants.neutralColor2,fontFamily: FontsConstants.notoSans,fontSize: 16),
           prefixIcon:Padding(
               padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
@@ -195,7 +196,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
     return Scaffold(
       appBar: WidgetAppBar(
         hideBack: true,
-        title: TitlesAppBar.addUserToParent,
+        title: (AppLocalizations.of(context)!.addRelatives),
         actionBack: ()=>Navigator.pop(context),
       ),
       body: MultiBlocProvider(
@@ -226,13 +227,13 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                             Avatar(avatar: avatar,avatarNull: "assets/images/img_avatar_null.png", enabled: false),
                             TextFieldCustom(
                               controller: fullName,
-                              title: StringConstatns.fullNameParent2,
+                              title: (AppLocalizations.of(context)!.fullName),
                               enabled: false,
                               typeTextField: "name",
                             ),
                             DropdownRelationship(
                               listRelationship: listRelationship,
-                              title: StringConstatns.relationship,
+                              title: (AppLocalizations.of(context)!.relationship),
                               returnRelationShip: (int value, int index) {
                                 relationshipTypeID = listRelationship[index].personToPersonPersonalRelationshipTypeId!;
                                 relationshipTypeName = listRelationship[index].personToPersonPersonalRelationshipTypeName!;
@@ -244,7 +245,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                 Expanded(
                                   child: Container(
                                     child: TextFieldCustom(
-                                        title: StringConstatns.phoneNumber1,
+                                        title: (AppLocalizations.of(context)!.phone1),
                                         controller: phoneNumber1,
                                         enabled: false),
                                   ),
@@ -253,7 +254,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                 Expanded(
                                   child: Container(
                                     child: TextFieldCustom(
-                                        title: StringConstatns.phoneNumber2,
+                                        title: (AppLocalizations.of(context)!.phone2),
                                         controller: phoneNumber2,
                                         enabled: false),
                                   ),
@@ -299,7 +300,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       CustomButtonBorder(
-                                          text: "Hủy",
+                                          text: (AppLocalizations.of(context)!.cancle),
                                           width: 133,
                                           press: () {}
                                       ),
@@ -307,7 +308,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                       BlocListener<ParentsBloc, ParentsState>(
                                           listener:(context, state)=> listenerPostParentState(context, state),
                                         child:CustomButtonText(
-                                          text: ButtonConstatns.sentPickUp,
+                                          text: (AppLocalizations.of(context)!.sendRequire),
                                           width: 153,
                                           press: () {
                                             if(isChecked == true){

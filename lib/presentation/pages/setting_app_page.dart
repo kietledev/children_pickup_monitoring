@@ -1,7 +1,13 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
+import 'package:children_pickup_monitoring/data/models/models.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/language/language_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class SettingAppPage extends StatefulWidget{
   @override
@@ -9,21 +15,39 @@ class SettingAppPage extends StatefulWidget{
 }
 class _SettingAppPage extends State<SettingAppPage> {
   bool isSwitched = true;
-  dynamic _toggleValue = 0;
   int currentIndex = -1;
-  final List<ItemMenu> listItemsSettingApp = [
-    ItemMenu(1, "Về ứng dụng", "assets/icons/ic_information_classroom.svg", RouteConstants.informationApp),
-    ItemMenu(2, "Trợ giúp", "assets/icons/ic_camera.svg", RouteConstants.helpApp),
-  ];
+  bool isSelected = true;
+  final preferences = Preferences();
+
+  @override
+  void initState() {
+    super.initState();
+     preferences.getLanguage().then((value) =>onSelected(value));
+  }
+  onSelected(int value){
+    if(value == 0){
+      setState(() {
+        isSelected = true;
+      });
+    }else{
+      setState(() {
+        isSelected = false;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    List<ItemMenu> listItemsSettingApp = [
+      ItemMenu(1, (AppLocalizations.of(context)!.aboutDOUP), "assets/icons/ic_information_classroom.svg", RouteConstants.informationApp),
+      ItemMenu(2, (AppLocalizations.of(context)!.help), "assets/icons/ic_camera.svg", RouteConstants.helpApp),
+    ];
     // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: WidgetAppBar(
         hideBack: true,
         actionBack: () => Navigator.pop(context),
-        title: TitlesAppBar.settingApp,
+        title: (AppLocalizations.of(context)!.setting),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -41,7 +65,7 @@ class _SettingAppPage extends State<SettingAppPage> {
                   Row(
                     children: [
                       Text(
-                        "Thông báo sắp đến giờ đón trẻ",
+                        (AppLocalizations.of(context)!.notification),
                         style: TextStyle(
                             fontSize: 16,
                             color: ColorConstants.neutralColor1,
@@ -72,7 +96,7 @@ class _SettingAppPage extends State<SettingAppPage> {
                   Container(
                     width: double.infinity,
                     child: Text(
-                      "Ngôn ngữ",
+                      (AppLocalizations.of(context)!.language),
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           fontSize: 16,
@@ -83,9 +107,20 @@ class _SettingAppPage extends State<SettingAppPage> {
                   ),
                   AnimatedToggle(
                     values: ['Việt Nam', 'English'],
+                    initialPosition: isSelected,
                     onToggleCallback: (value) {
                       setState(() {
-                        _toggleValue = value;
+                        if(value==0){
+                          isSelected = true;
+                        }else{
+                          isSelected = false;
+                        }
+                        preferences.setlanguage(value);
+                        BlocProvider.of<LanguageBloc>(context).add(
+                            ToggleLanguageEvent(
+                              Languages.languages[value], // index value can be 0 or 1 in our case
+                            )
+                        );//translateLanguage(value);
                       });
                     },
                     buttonColor: Colors.white,

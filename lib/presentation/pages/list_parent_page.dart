@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListParentPage extends StatelessWidget {
   @override
@@ -51,7 +51,7 @@ class _BodyListParentPage extends State<BodyListParentPage> with AutomaticKeepAl
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
-        title: "Danh sách liên quan",
+        title: (AppLocalizations.of(context)!.listOfRelatives),
         hideBack: true,
         actionBack: (){
           Navigator.pop(context);
