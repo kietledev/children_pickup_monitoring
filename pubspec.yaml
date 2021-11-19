@@ -54,6 +54,7 @@ dependencies:
   flutter_easyloading: ^3.0.3
   image_picker: ^0.8.4+3
 
+
   # Notification
   firebase_messaging: ^10.0.8
   flutter_local_notifications: ^9.0.0
@@ -65,6 +66,10 @@ dependencies:
 
   # Camera
   camera: ^0.9.4+2
+  #import for translate
+  flutter_localizations:
+    sdk: flutter
+
 
 
 dev_dependencies:
@@ -86,11 +91,13 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
     - assets/icons/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

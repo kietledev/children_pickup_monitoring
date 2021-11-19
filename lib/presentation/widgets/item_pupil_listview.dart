@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ItemPupilListView extends StatefulWidget {
-  final int index;
   final bool isSelected;
   final String avatar;
   final String fullName;
@@ -17,7 +16,6 @@ class ItemPupilListView extends StatefulWidget {
 
   const ItemPupilListView({
     Key? key,
-    required this.index,
     required this.isSelected,
     required this.avatar, required this.fullName,
     required this.onSelect,

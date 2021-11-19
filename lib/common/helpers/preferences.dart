@@ -14,6 +14,7 @@ class Preferences {
 
   static const String TOKEN_PREFERENCE = 'TOKEN_PREFERENCE';
   static const String PUPIL_PREFERENCE = 'PUPIL_PREFERENCE';
+  static const String LANGUAGE_PREFERENCE = 'LANGUAGE_PREFERENCE';
   /* Initial shared preferences */
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   static final Preferences preferences = Preferences();
@@ -113,7 +114,7 @@ class Preferences {
 
   Future<int> getIndexPupil() async {
     final prefs = await _prefs;
-    final index = prefs.getInt("indexPulpil") ?? 0;
+    final index = prefs.getInt("indexPulpil") ?? -1;
     return index;
   }
 
@@ -133,5 +134,16 @@ class Preferences {
 
   Future<String> getWarningTime() async {
     return preferences.get(WARNING_TIME);
+  }
+  /* Language */
+  Future<int> getLanguage() async {
+    final prefs = await _prefs;
+    final language = prefs.getInt(LANGUAGE_PREFERENCE) ?? 0;
+    return language;
+  }
+
+  Future setlanguage(int index) async {
+    final prefs = await _prefs;
+    prefs.setInt(LANGUAGE_PREFERENCE, index);
   }
 }

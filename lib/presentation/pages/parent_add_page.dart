@@ -19,7 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ParentAddPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _ParentAddPage();
@@ -32,7 +32,7 @@ class _ParentAddPage extends State<ParentAddPage>{
   final ImagePicker _picker = ImagePicker();
   File? _image;
   String avatar = "";
-  int pupilId = 2;
+  int pupilId = -1;
   int relationshipTypeID = -1;
   String relationshipTypeName = "";
   String relationshipTypeNameEN = "";
@@ -53,7 +53,8 @@ class _ParentAddPage extends State<ParentAddPage>{
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
-        title: TitlesAppBar.addUserToParent,
+        hideBack: true,
+        title: (AppLocalizations.of(context)!.addRelatives),
         actionBack: ()=>Navigator.pop(context),
       ),
       body: MultiBlocProvider(
@@ -92,7 +93,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                 ),
                                 TextFieldCustom(
                                   controller: fullName,
-                                  title: StringConstatns.fullNameParent2,
+                                  title: (AppLocalizations.of(context)!.fullName),
                                   enabled: _enabled,
                                   typeTextField: "name",
                                   firstNameController: firstName,
@@ -101,7 +102,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                 ),
                                 DropdownRelationship(
                                   listRelationship: listRelationship,
-                                  title: StringConstatns.relationship,
+                                  title: (AppLocalizations.of(context)!.relationship),
                                   returnRelationShip: (int value, int index) {
                                     relationshipTypeID = listRelationship[index].personToPersonPersonalRelationshipTypeId!;
                                     relationshipTypeName = listRelationship[index].personToPersonPersonalRelationshipTypeName!;
@@ -110,7 +111,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                 ),
                                 TextFieldCustom(
                                     controller: birthday,
-                                    title: "Năm sinh",
+                                    title: (AppLocalizations.of(context)!.birthday),
                                     enabled: _enabled,
                                     typeTextField: "birthday",
                                     day: "$day",
@@ -124,7 +125,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     Expanded(
                                       child: Container(
                                         child: TextFieldCustom(
-                                            title: StringConstatns.phoneNumber1,
+                                            title: (AppLocalizations.of(context)!.phone1),
                                             controller: phoneNumber1,
                                             keyboarType: "phone",
                                             enabled: _enabled),
@@ -134,7 +135,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     Expanded(
                                       child: Container(
                                         child: TextFieldCustom(
-                                            title: StringConstatns.phoneNumber2,
+                                            title: (AppLocalizations.of(context)!.phone2),
                                             controller: phoneNumber2,
                                             keyboarType: "phone",
                                             enabled: _enabled),
@@ -155,7 +156,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     enabled: _enabled),
                                 TextFieldCustom(
                                   controller: homeAddress,
-                                  title: "Địa chỉ",
+                                  title: (AppLocalizations.of(context)!.address),
                                   enabled: _enabled,
                                   typeTextField: "address",
                                 ),
@@ -190,7 +191,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       CustomButtonBorder(
-                                          text: "Hủy",
+                                          text: (AppLocalizations.of(context)!.cancle),
                                           width: 133,
                                           press: () {}
                                       ),
@@ -198,11 +199,11 @@ class _ParentAddPage extends State<ParentAddPage>{
                                       BlocListener<ParentsBloc, ParentsState>(
                                         listener:(context, state)=> listenerPostParentState(context, state),
                                         child:CustomButtonText(
-                                          text: "Gửi yêu cầu",
+                                          text: (AppLocalizations.of(context)!.sendRequire),
                                           width: 153,
                                           press: () {
                                             if(isChecked == true){
-                                              postUserToParent(context);
+                                              getUser().then((value) => postUserToParent(context,value!.userId,1));
                                             }else{
                                               WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Bạn chưa đồng ý với điều khoản"));
                                             }
@@ -232,7 +233,8 @@ class _ParentAddPage extends State<ParentAddPage>{
       ),
     );
   }
-  Future postUserToParent(BuildContext context) async{
+  Future postUserToParent(BuildContext context, int userId,int roleId) async{
+     pupilId = await getPupilID();
     if(relationshipTypeID == -1){
       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Bạn chưa chọn mối quan hệ"));
     }else if(avatar == "") {
@@ -252,6 +254,7 @@ class _ParentAddPage extends State<ParentAddPage>{
     }
     else{
       final Map<String, dynamic> body = <String, dynamic>{
+        "USER_ID": userId,
         "CURRENT_LAST_NAME": lastName.text.trim(),
         "CURRENT_FIRST_NAME": firstName.text.trim(),
         "CURRENT_MIDDLE_NAME":middleName.text.trim(),
@@ -270,17 +273,21 @@ class _ParentAddPage extends State<ParentAddPage>{
         "NOTE": "",
         "NOTE_EN": ""
       };
-     BlocProvider.of<ParentsBloc>(context).add(PostParentEvent(roleId: 1,body: body));
+      BlocProvider.of<ParentsBloc>(context).add(PostParentEvent(roleId: roleId,body: body));
     }
   }
   void listenerPostParentState(BuildContext context, ParentsState state) {
-    if (state is PostParentSuccessState) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Thêm người thân thành công"));
-      int count = 0;
-      Navigator.of(context).popUntil((_) => count++ >= 2);
-    } else if (state is FetchParentsFailureState) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Thêm người thân thất bại"));
-    } else {}
+   if(state is FetchParentsLoadingState){
+     EasyLoading.show();
+   }else{
+     if (state is PostParentSuccessState) {
+       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Thêm người thân thành công"));
+       int count = 0;
+       Navigator.of(context).popUntil((context) => count++ >= 2);
+     } else if (state is FetchParentsFailureState) {
+       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Thêm người thân thất bại"));
+     } else {}
+   }
   }
   Future showBottomSheet() {
     final decoration = BoxDecoration(

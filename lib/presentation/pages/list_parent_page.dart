@@ -1,6 +1,7 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/parents/parents_bloc.dart';
@@ -9,25 +10,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ListParentPage extends StatefulWidget {
-  const ListParentPage({
+class ListParentPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return BlocProvider(
+        create: (context) => injector<ParentsBloc>(),
+        child:BodyListParentPage()
+    );
+  }
+}
+class BodyListParentPage extends StatefulWidget  {
+  const BodyListParentPage({
     Key? key,
   }) : super(key: key);
-
   @override
-  State<ListParentPage> createState() => _ListParentPage();
+  State<BodyListParentPage> createState() => _BodyListParentPage();
 }
 
-class _ListParentPage extends State<ListParentPage>{
+class _BodyListParentPage extends State<BodyListParentPage> with AutomaticKeepAliveClientMixin {
   int currentIndex = -1;
   List<ParentModel> parents = [];
+  int pupilId = -1;
+  final preferences = Preferences();
+  @override
+  bool get wantKeepAlive => true;
+  @override
+  void initState() {
+    initBloc();
+    super.initState();
+  }
+  initBloc() async{
+    pupilId = await getPupilID();
+    BlocProvider.of<ParentsBloc>(context).add(FetchParents(pupilId: pupilId, relationshipTypeId: 0));
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
-        title: "Danh sách liên quan",
+        title: (AppLocalizations.of(context)!.listOfRelatives),
+        hideBack: true,
         actionBack: (){
           Navigator.pop(context);
         },
@@ -42,81 +67,76 @@ class _ListParentPage extends State<ListParentPage>{
             fit: BoxFit.fill,
           ),
         ),
-        child: BlocProvider(
-            create: (context) => injector<ParentsBloc>()..add(FetchParents(pupilId: 2, relationshipTypeId: 0)),
-            child:BlocConsumer<ParentsBloc, ParentsState>(
-                listener: (context, state) {
+        child: BlocConsumer<ParentsBloc, ParentsState>(
+          bloc: BlocProvider.of(context),
+          listener: (context, state) {
+            if(state is FetchParentsLoadingState){
+              EasyLoading.show();
+            }else {
               if (state is FetchParentsSuccessState) {
                 EasyLoading.dismiss();
-                 parents = state.parents!;
+                parents = state.parents!;
               } else if(state is DeleteParentSuccessState){
                 WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Xóa thành công"));
-                context.read<ParentsBloc>().add(FetchParents(pupilId: 2, relationshipTypeId: 0));
+                getPupilID().then((value) => context.read<ParentsBloc>().add(FetchParents(pupilId: value, relationshipTypeId: 0)));
               }
               else if (state is FetchParentsFailureState) {
                 EasyLoading.dismiss();
               } else {
                 EasyLoading.show();
               }
-            },
-              buildWhen: (prevState, currState) {
-                  return currState is ParentsState && currState.parents != null ||
-                      currState is FetchParentsSuccessState;
-                },
-                builder: (context,state){
-                  return  Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/bg_body_a.png'),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    child: ScrollConfiguration(
-                      behavior: MyBehavior(),
-                      child: ListView.builder(
-                          primary:false,
-                          itemCount:parents.length ,
-                          itemBuilder: (context,index){
-                            final item = parents[index];
-                            return SlideMenu(
-                                child:ItemParentListView(
-                                    index: index,
-                                    isSelected: currentIndex == index,
-                                    avatar: item.personDetail!.avatarPicture.toString(),
-                                    fullName: item.getFullName(),
-                                    approved: item.approved!,
-                                    parent: item,
-                                    onSelect: (){
-                                      setState(() {
-                                        currentIndex = index;
-                                      });
-                                    }
+            }
+          },
+          buildWhen: (prevState, currState) {
+            return currState != prevState && currState.parents != null ||
+                currState is FetchParentsSuccessState;
+          },
+          builder: (context,state){
+            return  ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: ListView.builder(
+                  primary:false,
+                  itemCount:parents.length ,
+                  itemBuilder: (context,index){
+                    final item = parents[index];
+                    return SlideMenu(
+                        child:ItemParentListView(
+                            index: index,
+                            isSelected: currentIndex == index,
+                            avatar: item.personDetail!.avatarPicture.toString(),
+                            fullName: item.getFullName(),
+                            approved: item.approved!,
+                            parent: item,
+                            onSelect: (){
+                              setState(() {
+                                currentIndex = index;
+                              });
+                            }
+                        ),
+                        menuItems:<Widget>[
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: InkWell(
+                              child: SizedBox(
+                                width: 26,
+                                height: 26,
+                                child: SvgPicture.asset(
+                                  'assets/icons/ic_delete_circle.svg',
+                                  fit: BoxFit.fill,
                                 ),
-                                menuItems:<Widget>[
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: InkWell(
-                                      child: SizedBox(
-                                        width: 26,
-                                        height: 26,
-                                        child: SvgPicture.asset(
-                                          'assets/icons/ic_delete_circle.svg',
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                      onTap: (){
-                                        deleteParent(item.parentId!, 2, context, 1);
-                                      },
-                                    ),
-                                  )
-                                ]
-                            );
-                          }
-                      ),
-                    ),
-                  );
-            },
-            )
+                              ),
+                              onTap: (){
+                                CustomWidgetsSnackBar.buildWaringSnackbar(context, "Bạn có muốn xóa dữ liệu?", ()=>getUser().then((value) => deleteParent(item.parentId!, value!.userId,context, 1))
+                                );
+                              },
+                            ),
+                          )
+                        ]
+                    );
+                  }
+              ),
+            );
+          },
         ),
       )
     );
@@ -126,13 +146,12 @@ class _ListParentPage extends State<ListParentPage>{
       "parentId": parentID,
       "userId": userID
     };
-    BlocProvider.of<ParentsBloc>(context)
-        .add(DeleteParentEvent(roleId:roleId,body: body,parentId: parentID ));
+    BlocProvider.of<ParentsBloc>(context).add(DeleteParentEvent(roleId:roleId,body: body,parentId: parentID ));
   }
   Widget itemRight(BuildContext context){
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context,RouteConstants.addUserToParent).then((value) => context.read<ParentsBloc>().add(FetchParents(pupilId: 2, relationshipTypeId: 0)));
+        Navigator.pushNamed(context,RouteConstants.addUserToParent).then((value) => getPupilID().then((value) => context.read<ParentsBloc>().add(FetchParents(pupilId: value, relationshipTypeId: 0))));
       },
       child: SvgPicture.asset(
         'assets/icons/ic_add_16.svg',

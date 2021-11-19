@@ -1,6 +1,8 @@
 import 'package:children_pickup_monitoring/common/config/local_notification_service.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/utils.dart';
+import 'package:children_pickup_monitoring/di/injection.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
 import 'package:children_pickup_monitoring/presentation/pages/classroom_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/home_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_page.dart';
@@ -10,7 +12,9 @@ import 'package:children_pickup_monitoring/presentation/pages/school_page.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomBarPage extends StatefulWidget {
   const BottomBarPage({Key? key}) : super(key: key);
@@ -21,48 +25,23 @@ class BottomBarPage extends StatefulWidget {
 class _BottomBarPageState extends State<BottomBarPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isParent = false;
-  final String _bgAppbar = 'assets/images/bg_appbar_b.png';
-
+  final String _bgAppbar = 'assets/images/bg_appbar_a.png';
+  BottomNavigationBarItem? _itemHome;
+  BottomNavigationBarItem? _itemClassroom;
+  BottomNavigationBarItem? _itemMessage;
+  BottomNavigationBarItem? _itemPersonal;
+  BottomNavigationBarItem? _itemSchool;
   final int _role = 0;
   int _currentIndex = 0;
   final _pageController = PageController();
-
   final _home = const HomePage();
   final _school = const SchoolPage();
   final _classroom = const ClassroomPage();
   final _message = const MessagePage();
   final _profile = const ProfilePage();
 
-  final _itemHome = BottomNavigationBarItem(
-      label: 'Trang chủ',
-      icon: SvgPicture.asset('assets/icons/ic_home.svg',
-          color: ColorConstants.primaryColor3),
-      activeIcon: SvgPicture.asset('assets/icons/ic_home.svg',
-          color: ColorConstants.brandColor));
-  final _itemSchool = BottomNavigationBarItem(
-      label: 'Trường học',
-      icon: SvgPicture.asset('assets/icons/ic_school.svg',
-          color: ColorConstants.primaryColor3),
-      activeIcon: SvgPicture.asset('assets/icons/ic_school.svg',
-          color: ColorConstants.brandColor));
-  final _itemClassroom = BottomNavigationBarItem(
-      label: StringConstatns.className,
-      icon: SvgPicture.asset('assets/icons/ic_class.svg',
-          color: ColorConstants.primaryColor3),
-      activeIcon: SvgPicture.asset('assets/icons/ic_class.svg',
-          color: ColorConstants.brandColor));
-  final _itemMessage = BottomNavigationBarItem(
-      label: 'Tin nhắn',
-      icon: SvgPicture.asset('assets/icons/ic_message.svg',
-          color: ColorConstants.primaryColor3),
-      activeIcon: SvgPicture.asset('assets/icons/ic_message.svg',
-          color: ColorConstants.brandColor));
-  final _itemPersonal = BottomNavigationBarItem(
-      label: 'Cá nhân',
-      icon: SvgPicture.asset('assets/icons/ic_profile.svg',
-          color: ColorConstants.primaryColor3),
-      activeIcon: SvgPicture.asset('assets/icons/ic_profile.svg',
-          color: ColorConstants.brandColor));
+
+
   final _itemQR = const BottomNavigationBarItem(label: '', icon: Icon(null));
 
   @override
@@ -105,11 +84,43 @@ class _BottomBarPageState extends State<BottomBarPage> {
 
   @override
   Widget build(BuildContext context) {
+    _itemHome = BottomNavigationBarItem(
+            label: (AppLocalizations.of(context)!.home),
+            icon: SvgPicture.asset('assets/icons/ic_home.svg',
+            color: ColorConstants.primaryColor3),
+            activeIcon: SvgPicture.asset('assets/icons/ic_home.svg',
+            color: ColorConstants.brandColor));
+    _itemClassroom = BottomNavigationBarItem(
+            label: (AppLocalizations.of(context)!.classRoom),
+            icon: SvgPicture.asset('assets/icons/ic_class.svg',
+            color: ColorConstants.primaryColor3),
+            activeIcon: SvgPicture.asset('assets/icons/ic_class.svg',
+            color: ColorConstants.brandColor));
+    _itemMessage = BottomNavigationBarItem(
+            label: (AppLocalizations.of(context)!.message),
+            icon: SvgPicture.asset('assets/icons/ic_message.svg',
+            color: ColorConstants.primaryColor3),
+             activeIcon: SvgPicture.asset('assets/icons/ic_message.svg',
+            color: ColorConstants.brandColor));
+    _itemPersonal = BottomNavigationBarItem(
+            label: (AppLocalizations.of(context)!.profileBottom),
+            icon: SvgPicture.asset('assets/icons/ic_profile.svg',
+            color: ColorConstants.primaryColor3),
+            activeIcon: SvgPicture.asset('assets/icons/ic_profile.svg',
+            color: ColorConstants.brandColor));
+    _itemSchool = BottomNavigationBarItem(
+            label: (AppLocalizations.of(context)!.school),
+            icon: SvgPicture.asset('assets/icons/ic_school.svg',
+            color: ColorConstants.primaryColor3),
+            activeIcon: SvgPicture.asset('assets/icons/ic_school.svg',
+            color: ColorConstants.brandColor));
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     return Scaffold(
       drawerEdgeDragWidth: 0,
       drawer: Drawer(
-          child: SwitchPupilPage(),
+          child: BlocProvider(
+            create: (context) => injector<PupilByParentBloc>(),
+            child:  SwitchPupilPage()),
           ),
       key: _scaffoldKey,
       body: Builder(
@@ -161,11 +172,11 @@ class _BottomBarPageState extends State<BottomBarPage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         items: [
-          _itemHome,
-          if (_role == 2) _itemSchool else _itemClassroom,
-          if (_role == 0) _itemQR else _itemMessage,
-          if (_role == 0) _itemMessage else _itemPersonal,
-          if (_role == 0) _itemPersonal,
+          _itemHome!,
+          if (_role == 2) _itemSchool! else _itemClassroom!,
+          if (_role == 0) _itemQR else _itemMessage!,
+          if (_role == 0) _itemMessage! else _itemPersonal!,
+          if (_role == 0) _itemPersonal!,
         ],
         onTap: (int index) {
           setState(() {
@@ -253,11 +264,11 @@ class _BottomBarPageState extends State<BottomBarPage> {
 
   String getTitle(int index) {
     final List<String> title = [
-      _itemHome.label!,
-      if (_role == 2) _itemSchool.label! else _itemClassroom.label!,
-      if (_role == 0) '' else _itemMessage.label!,
-      if (_role == 0) _itemMessage.label! else _itemPersonal.label!,
-      if (_role == 0) _itemPersonal.label!,
+      _itemHome!.label!,
+      if (_role == 2) _itemSchool!.label! else _itemClassroom!.label!,
+      if (_role == 0) '' else _itemMessage!.label!,
+      if (_role == 0) _itemMessage!.label! else _itemPersonal!.label!,
+      if (_role == 0) _itemPersonal!.label!,
     ];
     return title[index];
   }

@@ -13,6 +13,7 @@ class _AppInformationPage extends State<AppInformationPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WidgetAppBar(
+        hideBack: true,
         title: TitlesAppBar.infoApp,
         actionBack: ()=>Navigator.pop(context),
       ),
@@ -24,7 +25,7 @@ class _AppInformationPage extends State<AppInformationPage>{
           ),
         ),
         child: Center(
-          child: const Text('Mô tả chi tiết'),
+          child: Text("Nội dung")
         ),
       ) ,
     );

@@ -1,6 +1,7 @@
 import 'package:children_pickup_monitoring/common/constants/color_constants.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
+import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AddUserToParent extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _AddUserToParent();
@@ -30,7 +32,8 @@ class _AddUserToParent extends State <AddUserToParent>{
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
-        title: 'Thêm mới',
+        hideBack: true,
+        title: (AppLocalizations.of(context)!.addRelatives),
         actionBack: ()=>Navigator.pop(context),
       ),
       body: BlocProvider(
@@ -77,13 +80,13 @@ class _AddUserToParent extends State <AddUserToParent>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                                 (searchController.text.isNotEmpty)
-                                    ? Text('Chúng tôi không tìm thấy kết quả?',style:AddUserToParentStyle.contentStyle)
-                                    :Text('Nhập vào số điện thoại tìm kiếm hoặc',style: AddUserToParentStyle.contentStyle ),
+                                    ? Text((AppLocalizations.of(context)!.noSearchPhone),style:AddUserToParentStyle.contentStyle)
+                                    :Text((AppLocalizations.of(context)!.enterPhone),style: AddUserToParentStyle.contentStyle ),
                                 TextButton(
                                     onPressed: (){
                                       Navigator.pushNamed(context, RouteConstants.parentAdd);
                                     },
-                                    child: Text('Thêm mới',style: AddUserToParentStyle.buttonTextStyle)
+                                    child: Text((AppLocalizations.of(context)!.addRelatives),style: AddUserToParentStyle.buttonTextStyle)
                                 )
                               ],
                             ),
@@ -143,7 +146,7 @@ class _AddUserToParent extends State <AddUserToParent>{
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: ColorConstants.neutralColor4, width: 2),
           ),
-          hintText: "Tìm theo số điện thoại",
+          hintText: (AppLocalizations.of(context)!.searchPhone),
           hintStyle: TextStyle(color: ColorConstants.neutralColor2,fontFamily: FontsConstants.notoSans,fontSize: 16),
           prefixIcon:Padding(
               padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
@@ -174,7 +177,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
   String firstName = "";
   String middleName = "";
   String birthday = "";
-  int pupilId = 2 ;
+  int pupilId = -1 ;
   bool isChecked = false;
   String fromDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now());
   List<RelationshipTypeModel> listRelationship = [];
@@ -192,7 +195,8 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
-        title: TitlesAppBar.addUserToParent,
+        hideBack: true,
+        title: (AppLocalizations.of(context)!.addRelatives),
         actionBack: ()=>Navigator.pop(context),
       ),
       body: MultiBlocProvider(
@@ -223,13 +227,13 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                             Avatar(avatar: avatar,avatarNull: "assets/images/img_avatar_null.png", enabled: false),
                             TextFieldCustom(
                               controller: fullName,
-                              title: StringConstatns.fullNameParent2,
+                              title: (AppLocalizations.of(context)!.fullName),
                               enabled: false,
                               typeTextField: "name",
                             ),
                             DropdownRelationship(
                               listRelationship: listRelationship,
-                              title: StringConstatns.relationship,
+                              title: (AppLocalizations.of(context)!.relationship),
                               returnRelationShip: (int value, int index) {
                                 relationshipTypeID = listRelationship[index].personToPersonPersonalRelationshipTypeId!;
                                 relationshipTypeName = listRelationship[index].personToPersonPersonalRelationshipTypeName!;
@@ -241,7 +245,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                 Expanded(
                                   child: Container(
                                     child: TextFieldCustom(
-                                        title: StringConstatns.phoneNumber1,
+                                        title: (AppLocalizations.of(context)!.phone1),
                                         controller: phoneNumber1,
                                         enabled: false),
                                   ),
@@ -250,7 +254,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                 Expanded(
                                   child: Container(
                                     child: TextFieldCustom(
-                                        title: StringConstatns.phoneNumber2,
+                                        title: (AppLocalizations.of(context)!.phone2),
                                         controller: phoneNumber2,
                                         enabled: false),
                                   ),
@@ -296,7 +300,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       CustomButtonBorder(
-                                          text: "Hủy",
+                                          text: (AppLocalizations.of(context)!.cancle),
                                           width: 133,
                                           press: () {}
                                       ),
@@ -304,11 +308,11 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                       BlocListener<ParentsBloc, ParentsState>(
                                           listener:(context, state)=> listenerPostParentState(context, state),
                                         child:CustomButtonText(
-                                          text: ButtonConstatns.sentPickUp,
+                                          text: (AppLocalizations.of(context)!.sendRequire),
                                           width: 153,
                                           press: () {
                                             if(isChecked == true){
-                                              postUserToParent(context);
+                                              getUser().then((value) => postUserToParent(context,value!.userId,1));
                                             }else{
                                               WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Bạn chưa đồng ý với điều khoản"));
                                             }
@@ -338,11 +342,13 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
       );
   }
 
-  Future postUserToParent(BuildContext context) async{
+  Future postUserToParent(BuildContext context,int userId,int roleId) async{
+    pupilId = await getPupilID();
     if(relationshipTypeID == -1){
       WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Bạn chưa chọn mối quan hệ"));
     }else{
       final Map<String, dynamic> body = <String, dynamic>{
+        "USER_ID": userId,
         "CURRENT_LAST_NAME": lastName,
         "CURRENT_FIRST_NAME": firstName,
         "CURRENT_MIDDLE_NAME":middleName,
@@ -361,17 +367,22 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
         "NOTE": "",
         "NOTE_EN": ""
       };
-      BlocProvider.of<ParentsBloc>(context).add(PostParentEvent(roleId: 1,body: body));
+      BlocProvider.of<ParentsBloc>(context).add(PostParentEvent(roleId: roleId,body: body));
     }
   }
   void listenerPostParentState(BuildContext context, ParentsState state) {
-      if (state is PostParentSuccessState) {
-        WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Thêm người thân thành công"));
-        int count = 0;
-        Navigator.of(context).popUntil((_) => count++ >= 2);
-      } else if (state is FetchParentsFailureState) {
-        WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Thêm người thân thất bại"));
-      } else {}
+     if(state is FetchParentsLoadingState){
+       EasyLoading.show();
+     }
+     else{
+       if (state is PostParentSuccessState) {
+         WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Thêm người thân thành công"));
+         int count = 0;
+         Navigator.of(context).popUntil((_) => count++ >= 2);
+       } else if (state is FetchParentsFailureState) {
+         WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildErrorSnackbar(context, "Thêm người thân thất bại"));
+       } else {}
+     }
   }
   void getUserInit() {
     Future.delayed(Duration.zero, () {

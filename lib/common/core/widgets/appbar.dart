@@ -40,9 +40,10 @@ class WidgetAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       centerTitle: true,
-      leading: IconButton(
+      leading: hideBack ? IconButton(
           onPressed: actionBack,
-          icon: SvgPicture.asset('assets/icons/ic_back_appbar.svg')),
+          icon: SvgPicture.asset('assets/icons/ic_back_appbar.svg'))
+                         :Container(),
       actions: menuItem,
       title: LinearGradientMask(
         firstColor: Color(0xFF1D61F2),

@@ -16,6 +16,7 @@ class _AppHelpPage extends State<AppHelpPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WidgetAppBar(
+        hideBack: true,
         title: TitlesAppBar.helpApp,
         actionBack: ()=>Navigator.pop(context),
       ),

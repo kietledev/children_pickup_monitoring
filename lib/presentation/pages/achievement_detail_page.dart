@@ -15,6 +15,7 @@ class AchievementDetailsPage extends StatelessWidget {
 
     return Scaffold(
     appBar:  WidgetAppBar(
+      hideBack: true,
     title: TitlesConstants.details,
     menuItem: [],
     actionBack: () {

@@ -1,4 +1,6 @@
 import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
+import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -70,4 +72,19 @@ class Utils {
     }
   }
 
+}
+Future<UserModel?> getUser() async {
+  final preferences = Preferences();
+  final UserModel? user = await preferences.getUserPreference();
+  return user;
+}
+Future<int> getPupilID() async {
+  final preferences = Preferences();
+  final int pupilID = await preferences.getIDpupil();
+  return pupilID;
+}
+Future<int> getIndexPupil() async {
+  final preferences = Preferences();
+  final int index = await preferences.getIndexPupil();
+  return index;
 }

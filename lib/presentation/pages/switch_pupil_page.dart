@@ -1,5 +1,8 @@
+import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
+import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
@@ -8,22 +11,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+class SwitchPupilPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _SwitchPupilPage();
+}
 
-
-class SwitchPupilPage extends StatelessWidget {
+class _SwitchPupilPage extends State<SwitchPupilPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
         actionBack: ()=>Navigator.pop(context),
-        title: "Chuyển bé",
+        hideBack: false,
+        title: (AppLocalizations.of(context)!.switchPupil),
       ),
-      body: BlocProvider(
-        create: (_) => injector<PupilByParentBloc>()..add(const FetchPupilByParent(parentId: 2)),
-        child:  BodySwitchPupilPage(),
-      )
-
+      body: BodySwitchPupilPage()
     );
   }
 }
@@ -33,14 +37,36 @@ class BodySwitchPupilPage extends StatefulWidget{
   State<StatefulWidget> createState() => _BodySwitchPupilPage();
 }
 class _BodySwitchPupilPage extends State<BodySwitchPupilPage>{
-  int currentIndex = 0;
+  int currentIndex = -1;
+  List<Pupil> pupils = [];
+  UserModel? userModel;
+  int pupilId = -1;
+  int parentId = -1;
+  final preferences = Preferences();
+  @override
+  void initState() {
+    super.initState();
+    getUserId();
+    getPupilID().then((value) => _onSelected(value));
+  }
+  getUserId() async {
+    userModel = await getUser();
+    parentId = userModel!.fromParentId;
+    BlocProvider.of<PupilByParentBloc>(context).add(FetchPupilByParent(parentId: parentId));
+  }
+  _onSelected(int index) {
+    setState(() {
+      currentIndex = index;
+      preferences.setIDpupil(index);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return  BlocBuilder<PupilByParentBloc, PupilByParentState>(builder: (context, state) {
       if (state is FetchPupilByParentSuccessState) {
         EasyLoading.dismiss();
-        final List<Pupil> pupils = state.pupils!;
+        pupils = state.pupils!;
         return Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -55,17 +81,11 @@ class _BodySwitchPupilPage extends State<BodySwitchPupilPage>{
                 itemBuilder: (context,index){
                   final items =pupils[index];
                   return ItemPupilListView(
-                    index: 1,
-                    isSelected: currentIndex == index,
+                    isSelected: currentIndex == pupils[index].pupilId,
                     avatar: items.personDetail!.avatarPicture!,
                     fullName: items.getFullName(),
                     className: items.className!,
-                    onSelect: (){
-                      setState(() {
-                        print(index);
-                        currentIndex = index;
-                      });
-                    },
+                    onSelect: ()=>_onSelected(items.pupilId!)
                   );
                 }
             ),

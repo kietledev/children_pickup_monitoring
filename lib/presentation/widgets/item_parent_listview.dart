@@ -4,7 +4,7 @@ import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemParentListView extends StatefulWidget {
   final int index;
   final bool isSelected;
@@ -77,8 +77,8 @@ class _ItemParentListViewState extends State<ItemParentListView> {
                 children: [
                   Text(widget.fullName, style: Utils.setStyle(color: titleColor, weight: FontWeight.w600,size: 14)),
                    (widget.approved)
-                      ? Text("Đã xác nhận",style:Utils.setStyle(color: ColorConstants.secondaryColor4,size: 12),)
-                      : Text("Chưa xác nhận",style:Utils.setStyle(color: ColorConstants.neutralColor2,size: 12))
+                      ? Text((AppLocalizations.of(context)!.confirm),style:Utils.setStyle(color: ColorConstants.secondaryColor4,size: 12),)
+                      : Text((AppLocalizations.of(context)!.notVerified),style:Utils.setStyle(color: ColorConstants.neutralColor2,size: 12))
                 ],
              ),
             const Spacer(),

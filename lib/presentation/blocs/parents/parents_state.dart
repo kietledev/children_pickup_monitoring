@@ -11,6 +11,7 @@ abstract class ParentsState extends Equatable {
   List<Object> get props => [parents!, msg!];
 }
 
+class ParentsInitialState extends ParentsState {}
 class FetchParentsLoadingState extends ParentsState {}
 
 class FetchParentsSuccessState extends ParentsState {

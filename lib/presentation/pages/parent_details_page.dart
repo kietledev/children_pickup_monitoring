@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
@@ -48,8 +48,9 @@ class _ParentDetails extends State<ParentDetailsPage> {
     // TODO: implement build
     return Scaffold(
         appBar: WidgetAppBar(
-        title: TitlesAppBar.parentDetail,
-        menuItem: [itemButtonRightAppBar()],
+          hideBack: true,
+        title: (AppLocalizations.of(context)!.detail),
+       // menuItem: [itemButtonRightAppBar()],
         actionBack: () => Navigator.pop(context),
     ),
       body: MultiBlocProvider(
@@ -87,8 +88,8 @@ class _ParentDetails extends State<ParentDetailsPage> {
                         Padding(
                             padding: EdgeInsets.only(top: 8.h),
                             child: (approved == true)
-                                ? Text("Đã xác nhận",style:Utils.setStyle(color: ColorConstants.secondaryColor4,size: 12),)
-                                : Text("Chưa xác nhận",style:Utils.setStyle(color: ColorConstants.neutralColor2,size: 12))
+                                ? Text((AppLocalizations.of(context)!.confirm),style:Utils.setStyle(color: ColorConstants.secondaryColor4,size: 12),)
+                                : Text((AppLocalizations.of(context)!.notVerified),style:Utils.setStyle(color: ColorConstants.neutralColor2,size: 12))
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 24.h),
@@ -96,7 +97,7 @@ class _ParentDetails extends State<ParentDetailsPage> {
                             children: [
                               TextFieldCustom(
                                 controller: _fullName,
-                                title: StringConstatns.fullName,
+                                title: (AppLocalizations.of(context)!.fullName),
                                 enabled: _enabled,
                               ),
                               (_enabledRelationship) ? DropdownRelationship(
@@ -109,11 +110,11 @@ class _ParentDetails extends State<ParentDetailsPage> {
                                 },
                               )
                                          : TextFieldCustom(
-                                  title: StringConstatns.relationship,
+                                  title: (AppLocalizations.of(context)!.relationship),
                                   controller: _relationship,
                                   enabled: _enabledRelationship),
                               TextFieldCustom(
-                                  title: StringConstatns.yearOfBirth,
+                                  title: (AppLocalizations.of(context)!.birthday),
                                   controller: _yearOfBirth,
                                   enabled: _enabled),
                               SizedBox(height: 24.h,),
@@ -128,7 +129,7 @@ class _ParentDetails extends State<ParentDetailsPage> {
                                   Expanded(
                                     child: Container(
                                       child: TextFieldCustom(
-                                          title: StringConstatns.phoneNumber1,
+                                          title:(AppLocalizations.of(context)!.phone1),
                                           controller: _phone1,
                                           enabled: _enabled),
                                     ),
@@ -137,7 +138,7 @@ class _ParentDetails extends State<ParentDetailsPage> {
                                   Expanded(
                                     child: Container(
                                       child: TextFieldCustom(
-                                          title: StringConstatns.phoneNumber2,
+                                          title: (AppLocalizations.of(context)!.phone2),
                                           controller: _phone2,
                                           enabled: _enabled),
                                     ),
@@ -150,7 +151,7 @@ class _ParentDetails extends State<ParentDetailsPage> {
                                   enabled: _enabled),
                               TextFieldCustom(
                                 controller: _address,
-                                title: StringConstatns.homeAddress,
+                                title: (AppLocalizations.of(context)!.address),
                                 enabled: _enabled,
                                 typeTextField: "address",
                               ),
@@ -251,7 +252,7 @@ class _ParentDetails extends State<ParentDetailsPage> {
             });
            }
           },
-          child: Text(StringConstatns.editText,
+          child: Text((AppLocalizations.of(context)!.edit),
               style: AppBarStyle.textButtonRightStyle),
         ));
   }

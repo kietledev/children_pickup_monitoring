@@ -1,26 +1,20 @@
 
-
-
-
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
-import 'package:children_pickup_monitoring/presentation/pages/edit_profile_page.dart';
-import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
+import 'package:children_pickup_monitoring/presentation/pages/warning_page.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/avatar.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
-import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilePage extends StatefulWidget{
   const ProfilePage({Key? key}) : super(key: key);
@@ -34,18 +28,33 @@ class _ProfilePage extends State<ProfilePage> with AutomaticKeepAliveClientMixin
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocProvider(
-      create: (context) => injector<ProfileBloc>()..add(GetprofileEvent(personId: 2)),
+      create: (context) => injector<ProfileBloc>(),
       child: Scaffold(
           body: ProfileBody()
       ),
     );
   }
 }
+class ProfileBody extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ProfileBody();
+}
 
-class ProfileBody extends StatelessWidget{
+class _ProfileBody extends State<ProfileBody>{
   PersonModel? user;
-  late ProfileBloc bloc;
+  UserModel? userModel;
   String avatar = "";
+  int personId = -1;
+  @override
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+   getUserId() async {
+    userModel = await getUser();
+    personId = userModel!.personId.toInt();
+    BlocProvider.of<ProfileBloc>(context).add(GetprofileEvent(personId:personId ));
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -84,9 +93,13 @@ class ProfileBody extends StatelessWidget{
                     ),
                     SizedBox(height: 48.h,),
                     CustomButtonText(
-                      text: 'Đăng xuất ',
+                      text: (AppLocalizations.of(context)!.logout),
                       width: 174,
                       press: () {
+                        final prefs = Preferences();
+                        prefs.clear();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            RouteConstants.login, (Route<dynamic> route) => false);
                       },
                     ),
                     SizedBox(height: 24.h,)
@@ -100,8 +113,7 @@ class ProfileBody extends StatelessWidget{
         EasyLoading.dismiss();
         return const SizedBox.shrink();
       } else {
-        EasyLoading.show();
-        return const SizedBox.shrink();
+        return WarningPage(type: 1,);
       }
     });
 
@@ -115,15 +127,16 @@ class Menu extends StatefulWidget {
   State<Menu> createState() => _Menu();
 }
 class _Menu extends State<Menu>{
-  final List<ItemMenu> listItemsProfile= [
-    ItemMenu(1, "Thông tin cá nhân", "assets/icons/ic_information_personal.svg", ""),
-    ItemMenu(2, "Danh sách liên quan", "assets/icons/ic_list_order.svg", RouteConstants.listparent),
-    ItemMenu(3, "Đổi mật khẩu", "assets/icons/ic_change_password.svg", RouteConstants.passwordChange),
-    ItemMenu(4, "Cài đặt ứng dụng", "assets/icons/ic_setting.svg", RouteConstants.settingApp),
-  ];
+
   int currentIndex = -1;
   @override
   Widget build(BuildContext context) {
+    final List<ItemMenu> listItemsProfile= [
+      ItemMenu(1, (AppLocalizations.of(context)!.profile), "assets/icons/ic_information_personal.svg", ""),
+      ItemMenu(2, (AppLocalizations.of(context)!.listOfRelatives), "assets/icons/ic_list_order.svg", RouteConstants.listparent),
+      ItemMenu(3, (AppLocalizations.of(context)!.changePassword), "assets/icons/ic_change_password.svg", RouteConstants.passwordChange),
+      ItemMenu(4, (AppLocalizations.of(context)!.setting), "assets/icons/ic_setting.svg", RouteConstants.settingApp),
+    ];
       return ListView.builder(
         primary: false,
         itemCount: listItemsProfile.length,
@@ -138,7 +151,7 @@ class _Menu extends State<Menu>{
                 currentIndex = index;
               });
               if(listItemsProfile[index].id == 1){
-                Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: 2)));
+                Navigator.of(context).pushNamed(RouteConstants.editProfile,arguments: widget.user).then((value) => getUser().then((value) => context.read<ProfileBloc>().add(GetprofileEvent(personId: value!.personId))));
               }else{
                 Navigator.pushNamed(context, item.route);
               }

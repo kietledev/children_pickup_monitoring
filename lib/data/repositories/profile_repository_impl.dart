@@ -24,8 +24,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         'personId': query.personId,
       };
       final httpResponse = await _profileApiService.getProfile(
-          query: body, k: key, dm: dm, tk: getTokenApi(id: "2"), ttl: ttl);
-     //  print(httpResponse.response.data);
+          query: body, k: key, dm: dm, tk: getTokenApi(id: query.personId.toString()), ttl: ttl);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         final List<PersonModel> listProfile = <PersonModel>[];
         for (final dynamic item in httpResponse.data.data) {
@@ -57,7 +56,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         'roleId': params.roleId,
       };
       final httpResponse = await _postProfileApiService.postProfile(
-          query: query,body: params.body, k: key, dm: dm, tk: getTokenApi(id: "2"), ttl: ttl);
+          query: query,body: params.body, k: key, dm: dm, tk: getTokenApi(id: params.personId.toString()), ttl: ttl);
         print(httpResponse.response.data);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         final List<PersonModel> listProfile = <PersonModel>[];

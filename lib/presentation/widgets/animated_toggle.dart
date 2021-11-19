@@ -9,6 +9,7 @@ class AnimatedToggle extends StatefulWidget {
   final Color backgroundColor;
   final Color buttonColor;
   final Color textColor;
+  final bool initialPosition;
 
   AnimatedToggle({
     required this.values,
@@ -16,6 +17,7 @@ class AnimatedToggle extends StatefulWidget {
     this.backgroundColor = const Color(0xFFe7e7e8),
     this.buttonColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
+    required this.initialPosition,
   });
 
   @override
@@ -27,6 +29,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
 
   @override
   Widget build(BuildContext context) {
+    initialPosition = widget.initialPosition;
     return Container(
       margin: EdgeInsets.fromLTRB(0, 6, 0, 24),
       child: Stack(

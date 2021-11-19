@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/textfield.dart';
@@ -70,8 +70,9 @@ class _EditProfileBody extends State<EditProfileBody> {
     // TODO: implement build
     return Scaffold(
       appBar: WidgetAppBar(
-        title: TitlesAppBar.profileTitle,
+        title: (AppLocalizations.of(context)!.profile),
         menuItem: [itemButtonRightAppBar()],
+        hideBack: true,
         actionBack: () {
           Navigator.pop(context);
         },
@@ -105,7 +106,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                         children: [
                           TextFieldCustom(
                             controller: _fullName,
-                            title: "Họ và Tên",
+                            title: (AppLocalizations.of(context)!.fullName),
                             enabled: _enabled,
                             typeTextField: "name",
                             firstNameController: _firstName,
@@ -114,7 +115,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                           ),
                           TextFieldCustom(
                               controller: _yearOfBirth,
-                              title: "Năm sinh",
+                              title: (AppLocalizations.of(context)!.birthday),
                               enabled: _enabled,
                               typeTextField: "birthday",
                               day: "$day",
@@ -130,20 +131,20 @@ class _EditProfileBody extends State<EditProfileBody> {
                                 year = value;
                               }),
                           TextFieldCustom(
-                              title: "Di động 1:",
+                              title: (AppLocalizations.of(context)!.phone1),
                               controller: _phone1,
                               enabled: _enabled),
                           TextFieldCustom(
-                              title: "Di động 2:",
+                              title: (AppLocalizations.of(context)!.phone2),
                               controller: _phone2,
                               enabled: _enabled),
                           TextFieldCustom(
                               controller: _email,
-                              title: "email",
+                              title: "Email",
                               enabled: _enabled),
                           TextFieldCustom(
                             controller: _address,
-                            title: "Địa chỉ",
+                            title: (AppLocalizations.of(context)!.address),
                             enabled: _enabled,
                             typeTextField: "address",
                           ),
@@ -153,7 +154,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                                   child: Row(
                                     children: [
                                       CustomButtonBorder(
-                                        text: "Hủy",
+                                        text: (AppLocalizations.of(context)!.cancle),
                                         width: 135,
                                         press: () {
                                           setState(() {
@@ -164,10 +165,10 @@ class _EditProfileBody extends State<EditProfileBody> {
                                       ),
                                       Spacer(),
                                       CustomButtonText(
-                                        text: "Xác nhận",
+                                        text: (AppLocalizations.of(context)!.confirm),
                                         width: 135,
                                         press: () {
-                                          updateProfile(user!.personId.toInt());
+                                          getUser().then((value) => updateProfile(value!.personId,value.userId));
                                         },
                                       )
                                     ],
@@ -189,8 +190,9 @@ class _EditProfileBody extends State<EditProfileBody> {
     );
   }
 
-  void updateProfile(int personID) {
+  void updateProfile(int personID,int userId) {
     final Map<String, dynamic> body = <String, dynamic>{
+      "USER_ID": userId,
       "CURRENT_LAST_NAME": _lastName.text.trim(),
       "CURRENT_FIRST_NAME": _firstName.text.trim(),
       "CURRENT_MIDDLE_NAME": _middleName.text.trim(),
@@ -372,7 +374,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                     _enabled = true;
                   });
                 },
-                child: Text(StringConstatns.editText,
+                child: Text((AppLocalizations.of(context)!.edit),
                     style: AppBarStyle.textButtonRightStyle),
               ));
   }
