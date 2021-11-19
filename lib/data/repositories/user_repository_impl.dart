@@ -29,8 +29,19 @@ class UserRepositoryImpl implements UserRepository {
 
       if (httpResponse.response.statusCode == HttpStatus.ok &&
           httpResponse.data.data.toString().isNotEmpty) {
-        final person = UserModel.fromJson(httpResponse.data.data);
-        return DataSuccess(person);
+        if (httpResponse.data.errorCode == 0) {
+          final person = UserModel.fromJson(httpResponse.data.data);
+          return DataSuccess(person);
+        } else {
+          return DataFailed(
+            DioError(
+              error: httpResponse.data.message,
+              response: httpResponse.response,
+              requestOptions: httpResponse.response.requestOptions,
+              type: DioErrorType.response,
+            ),
+          );
+        }
       }
       return DataFailed(
         DioError(

@@ -54,7 +54,7 @@ class Preferences {
     final String userString = await preferences.getObject(USER_PREFERENCE);
     final Map<String, dynamic> map =
         jsonDecode(userString) as Map<String, dynamic>;
-    return UserModel.fromJson(map);
+    return UserModel.json(map);
   }
 
   /* Login time */
