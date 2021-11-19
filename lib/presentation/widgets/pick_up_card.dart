@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
@@ -15,16 +18,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class PickUpCard extends StatefulWidget {
+  late PickUpGenerated? pickUpGenerated;
+  late int? checkShow;
+  PickUpCard({
+    Key? key,
+    this.pickUpGenerated,
+    this.checkShow,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-
-    return _PickUpCardBody();
-  }
+  _PickUpCardState createState() => _PickUpCardState();
 }
 
-class _PickUpCardBody extends State<PickUpCard> {
+class _PickUpCardState extends State<PickUpCard> {
   GlobalKey previewContainer = new GlobalKey();
   @override
   void initState() {
@@ -33,6 +39,10 @@ class _PickUpCardBody extends State<PickUpCard> {
 
   @override
   Widget build(BuildContext context) {
+    Uint8List imageQR = base64.decode('');
+    if (widget.pickUpGenerated!.stringQrcode != null){
+      imageQR = base64.decode(widget.pickUpGenerated!.stringQrcode!);
+    }
     // TODO: implement build
     return Container(
       child:  Column(
@@ -59,7 +69,7 @@ class _PickUpCardBody extends State<PickUpCard> {
                     padding: EdgeInsets.fromLTRB(0, 12, 0, 24),
                     child: Text(
                       // "",
-                    "1234",
+                    widget.pickUpGenerated!.cardId!,
                       style: QRCodeStyle.contentStyle7,
                     ),
                   ),
@@ -85,7 +95,7 @@ class _PickUpCardBody extends State<PickUpCard> {
                       Expanded(
                         child:
                         Align(
-                          child: ItemPupilQRCard(),
+                          child: ItemPupilQRCard(pupils:widget.pickUpGenerated!.pupils!),
                         ),
                       )
                     ]),
@@ -113,14 +123,14 @@ class _PickUpCardBody extends State<PickUpCard> {
                               height: 6,
                             ),
                             Text(
-                         "10:00",
+                              widget.pickUpGenerated!.timePickUp!,
                               style: QRCodeStyle.contentStyle3,
                             ),
                             SizedBox(
                               height: 6,
                             ),
                             Text(
-                              "12-12-2021",
+                              widget.pickUpGenerated!.datePickUp!,
                               style: QRCodeStyle.contentStyle3 ,
                             ),
                           ],
@@ -144,7 +154,7 @@ class _PickUpCardBody extends State<PickUpCard> {
                               height: 6,
                             ),
                             Text(
-                              "Cổng trường",
+                              widget.pickUpGenerated!.placePickUp!,
                               style:  QRCodeStyle.contentStyle3,
                             ),
                           ],
@@ -178,7 +188,7 @@ class _PickUpCardBody extends State<PickUpCard> {
                               height: 6,
                             ),
                             Text(
-                             "Trần Phú Nhuận" +' - ' + "Chú",
+                              widget.pickUpGenerated!.parentPickUp!.getFullName() +' - ' +  widget.pickUpGenerated!.parentPickUp!.personToPersonPersonalRelationshipTypeName!,
                               style:  QRCodeStyle.contentStyle3,
                             ),
                           ],
@@ -206,7 +216,7 @@ class _PickUpCardBody extends State<PickUpCard> {
                     Container(
                       width: double.infinity,
                       child: Text(
-                        "123 nguyễn văn cừ, ninh kiều, cần thơ",
+                        widget.pickUpGenerated!.addressSchool!,
                         style:  QRCodeStyle.contentStyle3,
                       ),
                     ),
@@ -239,7 +249,7 @@ class _PickUpCardBody extends State<PickUpCard> {
                   new SizedBox(
                       height: 102,
                       width: 102,
-                      child:Text("mã QRR")),
+                      child:Image.memory(imageQR)),
                   SizedBox(
                     height: 12,
                   ),
@@ -252,6 +262,7 @@ class _PickUpCardBody extends State<PickUpCard> {
           SizedBox(
             height: 16,
           ),
+          widget.checkShow == 1?
           Center(
             child:  SizedBox(
               width: 130,
@@ -287,7 +298,8 @@ class _PickUpCardBody extends State<PickUpCard> {
                 ),
               ),
             )
-          ),
+          ):
+          SizedBox.shrink()
         ],
       ),
     );

@@ -12,6 +12,7 @@ class ClassInformationPage extends StatelessWidget {
       appBar: WidgetAppBar(
         title:  TitlesConstants.classInformationTitle,
         menuItem: [],
+        hideBack:true,
         actionBack: () {
           Navigator.pop(context);
         },

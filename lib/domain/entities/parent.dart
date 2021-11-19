@@ -54,4 +54,23 @@ class Parent extends Equatable {
           personDetail!.currentFirstName!.trim();
     }
   }
+  Map<String, Object?> toMap() {
+    var map = new Map<String, dynamic>();
+    map["parentId"] = parentId;
+    map["currentLastName"] = personDetail!.currentLastName;
+    map["currentFirstName"] = personDetail!.currentFirstName;
+    map["currentMiddleName"] = personDetail!.currentMiddleName;
+    map["personToPersonPersonalRelationshipTypeName"] = personToPersonPersonalRelationshipTypeName;
+    map["personToPersonPersonalRelationshipTypeNameEn"] = personToPersonPersonalRelationshipTypeNameEn;
+    map["personId"] = personDetail!.personId;
+    map["approvedByUserId"] = approvedByUserId;
+    map["approvedDatetime"] = approvedDatetime;
+    map["avatarPicture"] = personDetail!.avatarPicture;
+    map["birthDate"] = personDetail!.birthDate;
+    map["currentEmail"] = personDetail!.currentEmail;
+    map["currentPhoneNumber1"] = personDetail!.currentPhoneNumber1;
+    map["currentPhoneNumber2"] =  personDetail!.currentPhoneNumber2;
+    map["homeAddress1"] = personDetail!.homeAddress1;
+    return map;
+  }
 }

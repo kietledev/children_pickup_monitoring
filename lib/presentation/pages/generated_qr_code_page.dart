@@ -60,7 +60,7 @@ class _GeneratedQRCodeBodyState extends State<GeneratedQRCodeBody> {
   int _onSelected = -1;
   _getCard(int index){
     if(index == _onSelected){
-      return PickUpCard();
+      return PickUpCard( pickUpGenerated:null, checkShow: 1,);
     }else{
       return null;
     }

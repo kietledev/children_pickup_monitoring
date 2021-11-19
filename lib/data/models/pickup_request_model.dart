@@ -65,7 +65,7 @@ class PickUpRequestModel extends PickUpRequest{
       requestId: (json['REQUEST_ID'] as double? ?? -1.0).toInt(),
       requestByParentId: (json['REQUEST_BY_PARENT_ID'] as double? ?? -1.0).toInt(),
       requestDatetime: json['REQUEST_DATETIME'] as String? ?? '',
-      pickUpPlaceId: (json['PICK_UP_PLACE_ID'] as double? ?? -1.0).toInt(),
+      pickUpPlaceId: json['PICK_UP_PLACE_ID'] as int? ?? -1,
       pickUpPupilId1: (json['PICK_UP_PUPIL_ID_1'] as double? ?? -1.0).toInt(),
       pickUpPupilId2: (json['PICK_UP_PUPIL_ID_2'] as double? ?? -1.0).toInt(),
       pickUpPupilId3: (json['PICK_UP_PUPIL_ID_3'] as double? ?? -1.0).toInt(),
@@ -87,7 +87,7 @@ class PickUpRequestModel extends PickUpRequest{
       requestByUserId: (json['REQUEST_BY_USER_ID'] as double? ?? -1.0).toInt(),
       qrCode: json['QR_CODE'] as String? ?? '',
       idCard: json['ID_CARD'] as String? ?? '',
-      status: (json['STATUS'] as double? ?? -1.0).toInt(),
+      status: json['STATUS'] as int? ?? -1,
       parent: json['PARENT'] as String? ?? '',
       pickUpPlace: json['PICK_UP_PLACE'] as String? ?? '',
     );

@@ -19,26 +19,24 @@ class PickUpCardRepositoryImpl implements PickUpRepository {
   @override
   Future<DataState<PickUpRequestModel>> postPickUp(PostPickUpRequest params)  async {
     try {
-      final Map<String, dynamic> body = <String, dynamic>{
-
-      };
+      print("params.body== >  "+params.body.toString());
       final httpResponse = await _postPickUpCardApiService.PostPickUpCard(
-          body: body,
+          body: params.body,
           k: key,
           dm: dm,
           tk: getTokenApi(id: ""),
           ttl: ttl);
 
-      print(httpResponse.response.data);
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
-        final List<PickUpRequestModel> pickUpResponses = <PickUpRequestModel>[];
-        for (final dynamic item in httpResponse.data.data) {
-          if (item is! Map<String, dynamic>) continue;
-          final pickUpResponse = PickUpRequestModel.fromJson(item);
-          pickUpResponses.add(pickUpResponse);
-        }
+      print(httpResponse.response);
+      if (httpResponse.response.statusCode == HttpStatus.ok &&
+    httpResponse.data.data.toString().isNotEmpty) {
+        // for (final dynamic item in httpResponse.data.data) {
+        PickUpRequestModel pickUpResponse = new  PickUpRequestModel();
+        pickUpResponse = PickUpRequestModel.fromJson(httpResponse.data.data );
 
-        return DataSuccess(pickUpResponses[0]);
+
+
+        return DataSuccess(pickUpResponse);
       }
       return DataFailed(
         DioError(

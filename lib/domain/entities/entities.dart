@@ -8,3 +8,4 @@ export 'pickup_place.dart';
 export 'pickup_request.dart';
 export 'parent.dart';
 export 'user_by_person.dart';
+export 'pickup_generated.dart';

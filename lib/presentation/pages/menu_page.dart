@@ -26,6 +26,7 @@ class MenuPage extends StatelessWidget {
       appBar:  WidgetAppBar(
         title: TitlesConstants.menu,
         menuItem: [],
+        hideBack:true,
         actionBack: () {
           Navigator.pop(context);
         },

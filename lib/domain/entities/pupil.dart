@@ -73,6 +73,19 @@ class Pupil extends Equatable {
           currentFirstNameParent!.trim();
     }
   }
+  Map<String, Object?> toMap() {
+    var map = new Map<String, dynamic>();
+    map["pupilId"] = pupilId;
+    map["personToPersonPersonalRelationshipTypeName "] = personToPersonPersonalRelationshipTypeName ;
+    map["personToPersonPersonalRelationshipTypeNameEn"] = personToPersonPersonalRelationshipTypeNameEn;
+    map["personId"] = personDetail!.personId;
+    map["currentLastName"] = personDetail!.currentLastName;
+    map["currentMiddleName"] = personDetail!.currentMiddleName;
+    map["currentFirstName"] = personDetail!.currentFirstName;
+    map["className"] = className;
+    map["classId"] = classId;
+    return map;
+  }
 }
 class PupilCheck extends Equatable {
   bool? isCheck;
@@ -80,6 +93,7 @@ class PupilCheck extends Equatable {
   PupilCheck({ this.isCheck,  this.pupil});
   @override
   List<Object?> get props => [isCheck, pupil];
+
   String getFullName() {
     if (pupil!.currentMiddleNameParent!.isEmpty) {
       return '${pupil!.currentLastNameParent!.trim()} ${pupil!.currentFirstNameParent!.trim()}';
@@ -91,4 +105,5 @@ class PupilCheck extends Equatable {
           pupil!.currentFirstNameParent!.trim();
     }
   }
+
 }

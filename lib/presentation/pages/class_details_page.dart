@@ -21,6 +21,7 @@ class ClassDetailsPage extends StatelessWidget {
         appBar:  WidgetAppBar(
           title: TitlesConstants.classDetails,
           menuItem: [],
+          hideBack:true,
           actionBack: () {
             Navigator.pop(context);
           },
@@ -42,6 +43,8 @@ class ClassDetailsBody extends StatefulWidget {
 
 class _ClassDetailsBodyState extends State<ClassDetailsBody> {
   int currentIndex = -1;
+  int _role = 1;
+  List<int> pupilIds = [2,5,7];
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PupilsBloc, PupilsState>(builder: (context, state) {
@@ -56,45 +59,63 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            children: [
-              const SizedBox(height: 12),
-              Text(
-                StringConstatns.numberOfPupils + (pupils.length).toString() + "/"+(pupils.length).toString(),
-                style:
-                    Utils.setStyle(color: ColorConstants.neutralColor1),
-              ),
-               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 12, 0, 0) ,
-                child: ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: pupils.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final item = pupils[index];
-
-                    return ItemTeacherPupilListView(
-                      index: index,
-                      genderId: item.personDetail!.currentGenderId!,
-                      avtDefaultMale: 'assets/images/img_child_avt_trai.png',
-                      avtDefaultFemale: 'assets/images/img_child_avt_gai.png',
-                      isSelected: currentIndex == index,
-                      avatar: item.personDetail!.avatarPicture!,
-                      fullName: item.getFullName(),
-                      onSelect: () {
-                        setState(() {
-                          currentIndex = index;
-                        });
-                        Navigator.pushNamed(
-                            context, RouteConstants.pupilDetails,
-                            arguments: item);
-                      },
-                    );
-                  },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 12),
+                Text(
+                  StringConstatns.numberOfPupils + (pupils.length).toString() + "/"+(pupils.length).toString(),
+                  style:
+                      Utils.setStyle(color: ColorConstants.neutralColor1),
                 ),
-              ),
-            ],
+                 Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 12, 0, 0) ,
+                  child: ListView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: pupils.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final item = pupils[index];
+
+                      return ItemTeacherPupilListView(
+                        index: index,
+                        genderId: item.personDetail!.currentGenderId!,
+                        pupilIds:pupilIds,
+                        role: _role,
+                        pupilId: item.pupilId,
+                        avtDefaultMale: 'assets/images/img_child_avt_trai.png',
+                        avtDefaultFemale: 'assets/images/img_child_avt_gai.png',
+                        isSelected: currentIndex == index,
+                        avatar: item.personDetail!.avatarPicture!,
+                        fullName: item.getFullName(),
+                        onSelect: () {
+                          setState(() {
+                            currentIndex = index;
+                          });
+                          if (_role == 1) {
+                            if ( pupilIds.contains(item.pupilId!) == true){
+                              Navigator.pushNamed(
+                                  context, RouteConstants.pupilDetails,
+                                  arguments: item);
+                            }
+
+                              }else{
+                                Navigator.pushNamed(
+                                context, RouteConstants.pupilDetails,
+                                arguments: item);
+
+                          }
+
+
+
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       } else if (state is FetchPupilsFailureState) {

@@ -18,6 +18,7 @@ class TeacherDetailsPage extends StatelessWidget {
       appBar:  WidgetAppBar(
         title: teacher.getFullName(),
         menuItem: [],
+        hideBack:true,
         actionBack: () {
           Navigator.pop(context);
         },

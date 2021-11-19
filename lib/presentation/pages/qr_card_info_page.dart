@@ -11,7 +11,7 @@ class QRCardInfomationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final qrCart = ModalRoute.of(context)!.settings.arguments as PickUpRequest;
+    final qrCart = ModalRoute.of(context)!.settings.arguments as PickUpGenerated;
 
     return Scaffold(
       appBar:  WidgetAppBar(
@@ -23,7 +23,7 @@ class QRCardInfomationPage extends StatelessWidget {
         },
       ),
       body: QRCardInfomationBody(
-        // qrCart: qrCart,
+        qrCart: qrCart,
       ),
     );
   }
@@ -32,11 +32,10 @@ class QRCardInfomationPage extends StatelessWidget {
 class QRCardInfomationBody extends StatelessWidget {
   QRCardInfomationBody({
     Key? key,
-    // required this.qrCart,
+    required this.qrCart,
   }) : super(key: key);
 
-  // final PickUpRequest qrCart;
-
+  final PickUpGenerated qrCart;
   @override
   Widget build(BuildContext context) {
     return ScrollConfiguration(
@@ -52,7 +51,7 @@ class QRCardInfomationBody extends StatelessWidget {
             margin:const EdgeInsets.all(24.0),
             child: Column(
                 children: [
-                  PickUpCard(),
+                  PickUpCard(pickUpGenerated: qrCart, checkShow: 0),
                   Container(
 
                     height: 265,
@@ -100,13 +99,13 @@ class QRCardInfomationBody extends StatelessWidget {
                                         Text('Họ và tên người đón',
                                           style: QRCodeStyle.contentStyle9,),
                                         SizedBox(height: 6,),
-                                        Text("Trần Phú Nhuận",
+                                        Text(qrCart.parentPickUp!.getFullName(),
                                           style: QRCodeStyle.contentStyle3,),
                                         SizedBox(height: 6,),
                                         Text('Di động',
                                           style: QRCodeStyle.contentStyle9,),
                                         SizedBox(height: 6,),
-                                        Text("0989777777",
+                                        Text(qrCart.parentPickUp!.personDetail!.currentPhoneNumber1!,
                                           style: QRCodeStyle.contentStyle3,),
                                       ],
                                     ),
@@ -122,7 +121,7 @@ class QRCardInfomationBody extends StatelessWidget {
                                         style: QRCodeStyle.contentStyle9,),
                                       SizedBox(height: 6,),
                                       Text(
-                                        "Chú", style: QRCodeStyle.contentStyle3,),
+                                        qrCart.parentPickUp!.personToPersonPersonalRelationshipTypeName!, style: QRCodeStyle.contentStyle3,),
 
                                     ],
                                   ),

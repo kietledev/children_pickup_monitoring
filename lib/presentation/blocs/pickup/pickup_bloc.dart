@@ -26,6 +26,7 @@ class PickUpBloc extends Bloc<PickUpEvent, PickUpState> {
           body: event.body
         )
       );
+
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final pickUpRequest= dataState.data!;
         yield PickUpSuccessState(pickUpRequest: pickUpRequest);

@@ -20,6 +20,7 @@ class TeacherInformationPage extends StatelessWidget {
         appBar:  WidgetAppBar(
           title: TitlesConstants.teacherDetails,
           menuItem: [],
+          hideBack:true,
           actionBack: () {
             Navigator.pop(context);
           },
@@ -49,41 +50,50 @@ class _TeacherInformationBodyState extends State<TeacherInformationBody> {
       if (state is FetchTeachersSuccessState) {
         EasyLoading.dismiss();
         final List<Teacher> teachers = state.teachers!;
-        return Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bg_body_a.png'),
-              fit: BoxFit.cover,
+        return
+          Container(
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bg_body_a.png'),
+                fit: BoxFit.fitWidth,
+              ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 24, 0, 0) ,
-            child: ListView.builder(
-              primary: false,
-              itemCount: teachers.length,
-              itemBuilder: (context, index) {
-                final item = teachers[index];
-                return ItemTeacherPupilListView(
-                  index: index,
-                  isSelected: currentIndex == index,
-                  position: item.mainResponsibilityTeacher,
-                  avtDefaultFemale:"assets/images/img_gv_nu.png" ,
-                  avtDefaultMale: "assets/images/img_gv_nam.png",
-                  genderId:item.personDetail!.currentGenderId!,
-                  avatar: item.personDetail!.avatarPicture!,
-                  fullName: item.getFullName(),
-                  onSelect: () {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                    Navigator.pushNamed(context, RouteConstants.teacherDetails,
-                        arguments: item);
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 12, 0, 0) ,
+                child: ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: teachers.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final item = teachers[index];
+                    return ItemTeacherPupilListView(
+                      index: index,
+                      pupilIds: [],
+                      role: 0,
+                      isSelected: currentIndex == index,
+                      position: item.mainResponsibilityTeacher,
+                      avtDefaultFemale:"assets/images/img_gv_nu.png" ,
+                      avtDefaultMale: "assets/images/img_gv_nam.png",
+                      genderId:item.personDetail!.currentGenderId!,
+                      avatar: item.personDetail!.avatarPicture!,
+                      fullName: item.getFullName(),
+                      onSelect: () {
+                        setState(() {
+                          currentIndex = index;
+                        });
+                        Navigator.pushNamed(context, RouteConstants.teacherDetails,
+                            arguments: item);
+                      },
+                    );
                   },
-                );
-              },
+                ),
+              ),
             ),
-          ),
-        );
+          );
+
       } else if (state is FetchTeachersFailureState) {
         EasyLoading.dismiss();
         return const SizedBox.shrink();

@@ -3,11 +3,11 @@ import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 
 class ItemPupilQRCard extends StatefulWidget {
-  // final List<Pupil> pupils;
+   final List<Pupil> pupils;
 
   const ItemPupilQRCard({
     Key? key,
-    // required this.pupils,
+    required this.pupils,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class _ItemPupilQRCardState extends State<ItemPupilQRCard> {
         padding: EdgeInsets.only(top: 24),
 
         // itemCount: widget.pupils.length,
-        itemCount: 2,
+        itemCount: widget.pupils.length,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
@@ -45,13 +45,13 @@ class _ItemPupilQRCardState extends State<ItemPupilQRCard> {
                         flex: 2,
                         child: Text(
                             // widget.pupils[index].getFullName()!,
-                            "Trần Hạo",
+                            widget.pupils[index].personDetail!.getFullName(),
                             style: QRCodeStyle.contentStyle3),
                       ),
                       Expanded(
                           flex: 0,
                           // child: Text(widget.pupils[index].className!,
-                          child: Text("Nhà trẻ 1",
+                          child: Text(widget.pupils[index].className!,
                               style: QRCodeStyle.contentStyle3)),
                     ]),
                 SizedBox(

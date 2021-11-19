@@ -31,7 +31,7 @@ class _PostPickUpCardApiService implements PostPickUpCardApiService {
     final _data = <String, dynamic>{};
     _data.addAll(body!);
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<PickUpRequestModel>>(
+        _setStreamType<HttpResponse<ResponseModel>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/',
                     queryParameters: queryParameters, data: _data)

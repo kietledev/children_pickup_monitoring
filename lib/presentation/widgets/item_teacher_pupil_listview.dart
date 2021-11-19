@@ -12,9 +12,12 @@ class ItemTeacherPupilListView extends StatefulWidget {
   final bool? position;
   final int genderId;
   final String avatar;
+  final int? role;
   final String fullName;
   final String? avtDefaultMale;
   final String? avtDefaultFemale;
+  final int? pupilId;
+  final List<int>? pupilIds;
   final VoidCallback onSelect;
 
   const ItemTeacherPupilListView({
@@ -22,10 +25,13 @@ class ItemTeacherPupilListView extends StatefulWidget {
     required this.index,
     required this.isSelected,
     this.position,
+    this.role,
     required this.genderId,
     required this.avatar,
+    this.pupilId,
     this.avtDefaultFemale,
     this.avtDefaultMale,
+    this.pupilIds,
     required this.fullName,
     required this.onSelect,
   }) : super(key: key);
@@ -101,10 +107,15 @@ class _ItemTeacherPupilListViewState extends State<ItemTeacherPupilListView> {
                 style: Utils.setStyle(
                     color: titleColor, weight: FontWeight.w600)),
             const Spacer(),
-            SvgPicture.asset(
+            widget.role! == 0 ? SvgPicture.asset(
+              'assets/icons/ic_arrow_right.svg',
+              color: widget.isSelected ? Colors.white: ColorConstants.brandColor,): (widget.pupilIds!.contains(widget.pupilId!) == true && widget.role == 1 ? SvgPicture.asset(
               'assets/icons/ic_arrow_right.svg',
               color: widget.isSelected ? Colors.white: ColorConstants.brandColor,
-            )
+            ):SvgPicture.asset(
+              'assets/icons/ic_arrow_right.svg',
+              color: widget.isSelected ? Colors.white: ColorConstants.primaryColor2,
+            ))
           ],
         ),
       ),

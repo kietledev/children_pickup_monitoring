@@ -6,7 +6,7 @@ abstract class PickUpState extends Equatable {
   const PickUpState({this.pickUpRequest, this.msg});
 
   @override
-  List<Object> get props => [msg!];
+  List<Object> get props => [];
 }
 class FetchPickUpLoadingState extends PickUpState {}
 
