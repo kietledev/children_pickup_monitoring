@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:children_pickup_monitoring/common/constants/color_constants.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
@@ -628,7 +629,6 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   Future _initVariable() async {
-    // final preferences = Preferences();
     const String stringOfFinishTime =
         '09:55'; //await preferences.getSchoolFinishTime();
     _finishTime = getDateTimeFromString(stringOfFinishTime);
