@@ -53,8 +53,6 @@ dependencies:
   flutter_screenutil: ^5.0.0+2
   flutter_easyloading: ^3.0.3
   image_picker: ^0.8.4+3
-
-
   # Notification
   firebase_messaging: ^10.0.8
   flutter_local_notifications: ^9.0.0

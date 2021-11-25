@@ -14,3 +14,5 @@ export 'get_pupil_by_parent_api_service.dart';
 
 export 'delete_parent_api_service.dart';
 export 'post_password_api_service.dart';
+export 'get_notification_api_service.dart';
+export 'post_class_by_teacher_api_service.dart';

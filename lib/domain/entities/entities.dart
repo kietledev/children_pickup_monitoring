@@ -8,3 +8,7 @@ export 'pickup_place.dart';
 export 'pickup_request.dart';
 export 'parent.dart';
 export 'user_by_person.dart';
+export 'system_notification.dart';
+export 'school_notification.dart';
+export 'notification.dart';
+export 'list_class_by_teacher.dart';

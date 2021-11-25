@@ -82,7 +82,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `user_table` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `personId` INTEGER NOT NULL, `currentFirstName` TEXT NOT NULL, `currentLastName` TEXT NOT NULL, `currentMiddleName` TEXT, `loginTime` TEXT NOT NULL, `fromParentId` INTEGER NOT NULL, `toPupilId` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `user_table` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `personId` INTEGER NOT NULL, `currentFirstName` TEXT NOT NULL, `currentLastName` TEXT NOT NULL, `currentMiddleName` TEXT, `loginTime` TEXT NOT NULL, `roleId` INTEGER NOT NULL, `roleName` TEXT NOT NULL, `roleAllowAdd` INTEGER NOT NULL, `roleAllowUpdate` INTEGER NOT NULL, `roleAllowDelete` INTEGER NOT NULL, `fromParentId` INTEGER NOT NULL, `toPupilId` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -109,6 +109,11 @@ class _$UserDao extends UserDao {
                   'currentLastName': item.currentLastName,
                   'currentMiddleName': item.currentMiddleName,
                   'loginTime': item.loginTime,
+                  'roleId': item.roleId,
+                  'roleName': item.roleName,
+                  'roleAllowAdd': item.roleAllowAdd ? 1 : 0,
+                  'roleAllowUpdate': item.roleAllowUpdate ? 1 : 0,
+                  'roleAllowDelete': item.roleAllowDelete ? 1 : 0,
                   'fromParentId': item.fromParentId,
                   'toPupilId': item.toPupilId
                 }),
@@ -123,6 +128,11 @@ class _$UserDao extends UserDao {
                   'currentLastName': item.currentLastName,
                   'currentMiddleName': item.currentMiddleName,
                   'loginTime': item.loginTime,
+                  'roleId': item.roleId,
+                  'roleName': item.roleName,
+                  'roleAllowAdd': item.roleAllowAdd ? 1 : 0,
+                  'roleAllowUpdate': item.roleAllowUpdate ? 1 : 0,
+                  'roleAllowDelete': item.roleAllowDelete ? 1 : 0,
                   'fromParentId': item.fromParentId,
                   'toPupilId': item.toPupilId
                 });
@@ -139,23 +149,21 @@ class _$UserDao extends UserDao {
 
   @override
   Future<List<User>> getAllUsers() async {
-    return _queryAdapter.queryList(
-      'SELECT * FROM user_table',
-      mapper: (Map<String, Object?> row) => User(
-          userId: row['userId'] as int,
-          personId: row['personId'] as int,
-          currentFirstName: row['currentFirstName'] as String,
-          currentLastName: row['currentLastName'] as String,
-          currentMiddleName: row['currentMiddleName'] as String?,
-          loginTime: row['loginTime'] as String,
-          roleId: row['roleId'] as int,
-          roleName: row['roleName'] as String,
-          roleAllowAdd: row['roleAllowAdd'] as bool,
-          roleAllowUpdate: row['roleAllowUpdate'] as bool,
-          roleAllowDelete: row['roleAllowDelete'] as bool,
-          fromParentId: row['fromParentId'] as int,
-          toPupilId: row['toPupilId'] as int),
-    );
+    return _queryAdapter.queryList('SELECT * FROM user_table',
+        mapper: (Map<String, Object?> row) => User(
+            userId: row['userId'] as int,
+            personId: row['personId'] as int,
+            currentFirstName: row['currentFirstName'] as String,
+            currentLastName: row['currentLastName'] as String,
+            currentMiddleName: row['currentMiddleName'] as String?,
+            loginTime: row['loginTime'] as String,
+            roleId: row['roleId'] as int,
+            roleName: row['roleName'] as String,
+            roleAllowAdd: (row['roleAllowAdd'] as int) != 0,
+            roleAllowUpdate: (row['roleAllowUpdate'] as int) != 0,
+            roleAllowDelete: (row['roleAllowDelete'] as int) != 0,
+            fromParentId: row['fromParentId'] as int,
+            toPupilId: row['toPupilId'] as int));
   }
 
   @override

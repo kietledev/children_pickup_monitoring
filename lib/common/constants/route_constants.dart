@@ -28,4 +28,7 @@ class RouteConstants {
   static const String settingApp= "/setting_app";
   static const String informationApp= "/infomation_app";
   static const String helpApp= "/help_app";
+  static const String notification= "/Notification";
+  static const String notificationDetail= "/NotificationDetail";
+  static const String notificationAdd= "/NotificationAdd";
 }

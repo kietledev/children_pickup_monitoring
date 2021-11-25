@@ -22,5 +22,8 @@ export 'app_information_page.dart';
 export 'app_help_page.dart';
 export 'edit_profile_page.dart';
 export 'parent_add_page.dart';
+export 'notification_page.dart';
+export 'notification_add_page.dart';
+export 'notification_detail_page.dart';
 
 
