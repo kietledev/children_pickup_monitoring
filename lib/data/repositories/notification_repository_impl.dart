@@ -12,7 +12,8 @@ import 'package:children_pickup_monitoring/domain/repositories/repositories.dart
 
 class NotificationRepositoryImpl implements NotificationRepository {
   final GetListNotificationApiService _getListNotificationApiService;
-  const NotificationRepositoryImpl(this._getListNotificationApiService);
+  final PostTeacherSendNotificationApiService _postTeacherSendNotificationApiService;
+  const NotificationRepositoryImpl(this._getListNotificationApiService,this._postTeacherSendNotificationApiService);
 
   @override
   Future<DataState<NotificationModel>> getListNotification(GetNotificationRequest params) async {
@@ -31,6 +32,36 @@ class NotificationRepositoryImpl implements NotificationRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         final notification = NotificationModel.fromJson(httpResponse.data.data);
         return DataSuccess(notification);
+      }
+      return DataFailed(
+        DioError(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          requestOptions: httpResponse.response.requestOptions,
+          type: DioErrorType.response,
+        ),
+      );
+    } on DioError catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<String>> postNotificationByTeacher(PostNotificationByTeacherRequest params) async {
+    try {
+      final Map<String, dynamic> body = <String, dynamic>{
+        "personId": params.personId,
+        "teacherId": params.teacherId,
+        "listClassId": params.listClassId,
+        "titleAnnoucement": params.titleAnnoucement,
+        "contentAnnoucement": params.contentAnnoucement
+      };
+    print(body);
+      final httpResponse = await _postTeacherSendNotificationApiService.postTeacherSendNotification(
+          body: body, k: key, dm: dm, tk: getTokenApi(id: ""), ttl: ttl);
+      print(httpResponse.response.statusCode);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess("Success");
       }
       return DataFailed(
         DioError(

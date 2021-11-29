@@ -70,7 +70,7 @@ class RepositoryModule extends DIModule {
     );
     /* Notification repository */
     injector.registerSingleton<NotificationRepository>(
-      NotificationRepositoryImpl(injector()),
+      NotificationRepositoryImpl(injector(),injector()),
     );
     /* List Classroom repository */
     injector.registerSingleton<ClassByTeacherRepository>(

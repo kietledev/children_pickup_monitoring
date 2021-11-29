@@ -54,5 +54,7 @@ class ApiModule extends DIModule {
     injector.registerSingleton<GetListNotificationApiService>(GetListNotificationApiService(injector()));
     /* get list classroom api */
     injector.registerSingleton<PostListClassByTeacherApiService>(PostListClassByTeacherApiService(injector()));
+    /* post Notification api */
+    injector.registerSingleton<PostTeacherSendNotificationApiService>(PostTeacherSendNotificationApiService(injector()));
   }
 }

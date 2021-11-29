@@ -7,7 +7,7 @@ import 'package:flutter/rendering.dart';
 
 class DropdownSelected<T>   extends StatefulWidget {
    final bool selected;
-   final ValueChanged<List<dynamic>> onSelect;
+   final ValueChanged<List<int>> onSelect;
    final bool hideDropdownUnderline;
    final String? dropdownTitleTileHintText;
    final String? dropdownTitleTileText;
@@ -41,7 +41,7 @@ class _DropdownSelected extends State<DropdownSelected> with TickerProviderState
   bool showDropdown = false;
   final LayerLink _layerLink = LayerLink();
   final List _selectedTitles = [];
-  final List _selectedTitlesIndex = [];
+  final List<int> _selectedTitlesIndex = [];
   late AnimationController _animationController;
   late Animation<double> _expandAnimation;
   late Animation<double> _rotateAnimation;
@@ -66,7 +66,7 @@ class _DropdownSelected extends State<DropdownSelected> with TickerProviderState
     if (selected == true) {
       setState(() {
         _selectedTitles.add(widget.items[index].className);
-        _selectedTitlesIndex.add(widget.items[index].classId);
+        _selectedTitlesIndex.add(widget.items[index].classId!);
       });
     } else {
       setState(() {
@@ -198,7 +198,6 @@ class _DropdownSelected extends State<DropdownSelected> with TickerProviderState
                                   selected: widget.selected,
                                   onChanged: (bool? selected){
                                     setState(() {
-                                      print(selected);
                                       _controller.text;
                                       _onItemSelect(selected!, index);
                                       widget.onSelect(_selectedTitlesIndex);

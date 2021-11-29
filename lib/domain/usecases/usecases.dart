@@ -15,3 +15,4 @@ export 'delete_parent_usecase.dart';
 export 'post_password_usercase.dart';
 export 'get_notification_usercase.dart';
 export 'post_class_by_teacher_usecase.dart';
+export 'post_notification_by_teacher_usecase.dart';

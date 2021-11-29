@@ -22,4 +22,5 @@ class UrlConstatns {
   static const String apiPostPassword= urlServer + "changePassWord";
   static const String apiGetListNotification= urlServer + "getListUnreadNotificationByPersonId";
   static const String apiPostListClassByTeacherId = urlServer + "getListClassByTeacherId";
+  static const String apiPostTeacherSendNotification = urlServer + "teacherSendAnnoucementToClass";
 }

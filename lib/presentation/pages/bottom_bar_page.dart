@@ -93,7 +93,7 @@ class _BodyBottomBarPage extends State<BodyBottomBarPage> {
   getUserId() async {
     userModel = await getUser();
     personId = userModel!.personId.toInt();
-    BlocProvider.of<NotificationBloc>(context).add(GetNotificationEvent(page: 1, pageSize: 10, personId: 21));
+    BlocProvider.of<NotificationBloc>(context).add(GetNotificationEvent(page: 1, pageSize: 10, personId: personId));
   }
   @override
   void dispose() {

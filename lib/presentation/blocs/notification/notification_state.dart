@@ -20,7 +20,9 @@ class NotificationLoadingState extends NotificationState {
 class NotificationSuccessState extends NotificationState {
   const NotificationSuccessState({required NotificationModel notificationModel}) : super(notificationModel: notificationModel);
 }
-
+class PostNotificationSuccessState extends NotificationState {
+  const PostNotificationSuccessState({required String msg}) : super(msg: msg);
+}
 class NotificationFailureState extends NotificationState {
   const NotificationFailureState({required String msg}) : super(msg: msg);
 }

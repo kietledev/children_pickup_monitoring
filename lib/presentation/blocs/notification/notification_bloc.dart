@@ -13,7 +13,8 @@ part 'notification_state.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   final GetNotificationUseCase _getNotificationUseCase;
-  NotificationBloc(this._getNotificationUseCase, ) : super(NotificationInitialState());
+  final PostNotificationByTeacherUseCase _postNotificationByTeacherUseCase;
+  NotificationBloc(this._getNotificationUseCase,this._postNotificationByTeacherUseCase ) : super(NotificationInitialState());
 
   @override
   Stream<NotificationState> mapEventToState(
@@ -36,5 +37,24 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
         yield NotificationFailureState(msg: dataState.error!.message);
       }
     }
+    if (event is PostNotificationByTeacherEvent) {
+      yield const NotificationLoadingState();
+      final dataState = await _postNotificationByTeacherUseCase(
+        params: PostNotificationByTeacherRequest(
+         personId: event.personId,
+          teacherId: event.teacherId,
+          listClassId: event.listClassId,
+          titleAnnoucement: event.titleAnnoucement,
+          contentAnnoucement: event.contentAnnoucement
+        ),
+      );
+
+      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
+        yield PostNotificationSuccessState(msg: dataState.data!);
+      } else {
+        yield NotificationFailureState(msg: dataState.error!.message);
+      }
+    }
+
   }
 }
