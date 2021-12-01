@@ -6,6 +6,8 @@ class DBConstants {
   static const String kQRGeneratedTableName = 'qrgenerated_table';
   static const String kTeacherTableName = 'teacher_table';
   static const String kPersonTableName = 'person_table';
+  static const String kSystemNotificationTableName = 'system_notification_table';
+  static const String kSchoolNotificationTableName = 'school_notification_table';
 }
 
 class SecureStorageKeys {

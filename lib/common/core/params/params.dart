@@ -14,6 +14,9 @@ export 'get_pupil_by_parent_request.dart';
 
 export 'delete_parent_request.dart';
 export 'post_password.dart';
+export 'get_notification_request.dart';
+export 'post_class_by_teacher_request.dart';
+export 'post_notification_by_teacher_request.dart';
 export 'post_pickup_request.dart';
 export 'delete_pickup_destroyed_request.dart';
 

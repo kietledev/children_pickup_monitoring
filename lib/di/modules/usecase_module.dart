@@ -48,6 +48,12 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<GetPupilByParentUseCase>(GetPupilByParentUseCase(injector()));
     /*Post password Usecase */
     injector.registerSingleton<PostPasswordUseCase>(PostPasswordUseCase(injector()));
+    /*Get list notification Usecase */
+    injector.registerSingleton<GetNotificationUseCase>(GetNotificationUseCase(injector()));
+    /*Get list classRoom Usecase */
+    injector.registerSingleton<PostClassByTeacherUseCase>(PostClassByTeacherUseCase(injector()));
+    /*Get list notification Usecase */
+    injector.registerSingleton<PostNotificationByTeacherUseCase>(PostNotificationByTeacherUseCase(injector()));
     /*Post pickup card */
     injector.registerSingleton<PostPickUpUseCase>(PostPickUpUseCase(injector()));
     /*delete pickup card */

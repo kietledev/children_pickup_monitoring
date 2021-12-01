@@ -56,5 +56,11 @@ class ApiModule extends DIModule {
     /* DELETE card api */
     injector.registerSingleton<DeletePickupDestroyedApiService>(DeletePickupDestroyedApiService(injector()));
 
+    /* get list notification api */
+    injector.registerSingleton<GetListNotificationApiService>(GetListNotificationApiService(injector()));
+    /* get list classroom api */
+    injector.registerSingleton<PostListClassByTeacherApiService>(PostListClassByTeacherApiService(injector()));
+    /* post Notification api */
+    injector.registerSingleton<PostTeacherSendNotificationApiService>(PostTeacherSendNotificationApiService(injector()));
   }
 }

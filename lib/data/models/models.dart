@@ -11,4 +11,8 @@ export 'parent_model.dart';
 export 'user_by_person_model.dart';
 export 'relationship_type_model.dart';
 export 'language_model.dart';
+export 'system_notification_model.dart';
+export 'school_notification_model.dart';
+export 'notification_model.dart';
+export 'list_class_by_teacher_model.dart';
 

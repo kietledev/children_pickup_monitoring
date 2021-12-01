@@ -24,4 +24,7 @@ class UrlConstatns {
 
   static const String apiGetPickUpCards= urlServer + "api/getListPickUpRequestByUserId";
   static const String apiPutPickUpCards= urlServer + "updatePickUpDestroyed";
+  static const String apiGetListNotification= urlServer + "getListUnreadNotificationByPersonId";
+  static const String apiPostListClassByTeacherId = urlServer + "getListClassByTeacherId";
+  static const String apiPostTeacherSendNotification = urlServer + "teacherSendAnnoucementToClass";
 }

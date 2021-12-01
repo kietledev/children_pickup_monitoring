@@ -12,3 +12,8 @@ export 'pickup_generated.dart';
 export 'table_pickup_generated.dart';
 export 'table_parent.dart';
 export 'table_pupil.dart';
+
+export 'system_notification.dart';
+export 'school_notification.dart';
+export 'notification.dart';
+export 'list_class_by_teacher.dart';

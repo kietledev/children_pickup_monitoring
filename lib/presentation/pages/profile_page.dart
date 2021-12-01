@@ -56,6 +56,7 @@ class _ProfileBody extends State<ProfileBody>{
    getUserId() async {
     userModel = await getUser();
     personId = userModel!.personId.toInt();
+    print("Nhuan--role${userModel!.roleId}");
     BlocProvider.of<ProfileBloc>(context).add(GetprofileEvent(personId:personId ));
   }
   @override
