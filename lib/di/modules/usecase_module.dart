@@ -50,5 +50,7 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<PostPasswordUseCase>(PostPasswordUseCase(injector()));
     /*Post pickup card */
     injector.registerSingleton<PostPickUpUseCase>(PostPickUpUseCase(injector()));
+    /*delete pickup card */
+    injector.registerSingleton<DeletePickupCardUseCase>(DeletePickupCardUseCase(injector()));
   }
 }

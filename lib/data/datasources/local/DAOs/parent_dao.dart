@@ -5,11 +5,14 @@ import 'package:floor/floor.dart';
 @dao
 abstract class ParentDao {
   @Query('SELECT * FROM ${DBConstants.kParentTableName}')
-  Future<List<Parent>> getParents();
+  Future<List<TableParent>> getParents();
+
+  @Query('SELECT * FROM ${DBConstants.kParentTableName} WHERE parentId = :parentId')
+  Future<TableParent?> getParentById(int parentId);
 
   @Insert(onConflict: OnConflictStrategy.replace)
-  Future<void> insertParent(Parent parent);
+  Future<void> insertParent(TableParent parent);
 
-  // @delete
-  // Future<void> deleteParent(Parent parent);
+  @delete
+  Future<void> deleteParent(TableParent parent);
 }

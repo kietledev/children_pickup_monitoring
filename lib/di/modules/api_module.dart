@@ -53,7 +53,8 @@ class ApiModule extends DIModule {
 
     /* POST card api */
     injector.registerSingleton<PostPickUpCardApiService>(PostPickUpCardApiService(injector()));
-
+    /* DELETE card api */
+    injector.registerSingleton<DeletePickupDestroyedApiService>(DeletePickupDestroyedApiService(injector()));
 
   }
 }

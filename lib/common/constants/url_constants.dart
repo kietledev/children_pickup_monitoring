@@ -21,4 +21,7 @@ class UrlConstatns {
   static const String apiDeleteParent= urlServer + "deleteParent";
   static const String apiPostPassword= urlServer + "changePassWord";
   static const String apiPostPickUpCard= urlServer + "sendPickUpRequest";
+
+  static const String apiGetPickUpCards= urlServer + "api/getListPickUpRequestByUserId";
+  static const String apiPutPickUpCards= urlServer + "updatePickUpDestroyed";
 }

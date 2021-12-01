@@ -11,9 +11,10 @@ class InsertPickUpRequestEvent extends PickUpEvent {
   Map<String, dynamic> body;
   InsertPickUpRequestEvent({required this.body});
 }
-class UpdatePickUpRequestEvent extends PickUpEvent {
-  final String requestId;
+class DeletePickUpRequestEvent extends PickUpEvent {
+  final int requestId;
+  final int roleId;
   Map<String, dynamic> body;
-  UpdatePickUpRequestEvent({required this.body, required this.requestId});
+  DeletePickUpRequestEvent({required this.body, required this.requestId, required this.roleId});
 }
 

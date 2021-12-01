@@ -168,7 +168,7 @@ class _MenuBodyState extends State<MenuBody> {
                               return InkWell(
                               onTap: () {
                                 setState(() {
-                                  setState(() {
+
                                     if (_lengthList == 1) {
                                       _currentIndex = -1;
                                     }else {
@@ -183,7 +183,7 @@ class _MenuBodyState extends State<MenuBody> {
                                         checkSelect = index;
                                       }
                                     }
-                                  });
+
                                 });
 
                               },

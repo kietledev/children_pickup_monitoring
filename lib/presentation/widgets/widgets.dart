@@ -24,4 +24,5 @@ export 'item_pupil_checkbox.dart';
 export 'item_pupil_qrcard.dart';
 export 'pick_up_card.dart';
 export 'pupil_pickup.dart';
+export 'button_icon_left.dart';
 

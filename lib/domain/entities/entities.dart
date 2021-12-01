@@ -9,3 +9,6 @@ export 'pickup_request.dart';
 export 'parent.dart';
 export 'user_by_person.dart';
 export 'pickup_generated.dart';
+export 'table_pickup_generated.dart';
+export 'table_parent.dart';
+export 'table_pupil.dart';

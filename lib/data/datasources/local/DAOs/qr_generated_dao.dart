@@ -5,11 +5,17 @@ import 'package:floor/floor.dart';
 @dao
 abstract class QRGeneratedDao {
   @Query('SELECT * FROM ${DBConstants.kQRGeneratedTableName}')
-  Future<List<PickUpGenerated>> getQRGenerateds();
+  Future<List<TablePickUpGenerated>> getQRGenerateds();
+
+  @Query('SELECT * FROM ${DBConstants.kQRGeneratedTableName} WHERE cardId = :cardId')
+  Future<TablePickUpGenerated?> getQRGeneratedById(String cardId);
 
   @Insert(onConflict: OnConflictStrategy.replace)
-  Future<void> insertQRGenerated(Pupil pupil);
+  Future<void> insertQRGenerated(TablePickUpGenerated pickUpGenerated);
 
   @delete
-  Future<void> deleteQRGenerated(Pupil pupil);
+  Future<void> deleteQRGenerated(TablePickUpGenerated pickUpGenerated);
+
+  @Query('UPDATE ${DBConstants.kQRGeneratedTableName} SET status = :status WHERE cardId = :cardId')
+  Future<TablePickUpGenerated?> updateQRCode(int status, String cardId);
 }

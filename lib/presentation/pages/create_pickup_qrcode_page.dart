@@ -3,6 +3,7 @@ import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/common/helpers/my_behavior.dart';
+import 'package:children_pickup_monitoring/data/datasources/local/app_database.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
@@ -114,12 +115,48 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
   int _timeIndex = 1;
   int isselected = 0;
   int userID = 0;
+  late TablePickUpGenerated pickUpGen;
+  late TableParent parent;
+  late TablePupil pupil;
+  late Person person;
+  late final AppDatabase appDatabase;
   @override
   void initState() {
     super.initState();
+    $FloorAppDatabase
+        .databaseBuilder('app_database.db')
+        .build()
+        .then((value) async {
+      this.appDatabase = value;
+      setState(() {
+        // saveQRCode(pickUpGen);
+        // saveParent(parent);
+        // savePupil(pupil);
+        // savePerson(person);
+      });
+    });
+
     getParentId(currentParentID!);
     pin2FocusNode = FocusNode();
+
   }
+
+  Future<void> saveQRCode( TablePickUpGenerated pickUpGenerated) async {
+    return await appDatabase.appQRGeneratedDao.insertQRGenerated(pickUpGenerated);
+  }
+
+  Future<void> saveParent( TableParent parent) async{
+    return await appDatabase.appParentDao.insertParent(parent);
+  }
+
+  Future<void> savePupil( TablePupil pupil) async{
+    return await appDatabase.appPupilDao.insertPupil(pupil);
+  }
+
+  Future<void> savePerson( Person person) async{
+    return await appDatabase.appPersonDao.insertPerson(person);
+  }
+
   getParentId(String? parentId) async {
     userModel = await getUser();
       if (parentId == "-1"){
@@ -478,7 +515,6 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                       },
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -550,7 +586,6 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
            return const SizedBox.shrink();
           }
         });
-
   }
   Widget _buildParents() {
     return BlocBuilder<ParentsBloc, ParentsState>(
@@ -673,35 +708,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
       },
     );
   }
-  Widget _saveData1(){
-    return BlocBuilder<PickUpBloc,PickUpState>(
-      builder: (context, state) {
-        if (state is PickUpFailureState) {
-          return Text("khong co dl");
-        } else if (state is PickUpSuccessState) {
-          _parentPickUp = [];
-          if(isselected == 0){
-            _parentPickUp.add(currentParents[0]);
-          }else if(isselected == 1){
-            _parentPickUp.add(selectedParents[0]);
-          }else if(currentParentID == parentIDSelected){
-            _parentPickUp.add(currentParents[0]);
-          }
-          String address = '24/A3 Khu Dân Cư Hưng Phú I, Hưng Phú, Cái Răng, Cần Thơ';
 
-
-          _pickUpRequest = state.pickUpRequest!;
-          PickUpGenerated _pickUpGenerated = new PickUpGenerated(_pupilsPickUp,timeString,_pickUpRequest.requestId,pupil_1,pupil_2,pupil_3,_pickUpRequest.idCard,  formatDate.format(now),
-              locationNameSelected,_parentPickUp[0],_parentPickUp[0].parentId,address, _pickUpRequest.qrCode, _pickUpRequest.status ) ;
-          Navigator.of(context).pushNamed(RouteConstants.qrInformation,arguments: _pickUpGenerated);
-          return const SizedBox.shrink();
-        }else{
-          return const SizedBox.shrink();
-        }
-      },
-    );
-
-}
   Widget _saveData(){
     return BlocListener<PickUpBloc,PickUpState>(
         listener: (context, state){
@@ -720,6 +727,40 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
             String address = '24/A3 Khu Dân Cư Hưng Phú I, Hưng Phú, Cái Răng, Cần Thơ';
             PickUpGenerated _pickUpGenerated = new PickUpGenerated(_pupilsPickUp,timeString,_pickUpRequest.requestId,pupil_1,pupil_2,pupil_3,_pickUpRequest.idCard,  formatDate.format(now),
                 locationNameSelected,_parentPickUp[0],_parentPickUp[0].parentId,address, _pickUpRequest.qrCode, _pickUpRequest.status ) ;
+            //lưu table
+            //table QR code
+            TablePickUpGenerated pickUpGenerated = new TablePickUpGenerated(parentId: _parentPickUp[0].parentId,addressSchool:address,cardId:  _pickUpRequest.idCard,datePickUp:formatDate.format(now),placePickUp: locationNameSelected,
+                pupilId1:pupil_1, pupilId2: pupil_2, pupilId3: pupil_3, requestId: _pickUpRequest.requestId, status: _pickUpRequest.status ,stringQrcode: _pickUpRequest.qrCode,timePickUp: timeString);
+            //table pupil
+            if(pupil_1 != 0){
+              TablePupil pupil = new TablePupil(pupilId: _pupilsPickUp[0].pupilId,classId: _pupilsPickUp[0].classId, className: _pupilsPickUp[0].className,currentFirstNameParent: _pupilsPickUp[0].currentFirstNameParent,
+              currentLastNameParent: _pupilsPickUp[0].currentLastNameParent, currentMiddleNameParent: _pupilsPickUp[0].currentMiddleNameParent, currentPhoneNumber1Parent: _pupilsPickUp[0].currentPhoneNumber1Parent,
+              currentPhoneNumber2Parent: _pupilsPickUp[0].currentPhoneNumber2Parent, personId: _pupilsPickUp[0].personDetail!.personId,personToPersonPersonalRelationshipTypeName:_pupilsPickUp[0].personToPersonPersonalRelationshipTypeName,
+              personToPersonPersonalRelationshipTypeNameEn: _pupilsPickUp[0].personToPersonPersonalRelationshipTypeName);
+              savePupil(pupil);
+              savePerson(_pupilsPickUp[0].personDetail!);
+            }else if(pupil_2 != 0){
+              TablePupil pupil = new TablePupil(pupilId: _pupilsPickUp[1].pupilId,classId: _pupilsPickUp[1].classId, className: _pupilsPickUp[1].className,currentFirstNameParent: _pupilsPickUp[1].currentFirstNameParent,
+                  currentLastNameParent: _pupilsPickUp[1].currentLastNameParent, currentMiddleNameParent: _pupilsPickUp[1].currentMiddleNameParent, currentPhoneNumber1Parent: _pupilsPickUp[1].currentPhoneNumber1Parent,
+                  currentPhoneNumber2Parent: _pupilsPickUp[1].currentPhoneNumber2Parent, personId: _pupilsPickUp[1].personDetail!.personId,personToPersonPersonalRelationshipTypeName:_pupilsPickUp[1].personToPersonPersonalRelationshipTypeName,
+                  personToPersonPersonalRelationshipTypeNameEn: _pupilsPickUp[1].personToPersonPersonalRelationshipTypeName);
+              savePupil(pupil);
+              savePerson(_pupilsPickUp[1].personDetail!);
+            }else if(pupil_3 != 0){
+              TablePupil pupil = new TablePupil(pupilId: _pupilsPickUp[2].pupilId,classId: _pupilsPickUp[2].classId, className: _pupilsPickUp[2].className,currentFirstNameParent: _pupilsPickUp[2].currentFirstNameParent,
+                  currentLastNameParent: _pupilsPickUp[2].currentLastNameParent, currentMiddleNameParent: _pupilsPickUp[2].currentMiddleNameParent, currentPhoneNumber1Parent: _pupilsPickUp[2].currentPhoneNumber1Parent,
+                  currentPhoneNumber2Parent: _pupilsPickUp[2].currentPhoneNumber2Parent, personId: _pupilsPickUp[2].personDetail!.personId,personToPersonPersonalRelationshipTypeName:_pupilsPickUp[2].personToPersonPersonalRelationshipTypeName,
+                  personToPersonPersonalRelationshipTypeNameEn: _pupilsPickUp[2].personToPersonPersonalRelationshipTypeName);
+              savePupil(pupil);
+              savePerson(_pupilsPickUp[2].personDetail!);
+            }
+            //table parent
+            TableParent parent = new TableParent(parentId: _parentPickUp[0].parentId,personId: _parentPickUp[0].personDetail!.personId,accountUser: _parentPickUp[0].accountUser,approved: _parentPickUp[0].approved,
+            personToPersonPersonalRelationshipTypeNameEn: _parentPickUp[0].personToPersonPersonalRelationshipTypeNameEn,personToPersonPersonalRelationshipTypeName: _parentPickUp[0].personToPersonPersonalRelationshipTypeName,
+            approvedByUserId: _parentPickUp[0].approvedByUserId, approvedDatetime: _parentPickUp[0].approvedDatetime);
+            saveParent(parent);
+            savePerson(_parentPickUp[0].personDetail!);
+            saveQRCode(pickUpGenerated);
 
             Navigator.of(context).pushNamed(RouteConstants.qrInformation,arguments: _pickUpGenerated);
             EasyLoading.dismiss();

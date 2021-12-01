@@ -17,3 +17,6 @@ class PickUpSuccessState extends PickUpState {
 class PickUpFailureState extends PickUpState {
   const PickUpFailureState({required String msg}) : super(msg: msg);
 }
+class DeletePickUpSuccessState extends PickUpState{
+  const DeletePickUpSuccessState({required PickUpRequest pickUpRequest}) : super(pickUpRequest: pickUpRequest);
+}

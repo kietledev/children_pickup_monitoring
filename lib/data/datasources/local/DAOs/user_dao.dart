@@ -12,4 +12,5 @@ abstract class UserDao {
 
   @delete
   Future<void> deleteUser(User user);
+
 }
