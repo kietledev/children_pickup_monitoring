@@ -16,6 +16,7 @@ export 'menu_page.dart';
 export 'menu_detail_page.dart';
 export 'generated_qr_code_page.dart';
 export 'password_change_page.dart';
+export 'create_pickup_qrcode_page.dart';
 export 'switch_pupil_page.dart';
 export 'setting_app_page.dart';
 export 'app_information_page.dart';
@@ -25,5 +26,8 @@ export 'parent_add_page.dart';
 export 'notification_page.dart';
 export 'notification_add_page.dart';
 export 'notification_detail_page.dart';
+export 'qr_card_info_page.dart';
+
+
 
 

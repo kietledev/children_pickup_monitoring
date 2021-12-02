@@ -10,4 +10,5 @@ export 'relationship_type_repository.dart';
 export 'pickup_place_repository.dart';
 export 'pupil_by_parent_repository.dart';
 export 'password_repository.dart';
+export 'pickup_reponsitory.dart';
 export 'notification_repository.dart';

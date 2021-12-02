@@ -23,11 +23,12 @@ class RouteConstants {
   static const String formAddUserToParent = "/form_add_user_to_parent";
   static const String parentAdd= "/parent_add";
   static const String generatedQCode= "/generated_qr_code";
-
+  static const String createQCode= "/create_qr_code";
   static const String passwordChange= "/password_change";
   static const String settingApp= "/setting_app";
   static const String informationApp= "/infomation_app";
   static const String helpApp= "/help_app";
+  static const String qrInformation = "/qr_card_information";
   static const String notification= "/Notification";
   static const String notificationDetail= "/NotificationDetail";
   static const String notificationAdd= "/NotificationAdd";

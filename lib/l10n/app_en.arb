@@ -42,5 +42,19 @@
   "helloWorld": "Hello World!",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
-  }
+  },
+  "generateQrCode": "Generated QR Code",
+  "sendRequest": "Send Request",
+  "classInformation": "Class Information",
+  "viewCamera": "View Camera",
+  "childPickupHistory": "Child Pick Up History",
+  "teacherInformation": "Teacher Information",
+  "classDetail": "Class Detail",
+  "foodMenu": "Food Menu",
+  "achievements": "Achievements",
+  "teacherDetail": "Teacher Detail",
+  "homeroomTeacher": "Master",
+  "position": "Position",
+  "email": "Email",
+  "introduce": "Introduce"
 }

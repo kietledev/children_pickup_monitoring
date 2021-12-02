@@ -5,16 +5,19 @@ import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemTeacherPupilListView extends StatefulWidget {
   final int index;
   final bool isSelected;
   final bool? position;
   final int genderId;
   final String avatar;
+  final int? role;
   final String fullName;
   final String? avtDefaultMale;
   final String? avtDefaultFemale;
+  final int? pupilId;
+  final List<int>? pupilIds;
   final VoidCallback onSelect;
 
   const ItemTeacherPupilListView({
@@ -22,10 +25,13 @@ class ItemTeacherPupilListView extends StatefulWidget {
     required this.index,
     required this.isSelected,
     this.position,
+    this.role,
     required this.genderId,
     required this.avatar,
+    this.pupilId,
     this.avtDefaultFemale,
     this.avtDefaultMale,
+    this.pupilIds,
     required this.fullName,
     required this.onSelect,
   }) : super(key: key);
@@ -97,13 +103,21 @@ class _ItemTeacherPupilListViewState extends State<ItemTeacherPupilListView> {
               ),
             ),
             const SizedBox(width: 12),
-            Text(widget.position == true ? widget.fullName + " ("+StringConstatns.homeroomTeacher+")": widget.fullName,
+            Text(widget.position == true ? widget.fullName + " \n("+(AppLocalizations.of(context)!.homeroomTeacher)+")": widget.fullName,
                 style: Utils.setStyle(
                     color: titleColor, weight: FontWeight.w600)),
             const Spacer(),
-            SvgPicture.asset(
+            widget.pupilIds!.length == 0  ? SvgPicture.asset(
               'assets/icons/ic_arrow_right.svg',
+              color: widget.isSelected ? Colors.white: ColorConstants.brandColor,)
+                : (widget.pupilIds!.contains(widget.pupilId!) == true && widget.role == 1 ? SvgPicture.asset('assets/icons/ic_arrow_right.svg',
               color: widget.isSelected ? Colors.white: ColorConstants.brandColor,
+            ):  widget.role == 1 ? SvgPicture.asset(
+              'assets/icons/ic_arrow_right.svg',
+              color: widget.isSelected ? Colors.white: ColorConstants.primaryColor2
+            ):SvgPicture.asset(
+              'assets/icons/ic_arrow_right.svg',
+              color: widget.isSelected ? Colors.white: ColorConstants.brandColor,)
             )
           ],
         ),

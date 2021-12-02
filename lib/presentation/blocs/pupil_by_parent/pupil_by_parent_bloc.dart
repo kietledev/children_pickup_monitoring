@@ -23,14 +23,15 @@ class PupilByParentBloc extends Bloc<PupilByParentEvent,PupilByParentState> {
       PupilByParentEvent event,
       ) async* {
     if (event is FetchPupilByParent) {
+      print("event.parentId ==> "+event.parentId.toString());
       final dataState = await _getPupilByParentUseCase(
         params: PupilByParentRequest(
             parentId: event.parentId,
         ),
       );
-
-      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
+      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty)  {
         final pupils = dataState.data!;
+        print("pupils data ==> "+pupils.toString());
         yield FetchPupilByParentSuccessState(pupils: pupils);
       } else {
         yield FetchPupilByParentFailureState(msg: dataState.error!.message);

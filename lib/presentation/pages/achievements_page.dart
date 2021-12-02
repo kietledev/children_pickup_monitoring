@@ -23,6 +23,7 @@ class AchievementsPage extends StatelessWidget {
         appBar:  WidgetAppBar(
           title: TitlesConstants.achievements,
           menuItem: [],
+          hideBack:true,
           actionBack: () {
             Navigator.pop(context);
           },
@@ -53,34 +54,39 @@ class _AchievementsBodyState extends State<AchievementsBody> {
         EasyLoading.dismiss();
         final List<Achievement> achievement = state.achievements!;
         return Container(
+          height: double.infinity,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/bg_body_a.png'),
               fit: BoxFit.cover,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24),
-            child: ListView.builder(
-              primary: false,
-              itemCount: achievement.length,
-              itemBuilder: (context, index) {
-                final item = achievement[index];
-                return ItemTitleDateListView(
-                  index: index,
-                  isSelected: currentIndex == index,
-                  image: "assets/images/img_avatar.png",
-                  date: item.createdDatetime!,
-                  title: item.achievementBriefDescription!,
-                  onSelect: () {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                    Navigator.pushNamed(context, RouteConstants.achievementDetail,
-                        arguments: item);
-                  },
-                );
-              },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemCount: achievement.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final item = achievement[index];
+                  return ItemTitleDateListView(
+                    index: index,
+                    isSelected: currentIndex == index,
+                    image: "assets/images/img_avatar.png",
+                    date: item.createdDatetime!,
+                    title: item.achievementBriefDescription!,
+                    onSelect: () {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                      Navigator.pushNamed(context, RouteConstants.achievementDetail,
+                          arguments: item);
+                    },
+                  );
+                },
+              ),
             ),
           ),
         );

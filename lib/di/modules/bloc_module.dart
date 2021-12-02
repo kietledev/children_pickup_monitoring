@@ -64,5 +64,8 @@ class BlocModule extends DIModule {
     injector.registerFactory<NotificationBloc>(() =>NotificationBloc(injector(),injector(),injector()));
     /* list classRoom */
     injector.registerFactory<ClassRoomBloc>(() =>ClassRoomBloc(injector()));
+
+    injector.registerFactory<PickUpBloc>(() =>PickUpBloc(injector(), injector()));
+
   }
 }

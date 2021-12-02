@@ -38,4 +38,5 @@ class ParentModel extends Parent{
 
     );
   }
+
 }

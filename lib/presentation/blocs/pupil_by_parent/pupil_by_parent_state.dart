@@ -7,7 +7,7 @@ abstract class PupilByParentState extends Equatable {
   final String? msg;
 
   @override
-  List<Object> get props => [pupils!, msg!];
+  List<Object> get props => [pupils!];
 }
 
 class FetchPupilByParentLoadingState extends PupilByParentState {}

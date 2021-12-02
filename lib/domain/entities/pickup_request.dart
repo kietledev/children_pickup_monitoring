@@ -15,7 +15,7 @@ class PickUpRequest extends Equatable{
   final String? pickUpTokenScript;
   final String? pickUpTokenFromDatetime;
   final String? pickUpTokenThruDatetime;
-  final String? pickUpTokenDestroyed;
+  final bool? pickUpTokenDestroyed;
   final String? pickUpTokenDestroyedBy;
   final String? pickUpTokenDestroyedScript;
   final String? pickUpTokenDestroyedDatetime;

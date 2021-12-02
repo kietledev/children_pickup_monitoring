@@ -37,6 +37,7 @@ class ParentRepositoryImpl implements ParentsRepository {
           final parent = ParentModel.fromJson(item);
           parents.add(parent);
         }
+
         return DataSuccess(parents);
       }
 

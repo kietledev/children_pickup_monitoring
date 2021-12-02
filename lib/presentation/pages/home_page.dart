@@ -82,7 +82,7 @@ class _HomeBodyState extends State<HomeBody> {
   ];
 
   late int _currentPupilId;
-  final int _role = 1;
+  final int _role = 0;
 
 /* Alarm */
   Timer? _timer;
@@ -305,7 +305,7 @@ class _HomeBodyState extends State<HomeBody> {
         ),
       ),
     );
-  }
+}
 
   Widget _buildTimer() {
     return Expanded(
