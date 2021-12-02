@@ -7,7 +7,7 @@ import 'package:children_pickup_monitoring/presentation/widgets/avatar_gender.da
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class TeacherDetailsPage extends StatelessWidget {
   const TeacherDetailsPage({Key? key}) : super(key: key);
 
@@ -75,7 +75,8 @@ class TeacherDetailsBody extends StatelessWidget {
                 // Image.network(teacher.avatarPicture!),
                 SizedBox(height: 48.h),
                 Text(
-                  StringConstatns.fullName,
+                  (AppLocalizations.of(context)!.fullName),
+                  // StringConstatns.fullName,
                   style: titleStyle,
                 ),
                 CustomTextFieldMenu(value: teacher.getFullName(), style: valueStyle),
@@ -88,7 +89,8 @@ class TeacherDetailsBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            StringConstatns.yearOfBirth,
+                            // StringConstatns.yearOfBirth,
+                            (AppLocalizations.of(context)!.birthday),
                             style: titleStyle,
                           ),
                           CustomTextFieldMenu(
@@ -103,11 +105,12 @@ class TeacherDetailsBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            StringConstatns.position,
+                            // StringConstatns.position,
+                            (AppLocalizations.of(context)!.position),
                             style: titleStyle,
                           ),
                           CustomTextFieldMenu(
-                              value: teacher.mainResponsibilityTeacher! == true ? StringConstatns.homeroomTeacher: StringConstatns.teacher, style: valueStyle),
+                              value: teacher.mainResponsibilityTeacher! == true ? (AppLocalizations.of(context)!.homeroomTeacher): StringConstatns.teacher, style: valueStyle),
                         ],
                       ),
                     )
@@ -130,7 +133,7 @@ class TeacherDetailsBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            StringConstatns.phoneNumber1,
+                            (AppLocalizations.of(context)!.phone1),
                             style: titleStyle,
                           ),
                           CustomTextFieldMenu(
@@ -146,7 +149,7 @@ class TeacherDetailsBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            StringConstatns.phoneNumber2,
+                            (AppLocalizations.of(context)!.phone2),
                             style: titleStyle,
                           ),
                           CustomTextFieldMenu(
@@ -159,13 +162,13 @@ class TeacherDetailsBody extends StatelessWidget {
                 ),
                 SizedBox(height: 24.h),
                 Text(
-                  StringConstatns.email,
+                  (AppLocalizations.of(context)!.email),
                   style: titleStyle,
                 ),
                 CustomTextFieldMenu(value: teacher.personDetail!.currentEmail!, style: valueStyle),
                 SizedBox(height: 24.h),
                 Text(
-                  StringConstatns.introduce,
+                  (AppLocalizations.of(context)!.introduce),
                   style: titleStyle,
                 ),
                 CustomTextField(

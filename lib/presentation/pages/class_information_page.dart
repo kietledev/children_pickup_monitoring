@@ -2,7 +2,7 @@ import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ClassInformationPage extends StatelessWidget {
   const ClassInformationPage({Key? key}) : super(key: key);
 
@@ -10,7 +10,7 @@ class ClassInformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: WidgetAppBar(
-        title:  TitlesConstants.classInformationTitle,
+        title:  (AppLocalizations.of(context)!.classInformation),
         menuItem: [],
         hideBack:true,
         actionBack: () {
@@ -32,22 +32,22 @@ class ClassInformationBody extends StatefulWidget {
 }
 
 class _ClassInformationBodyState extends State<ClassInformationBody> {
-  final List<ItemMenu> listItemsClassInformation = [
 
-    ItemMenu(1, "Thông tin giáo viên", "assets/icons/ic_teacher_infomation.svg",
-        RouteConstants.teacherInformation),
-    ItemMenu(2, "Chi tiết lớp học", "assets/icons/ic_detail_class.svg",
-        RouteConstants.classDetails),
-    ItemMenu(3, "Thực đơn của bé", "assets/icons/ic_menu_baby.svg",
-        RouteConstants.menu),
-    ItemMenu(4, "Thành tích", "assets/icons/ic_achievements.svg",
-        RouteConstants.achievement),
-  ];
 
   int currentIndex = -1;
 
   @override
   Widget build(BuildContext context) {
+    final List<ItemMenu> listItemsClassInformation = [
+      ItemMenu(1, (AppLocalizations.of(context)!.teacherInformation), "assets/icons/ic_teacher_infomation.svg",
+          RouteConstants.teacherInformation),
+      ItemMenu(2,  (AppLocalizations.of(context)!.classDetail), "assets/icons/ic_detail_class.svg",
+          RouteConstants.classDetails),
+      ItemMenu(3,  (AppLocalizations.of(context)!.foodMenu), "assets/icons/ic_menu_baby.svg",
+          RouteConstants.menu),
+      ItemMenu(4, (AppLocalizations.of(context)!.achievements), "assets/icons/ic_achievements.svg",
+          RouteConstants.achievement),
+    ];
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class GeneratedQRCodePage extends StatefulWidget {
   // const GeneratedQRCodePage({Key? key}) : super(key: key);
 
@@ -125,7 +125,7 @@ Future<List<PickUpGenerated>> getAllQRCode( ) async{
   print("pickUpGenerateds"+pickUpGenerateds.toString());
     return Scaffold(
         appBar: WidgetAppBar(
-          title: TitlesConstants.generated_qr,
+          title: (AppLocalizations.of(context)!.generateQrCode),
           menuItem: [itemButtonRightAppBar(context)],
           hideBack: true,
           actionBack: () {

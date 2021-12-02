@@ -9,17 +9,17 @@ import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ClassDetailsPage extends StatelessWidget {
   const ClassDetailsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => injector<PupilsBloc>()..add(const FetchPupils(classId: 1)),
+      create: (_) => injector<PupilsBloc>()..add(const FetchPupils(classId: 5)),
       child:  Scaffold(
         appBar:  WidgetAppBar(
-          title: TitlesConstants.classDetails,
+          title: (AppLocalizations.of(context)!.classDetail),
           menuItem: [],
           hideBack:true,
           actionBack: () {
@@ -44,7 +44,7 @@ class ClassDetailsBody extends StatefulWidget {
 class _ClassDetailsBodyState extends State<ClassDetailsBody> {
   int currentIndex = -1;
   int _role = 1;
-  List<int> pupilIds = [2,5,7];
+  List<int> pupilIds = [1,2];
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PupilsBloc, PupilsState>(builder: (context, state) {
@@ -53,6 +53,7 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
         final List<Pupil> pupils = state.pupils!;
 
         return Container(
+          height: double.infinity,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/bg_body_a.png'),

@@ -15,7 +15,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CreateQRCodePage extends StatefulWidget {
   const CreateQRCodePage({Key? key}) : super(key: key);
 
@@ -29,7 +29,7 @@ class _CreateQRCodeState extends State<CreateQRCodePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: WidgetAppBar(
-          title: TitlesConstants.send_request_pickup,
+          title:(AppLocalizations.of(context)!.sendRequest),
           menuItem: [],
           hideBack:true,
           actionBack: () {

@@ -7,7 +7,7 @@ import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class TeacherInformationPage extends StatelessWidget {
   const TeacherInformationPage({Key? key}) : super(key: key);
 
@@ -15,10 +15,10 @@ class TeacherInformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          injector<TeachersBloc>()..add(const FetchTeaches(classId: 4)),
+          injector<TeachersBloc>()..add(const FetchTeaches(classId: 5)),
       child:  Scaffold(
         appBar:  WidgetAppBar(
-          title: TitlesConstants.teacherDetails,
+          title: (AppLocalizations.of(context)!.teacherInformation),
           menuItem: [],
           hideBack:true,
           actionBack: () {
@@ -43,15 +43,15 @@ class TeacherInformationBody extends StatefulWidget {
 
 class _TeacherInformationBodyState extends State<TeacherInformationBody> {
   int currentIndex = -1;
-
+  List<int> pupilIds = [];
+  int _role =1;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TeachersBloc, TeachersState>(builder: (context, state) {
       if (state is FetchTeachersSuccessState) {
         EasyLoading.dismiss();
         final List<Teacher> teachers = state.teachers!;
-        return
-          Container(
+        return Container(
             height: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -71,8 +71,8 @@ class _TeacherInformationBodyState extends State<TeacherInformationBody> {
                     final item = teachers[index];
                     return ItemTeacherPupilListView(
                       index: index,
-                      pupilIds: [],
-                      role: 0,
+                      pupilIds: pupilIds,
+                      role: _role,
                       isSelected: currentIndex == index,
                       position: item.mainResponsibilityTeacher,
                       avtDefaultFemale:"assets/images/img_gv_nu.png" ,
