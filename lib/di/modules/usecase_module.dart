@@ -52,7 +52,9 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<GetNotificationUseCase>(GetNotificationUseCase(injector()));
     /*Get list classRoom Usecase */
     injector.registerSingleton<PostClassByTeacherUseCase>(PostClassByTeacherUseCase(injector()));
-    /*Get list notification Usecase */
+    /*Post Notification by teacher Usecase */
     injector.registerSingleton<PostNotificationByTeacherUseCase>(PostNotificationByTeacherUseCase(injector()));
+    /*post notification read Usecase */
+    injector.registerSingleton<PostNotificationReadUseCase>(PostNotificationReadUseCase(injector()));
   }
 }

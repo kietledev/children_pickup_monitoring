@@ -23,6 +23,9 @@ class NotificationSuccessState extends NotificationState {
 class PostNotificationSuccessState extends NotificationState {
   const PostNotificationSuccessState({required String msg}) : super(msg: msg);
 }
+class PostNotificationReadSuccessState extends NotificationState {
+  const PostNotificationReadSuccessState({required String msg}) : super(msg: msg);
+}
 class NotificationFailureState extends NotificationState {
   const NotificationFailureState({required String msg}) : super(msg: msg);
 }

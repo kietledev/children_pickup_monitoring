@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:children_pickup_monitoring/common/core/params/params.dart';
 import 'package:children_pickup_monitoring/common/core/resources/resources.dart';
-import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/domain/usecases/usecases.dart';
 import 'package:equatable/equatable.dart';
@@ -14,7 +13,8 @@ part 'notification_state.dart';
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   final GetNotificationUseCase _getNotificationUseCase;
   final PostNotificationByTeacherUseCase _postNotificationByTeacherUseCase;
-  NotificationBloc(this._getNotificationUseCase,this._postNotificationByTeacherUseCase ) : super(NotificationInitialState());
+  final PostNotificationReadUseCase _postNotificationReadUseCase;
+  NotificationBloc(this._getNotificationUseCase,this._postNotificationByTeacherUseCase,this._postNotificationReadUseCase ) : super(NotificationInitialState());
 
   @override
   Stream<NotificationState> mapEventToState(
@@ -51,6 +51,20 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
 
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         yield PostNotificationSuccessState(msg: dataState.data!);
+      } else {
+        yield NotificationFailureState(msg: dataState.error!.message);
+      }
+    }
+    if (event is PostNotificationReadEvent) {
+      yield const NotificationLoadingState();
+      final dataState = await _postNotificationReadUseCase(
+        params: PostNotificationReadRequest(
+            personId: event.personId,
+            annoucementId: event.annoucementId
+        ),
+      );
+      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
+        yield PostNotificationReadSuccessState(msg: dataState.data!);
       } else {
         yield NotificationFailureState(msg: dataState.error!.message);
       }

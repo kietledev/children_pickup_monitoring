@@ -1,3 +1,4 @@
+import 'package:children_pickup_monitoring/data/datasources/remote/post_notification_read_api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:children_pickup_monitoring/data/datasources/remote/remote.dart';
 
@@ -54,7 +55,9 @@ class ApiModule extends DIModule {
     injector.registerSingleton<GetListNotificationApiService>(GetListNotificationApiService(injector()));
     /* get list classroom api */
     injector.registerSingleton<PostListClassByTeacherApiService>(PostListClassByTeacherApiService(injector()));
-    /* post Notification api */
+    /* post Notification by Teacher api */
     injector.registerSingleton<PostTeacherSendNotificationApiService>(PostTeacherSendNotificationApiService(injector()));
+    /* post Notification Read api */
+    injector.registerSingleton<PostNotificationReadApiService>(PostNotificationReadApiService(injector()));
   }
 }

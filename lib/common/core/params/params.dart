@@ -17,3 +17,4 @@ export 'post_password.dart';
 export 'get_notification_request.dart';
 export 'post_class_by_teacher_request.dart';
 export 'post_notification_by_teacher_request.dart';
+export 'post_notification_read_request.dart';

@@ -23,4 +23,5 @@ class UrlConstatns {
   static const String apiGetListNotification= urlServer + "getListUnreadNotificationByPersonId";
   static const String apiPostListClassByTeacherId = urlServer + "getListClassByTeacherId";
   static const String apiPostTeacherSendNotification = urlServer + "teacherSendAnnoucementToClass";
+  static const String apiPostNotificationRead = urlServer + "maskAnnoucementAsReadByAnnoucementId";
 }

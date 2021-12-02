@@ -45,6 +45,7 @@ class _ProfileBody extends State<ProfileBody>{
   UserModel? userModel;
   String avatar = "";
   int personId = -1;
+  int roleId = -1;
   @override
   void initState() {
     getUserId();
@@ -52,8 +53,10 @@ class _ProfileBody extends State<ProfileBody>{
   }
    getUserId() async {
     userModel = await getUser();
+    setState(() {
+      roleId = userModel!.roleId;
+    });
     personId = userModel!.personId.toInt();
-    print("Nhuan--role${userModel!.roleId}");
     BlocProvider.of<ProfileBloc>(context).add(GetprofileEvent(personId:personId ));
   }
   @override
@@ -90,7 +93,7 @@ class _ProfileBody extends State<ProfileBody>{
                     SizedBox(height: 24.h,),
                     Container(
                       height: (65 + 24) * listMenuPersonal.length.toDouble(),
-                      child: Menu(user: user,),
+                      child: Menu(user: user,roleId: roleId,),
                     ),
                     SizedBox(height: 48.h,),
                     CustomButtonText(
@@ -123,21 +126,31 @@ class _ProfileBody extends State<ProfileBody>{
 
 class Menu extends StatefulWidget {
   final PersonModel? user;
-  Menu({this.user});
+  final int? roleId;
+  Menu({this.user,this.roleId});
   @override
   State<Menu> createState() => _Menu();
 }
 class _Menu extends State<Menu>{
-
   int currentIndex = -1;
+
   @override
   Widget build(BuildContext context) {
-    final List<ItemMenu> listItemsProfile= [
-      ItemMenu(1, (AppLocalizations.of(context)!.profile), "assets/icons/ic_information_personal.svg", ""),
-      ItemMenu(2, (AppLocalizations.of(context)!.listOfRelatives), "assets/icons/ic_list_order.svg", RouteConstants.listparent),
-      ItemMenu(3, (AppLocalizations.of(context)!.changePassword), "assets/icons/ic_change_password.svg", RouteConstants.passwordChange),
-      ItemMenu(4, (AppLocalizations.of(context)!.setting), "assets/icons/ic_setting.svg", RouteConstants.settingApp),
-    ];
+    List<ItemMenu> listItemsProfile;
+      if(widget.roleId ==1){
+         listItemsProfile= [
+          ItemMenu(1, (AppLocalizations.of(context)!.profile), "assets/icons/ic_information_personal.svg", ""),
+          ItemMenu(2, (AppLocalizations.of(context)!.listOfRelatives), "assets/icons/ic_list_order.svg", RouteConstants.listparent),
+          ItemMenu(3, (AppLocalizations.of(context)!.changePassword), "assets/icons/ic_change_password.svg", RouteConstants.passwordChange),
+          ItemMenu(4, (AppLocalizations.of(context)!.setting), "assets/icons/ic_setting.svg", RouteConstants.settingApp),
+        ];
+      }else{
+         listItemsProfile= [
+          ItemMenu(1, (AppLocalizations.of(context)!.profile), "assets/icons/ic_information_personal.svg", ""),
+          ItemMenu(2, (AppLocalizations.of(context)!.changePassword), "assets/icons/ic_change_password.svg", RouteConstants.passwordChange),
+          ItemMenu(3, (AppLocalizations.of(context)!.setting), "assets/icons/ic_setting.svg", RouteConstants.settingApp),
+        ];
+      }
       return ListView.builder(
         primary: false,
         itemCount: listItemsProfile.length,

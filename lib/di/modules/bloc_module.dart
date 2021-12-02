@@ -61,7 +61,7 @@ class BlocModule extends DIModule {
     injector.registerFactory<PupilByParentBloc>(() =>PupilByParentBloc(injector()));
     //injector.registerFactory<LanguageBloc>(() =>LanguageBloc(injector()));
     /* list notification */
-    injector.registerFactory<NotificationBloc>(() =>NotificationBloc(injector(),injector()));
+    injector.registerFactory<NotificationBloc>(() =>NotificationBloc(injector(),injector(),injector()));
     /* list classRoom */
     injector.registerFactory<ClassRoomBloc>(() =>ClassRoomBloc(injector()));
   }
