@@ -9,5 +9,5 @@ abstract class NotificationRepository {
   // API methods
   Future<DataState<NotificationModel>> getListNotification(GetNotificationRequest query);
   Future<DataState<String>> postNotificationByTeacher(PostNotificationByTeacherRequest query);
-  Future<DataState<String>> postNotificationRead(PostNotificationReadRequest query);
+  Future<DataState<NotificationModel>> postNotificationRead(PostNotificationReadRequest query);
 }

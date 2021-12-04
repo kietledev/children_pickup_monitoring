@@ -80,17 +80,22 @@ class NotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<DataState<String>> postNotificationRead(PostNotificationReadRequest params) async {
+  Future<DataState<NotificationModel>> postNotificationRead(PostNotificationReadRequest params) async {
     try {
+      final Map<String, dynamic> query = <String, dynamic>{
+        'page': params.page,
+        'pageSize': params.pageSize,
+      };
       final Map<String, dynamic> body = <String, dynamic>{
         "personId": params.personId,
         "annoucementId": params.annoucementId,
       };
       print(body);
       final httpResponse = await _postNotificationReadApiService.postNotificationRead(
-          body: body, k: key, dm: dm, tk: getTokenApi(id: ""), ttl: ttl);
+          query: query,body: body, k: key, dm: dm, tk: getTokenApi(id: ""), ttl: ttl);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess("Success");
+        final notification = NotificationModel.fromJson(httpResponse.data.data);
+        return DataSuccess(notification);
       }
       return DataFailed(
         DioError(

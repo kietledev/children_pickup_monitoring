@@ -12,6 +12,7 @@ abstract class PostNotificationReadApiService {
   @POST('/')
   Future<HttpResponse<ResponseModel>> postNotificationRead({
     @Body() Map<String, dynamic>? body,
+    @Queries() Map<String, dynamic>? query,
     @Header('k') String? k,
     @Header('dm') String? dm,
     @Header('tk') String? tk,

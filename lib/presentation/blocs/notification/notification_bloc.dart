@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:children_pickup_monitoring/common/core/params/params.dart';
 import 'package:children_pickup_monitoring/common/core/resources/resources.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/domain/usecases/usecases.dart';
 import 'package:equatable/equatable.dart';
@@ -33,6 +34,8 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final notification = dataState.data!;
         yield NotificationSuccessState(notificationModel:notification );
+        final preferences = Preferences();
+        preferences.setNotification(state.notificationModel!);
       } else {
         yield NotificationFailureState(msg: dataState.error!.message);
       }
@@ -60,11 +63,13 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       final dataState = await _postNotificationReadUseCase(
         params: PostNotificationReadRequest(
             personId: event.personId,
-            annoucementId: event.annoucementId
+            annoucementId: event.annoucementId,
+            page: event.page,
+            pageSize: event.pageSize,
         ),
       );
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
-        yield PostNotificationReadSuccessState(msg: dataState.data!);
+        yield PostNotificationReadSuccessState(notificationModel: dataState.data!);
       } else {
         yield NotificationFailureState(msg: dataState.error!.message);
       }

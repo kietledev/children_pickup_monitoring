@@ -64,65 +64,120 @@ class _ProfileBody extends State<ProfileBody>{
   }
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
-      if (state is ProfileSuccessState) {
-        EasyLoading.dismiss();
-        user = state.person;
-        return Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bg_body_a.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: SingleChildScrollView(
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Avatar(
-                      enabled: false,
-                      avatar: user!.avatarPicture!,
-                      avatarNull:"assets/images/img_avatar_null.png" ,
-                    ),
-                    SizedBox(height: 12.h,),
-                    (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
-                    SizedBox(height: 6.h,),
-                    (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
-                    SizedBox(height: 24.h,),
-                    Container(
-                      height: (65 + 24) * listMenuPersonal.length.toDouble(),
-                      child: Menu(user: user,roleId: roleId,),
-                    ),
-                    SizedBox(height: 48.h,),
-                    CustomButtonText(
-                      text: (AppLocalizations.of(context)!.logout),
-                      width: 174,
-                      press: () {
-                        final prefs = Preferences();
-                        prefs.clear();
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            RouteConstants.login, (Route<dynamic> route) => false);
-                      },
-                    ),
-                    SizedBox(height: 24.h,)
-                  ],
+    return BlocListener<ProfileBloc,ProfileState>(
+        listener: (context,state){
+          if (state is ProfileLoadingState) {
+            EasyLoading.show();
+          } else {
+            EasyLoading.dismiss();
+            if (state is ProfileSuccessState) {
+              setState(() {
+                user = state.person;
+              });
+            } else if (state is ProfileFailureState) {
+              UiHelper.showMyDialog(
+                context: context,
+                content: state.msg ?? "This is something wrong",
+              );
+            } else {}
+          }
+        },
+      child:ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                (user!= null) ?  Avatar(enabled: false, avatar: user!.avatarPicture!, avatarNull:"assets/images/img_avatar_null.png" ,)
+                              :  Avatar(enabled: false, avatar: "", avatarNull:"assets/images/img_avatar_null.png" ,),
+                SizedBox(height: 12.h,),
+                (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
+                SizedBox(height: 6.h,),
+                (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
+                SizedBox(height: 24.h,),
+                Container(
+                  height: (65 + 24) * listMenuPersonal.length.toDouble(),
+                  child: Menu(user: user,roleId: roleId,),
                 ),
-              ),
+                SizedBox(height: 48.h,),
+                CustomButtonText(
+                  text: (AppLocalizations.of(context)!.logout),
+                  width: 174,
+                  press: () {
+                    final prefs = Preferences();
+                    prefs.clear();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        RouteConstants.login, (Route<dynamic> route) => false);
+                  },
+                ),
+                SizedBox(height: 24.h,)
+              ],
             ),
           ),
-        );
-      } else if (state is ProfileFailureState) {
-        EasyLoading.dismiss();
-        return const SizedBox.shrink();
-      } else {
-        return WarningPage(type: 1,);
-      }
-    });
+        ),
+      ),
+    );
+
+
+    // return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+    //   if (state is ProfileSuccessState) {
+    //     EasyLoading.dismiss();
+    //     user = state.person;
+    //     return Container(
+    //       width: double.infinity,
+    //       decoration: BoxDecoration(
+    //         image: DecorationImage(
+    //           image: AssetImage('assets/images/bg_body_a.png'),
+    //           fit: BoxFit.cover,
+    //         ),
+    //       ),
+    //       child: ScrollConfiguration(
+    //         behavior: MyBehavior(),
+    //         child: SingleChildScrollView(
+    //           child: Container(
+    //             child: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.center,
+    //               children: [
+    //                 Avatar(
+    //                   enabled: false,
+    //                   avatar: user!.avatarPicture!,
+    //                   avatarNull:"assets/images/img_avatar_null.png" ,
+    //                 ),
+    //                 SizedBox(height: 12.h,),
+    //                 (user!=null)?Text("${user!.getFullName()}",style:ProfileStyle.contentStyle1): Text(""),
+    //                 SizedBox(height: 6.h,),
+    //                 (user!=null)?Text(user!.currentPhoneNumber1.toString(),style: ProfileStyle.contentStyle2,): Text(""),
+    //                 SizedBox(height: 24.h,),
+    //                 Container(
+    //                   height: (65 + 24) * listMenuPersonal.length.toDouble(),
+    //                   child: Menu(user: user,roleId: roleId,),
+    //                 ),
+    //                 SizedBox(height: 48.h,),
+    //                 CustomButtonText(
+    //                   text: (AppLocalizations.of(context)!.logout),
+    //                   width: 174,
+    //                   press: () {
+    //                     final prefs = Preferences();
+    //                     prefs.clear();
+    //                     Navigator.of(context).pushNamedAndRemoveUntil(
+    //                         RouteConstants.login, (Route<dynamic> route) => false);
+    //                   },
+    //                 ),
+    //                 SizedBox(height: 24.h,)
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   } else if (state is ProfileFailureState) {
+    //     EasyLoading.dismiss();
+    //     return const SizedBox.shrink();
+    //   } else {
+    //     return const SizedBox.shrink();
+    //   }
+    // });
 
   }
 }

@@ -1,6 +1,8 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/widgets.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
+import 'package:children_pickup_monitoring/data/datasources/local/app_database.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
@@ -38,18 +40,19 @@ class _BodyNotificationPage extends State<BodyNotificationPage>{
   int roleId = -1;
   int personId = -1;
   UserModel? userModel;
+  late final AppDatabase appDatabase;
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      notificationModel = ModalRoute.of(context)!.settings.arguments as NotificationModel?;
+    getNotification().then((value){
       setState(() {
-        listSchoolNotification = notificationModel!.schoolNotification!;
-        listSystemNotification = notificationModel!.systemNotification!;
+        listSystemNotification = value!.systemNotification!;
+        listSchoolNotification = value.schoolNotification!;
       });
     });
     getUserId();
   }
+ 
   getUserId() async {
     userModel = await getUser();
     setState(() {
@@ -58,6 +61,7 @@ class _BodyNotificationPage extends State<BodyNotificationPage>{
 
     });
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -78,7 +82,15 @@ class _BodyNotificationPage extends State<BodyNotificationPage>{
             } else {
               EasyLoading.dismiss();
               if (state is PostNotificationReadSuccessState) {
-                 print(state.msg);
+                 final preferences = Preferences();
+                 preferences.setNotification(state.notificationModel!);
+                 getNotification().then((value) {
+                   setState(() {
+                     listSystemNotification = value!.systemNotification!;
+                     listSchoolNotification = value.schoolNotification!;
+                   });
+                 });
+               // print(state.notificationModel!.unreadCount);
               } else if (state is NotificationFailureState) {
                 UiHelper.showMyDialog(
                   context: context,
@@ -138,8 +150,13 @@ class _BodyNotificationPage extends State<BodyNotificationPage>{
                                         context: context,
                                         item: item,
                                         onPress: () {
-                                          Navigator.pushNamed(context, RouteConstants.notificationDetail, arguments: item);
-                                          BlocProvider.of<NotificationBloc>(context).add(PostNotificationReadEvent(annoucementId: item.annoucementId!,personId: personId));
+                                         // BlocProvider.of<NotificationBloc>(context).add(PostNotificationReadEvent(annoucementId: item.annoucementId!,personId: personId,pageSize: 10,page: 1));
+                                          if(item.isRead == false){
+                                            BlocProvider.of<NotificationBloc>(context).add(PostNotificationReadEvent(annoucementId: item.annoucementId!,personId: personId,pageSize: 10,page: 1));
+                                            Navigator.pushNamed(context, RouteConstants.notificationDetail, arguments: item);
+                                          }else{
+                                            Navigator.pushNamed(context, RouteConstants.notificationDetail, arguments: item);
+                                          }
                                         },
                                       );
                                     }

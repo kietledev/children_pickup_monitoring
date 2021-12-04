@@ -19,9 +19,10 @@ class _PostNotificationReadApiService
 
   @override
   Future<HttpResponse<ResponseModel>> postNotificationRead(
-      {body, k, dm, tk, ttl}) async {
+      {body, query, k, dm, tk, ttl}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(query ?? <String, dynamic>{});
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{
       r'k': k,

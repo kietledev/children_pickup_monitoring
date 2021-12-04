@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:children_pickup_monitoring/data/models/models.dart';
+import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {
@@ -15,6 +16,7 @@ class Preferences {
   static const String TOKEN_PREFERENCE = 'TOKEN_PREFERENCE';
   static const String PUPIL_PREFERENCE = 'PUPIL_PREFERENCE';
   static const String LANGUAGE_PREFERENCE = 'LANGUAGE_PREFERENCE';
+  static const String NOTIFICATION_PREFERENCE = 'NOTIFICATION_PREFERENCE';
   /* Initial shared preferences */
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   static final Preferences preferences = Preferences();
@@ -107,17 +109,6 @@ class Preferences {
     return pupilID;
   }
 
-  Future setIndexPupil(int index) async {
-    final prefs = await _prefs;
-    prefs.setInt("indexPulpil", index);
-  }
-
-  Future<int> getIndexPupil() async {
-    final prefs = await _prefs;
-    final index = prefs.getInt("indexPulpil") ?? -1;
-    return index;
-  }
-
   /* School Finish Time */
   void setSchoolFinishTime(String value) {
     preferences.set(SHOOL_FINISH_TIME, value);
@@ -146,4 +137,15 @@ class Preferences {
     final prefs = await _prefs;
     prefs.setInt(LANGUAGE_PREFERENCE, index);
   }
+  /* User Preference */
+  void setNotification(NotificationModel notificationModel) {
+    final Map<String, dynamic> notificationString = notificationModel.toJson();
+    preferences.set(NOTIFICATION_PREFERENCE, notificationString);
+  }
+  Future<NotificationModel?> getNotification() async {
+    final String notificationString = await preferences.getObject(NOTIFICATION_PREFERENCE);
+    final Map<String, dynamic> map = jsonDecode(notificationString) as Map<String, dynamic>;
+    return NotificationModel.json(map);
+  }
 }
+

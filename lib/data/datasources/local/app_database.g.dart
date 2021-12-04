@@ -90,7 +90,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `user_table` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `personId` INTEGER NOT NULL, `currentFirstName` TEXT NOT NULL, `currentLastName` TEXT NOT NULL, `currentMiddleName` TEXT, `loginTime` TEXT NOT NULL, `roleId` INTEGER NOT NULL, `roleName` TEXT NOT NULL, `roleAllowAdd` INTEGER NOT NULL, `roleAllowUpdate` INTEGER NOT NULL, `roleAllowDelete` INTEGER NOT NULL, `fromParentId` INTEGER NOT NULL, `toPupilId` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `user_table` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `personId` INTEGER NOT NULL, `currentFirstName` TEXT NOT NULL, `currentLastName` TEXT NOT NULL, `currentMiddleName` TEXT, `loginTime` TEXT NOT NULL, `roleId` INTEGER NOT NULL, `roleName` TEXT NOT NULL, `roleAllowAdd` INTEGER NOT NULL, `roleAllowUpdate` INTEGER NOT NULL, `roleAllowDelete` INTEGER NOT NULL, `fromParentId` INTEGER NOT NULL, `toPupilId` INTEGER NOT NULL, `staffIdNumber` TEXT NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `qrgenerated_table` (`requestId` INTEGER PRIMARY KEY AUTOINCREMENT, `timePickUp` TEXT, `pupilId1` INTEGER, `pupilId2` INTEGER, `pupilId3` INTEGER, `cardId` TEXT, `datePickUp` TEXT, `placePickUp` TEXT, `parentId` INTEGER, `addressSchool` TEXT, `stringQrcode` TEXT, `status` INTEGER)');
         await database.execute(
@@ -99,7 +99,6 @@ class _$AppDatabase extends AppDatabase {
             'CREATE TABLE IF NOT EXISTS `parent_table` (`parentId` INTEGER PRIMARY KEY AUTOINCREMENT, `personToPersonPersonalRelationshipTypeName` TEXT, `personToPersonPersonalRelationshipTypeNameEn` TEXT, `approved` INTEGER, `approvedByUserId` INTEGER, `approvedDatetime` TEXT, `personId` INTEGER, `accountUser` INTEGER)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `pupil_table` (`pupilId` INTEGER PRIMARY KEY AUTOINCREMENT, `className` TEXT, `classId` INTEGER, `personToPersonPersonalRelationshipTypeName` TEXT, `personToPersonPersonalRelationshipTypeNameEn` TEXT, `currentLastNameParent` TEXT, `currentFirstNameParent` TEXT, `currentMiddleNameParent` TEXT, `currentPhoneNumber1Parent` TEXT, `currentPhoneNumber2Parent` TEXT, `personId` INTEGER)');
-            'CREATE TABLE IF NOT EXISTS `user_table` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `personId` INTEGER NOT NULL, `currentFirstName` TEXT NOT NULL, `currentLastName` TEXT NOT NULL, `currentMiddleName` TEXT, `loginTime` TEXT NOT NULL, `roleId` INTEGER NOT NULL, `roleName` TEXT NOT NULL, `roleAllowAdd` INTEGER NOT NULL, `roleAllowUpdate` INTEGER NOT NULL, `roleAllowDelete` INTEGER NOT NULL, `fromParentId` INTEGER NOT NULL, `toPupilId` INTEGER NOT NULL, `staffIdNumber` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
