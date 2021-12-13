@@ -53,7 +53,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
 
     messaging.getToken().then((value) {
       String? token = value;
-      print("Instance ID: $token");
+      // print("Instance ID: $token");
     });
 
     //Forground

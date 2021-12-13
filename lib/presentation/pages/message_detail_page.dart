@@ -4,6 +4,7 @@ import 'package:children_pickup_monitoring/common/constants/color_constants.dart
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
+import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +13,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:record/record.dart';
 
+int page = 1;
+
 class MessageDetailPage extends StatelessWidget {
   const MessageDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final conversation =
+        ModalRoute.of(context)!.settings.arguments as Conversation;
+    final message = conversation.lastMessage;
     return BlocProvider<MessageDetailBloc>(
-      create: (_) =>
-          injector<MessageDetailBloc>()..add(DownloadMessageDetail('1')),
+      create: (_) => injector<MessageDetailBloc>()
+        ..add(DownloadMessageDetail(
+            personId: 4, groupId: message!.messageGroupId!, page: page)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: appBar(context),
@@ -90,10 +97,7 @@ AppBar appBar(BuildContext context) {
       ),
       const SizedBox(width: 16),
       buildActionAppbar(press: () {}, icon: 'assets/icons/ic_phone.svg'),
-      buildActionAppbar(
-          press: () {
-          },
-          icon: 'assets/icons/ic_gallery.svg'),
+      buildActionAppbar(press: () {}, icon: 'assets/icons/ic_gallery.svg'),
       const SizedBox(width: 16)
     ],
   );
@@ -116,17 +120,6 @@ GestureDetector buildActionAppbar({
     ),
   );
 }
-
-List<String> listMessagesAll = [
-  'aaaaa',
-  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-  'aaaaaaaaaaaaaaaaaaaaaaaaa',
-  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-  'aaaaaaaaaaa',
-];
 
 class MessageDetailBody extends StatefulWidget {
   const MessageDetailBody({
@@ -164,7 +157,7 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _messageController = TextEditingController();
 
-  List<String> _listMessages = [];
+  List<Message> _listMessages = [];
   List<AssetEntity> _assets = [];
   List<double> _listAmp = [];
 
@@ -215,9 +208,9 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
         builder: (context, state) {
           if (state is ListMessageState) {
             if (state.status == ListMessageStatus.success) {
-              _listMessages = listMessagesAll;
+              _listMessages.addAll(state.messages!);
             } else if (state.status == ListMessageStatus.add) {
-              _listMessages.insert(0, state.message!);
+              _listMessages.insert(0, state.messages![0]);
               if (defaulHeight == 0) {
                 bloc.add(InputEvent(
                     onFocus: false,
@@ -247,36 +240,71 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
               itemCount: _listMessages.length,
               reverse: true,
               itemBuilder: (context, index) {
+                const int personId = 4;
                 final item = _listMessages[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 1),
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.7),
-                      decoration: BoxDecoration(
-                        color: ColorConstants.primaryColor2,
-                        borderRadius: BorderRadius.circular(12),
+                if (item.createdByPersonId == personId) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 1),
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.7),
+                        decoration: BoxDecoration(
+                          color: ColorConstants.primaryColor2,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6.5),
+                          child: Text(item.messageContent!,
+                              style: styleMessage1, softWrap: true),
+                        ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6.5),
-                        child: Text(item, style: styleMessage1, softWrap: true),
+                      const SizedBox(width: 4),
+                      Container(
+                        margin: const EdgeInsets.only(right: 18, bottom: 1),
+                        child: SvgPicture.asset(
+                          sent,
+                          width: 12,
+                          height: 12,
+                        ),
+                      )
+                    ],
+                  );
+                } else {
+                  return Row(
+                    children: [
+                      const SizedBox(width: 12),
+                      Container(
+                        height: 24,
+                        width: 24,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Image.asset('assets/images/Avatar.png'),
                       ),
-                    ),
-                    const SizedBox(width: 4),
-                    Container(
-                      margin: const EdgeInsets.only(right: 18, bottom: 1),
-                      child: SvgPicture.asset(
-                        sent,
-                        width: 12,
-                        height: 12,
+                      const SizedBox(width: 12),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 1),
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.7),
+                        decoration: BoxDecoration(
+                          color: ColorConstants.primaryColor2,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6.5),
+                          child: Text(item.messageContent!,
+                              style: styleMessage1, softWrap: true),
+                        ),
                       ),
-                    )
-                  ],
-                );
+                      const SizedBox(width: 18)
+                    ],
+                  );
+                }
               },
             ),
           );
@@ -402,12 +430,14 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
           child: GestureDetector(
             onTap: () {
               if (_messageController.text.trim().isNotEmpty) {
-                bloc.add(
-                    AddNewMessage(message: _messageController.text.trim()));
+                bloc.add(AddNewMessage(
+                    message: createMessage(
+                        messageContent: _messageController.text.trim())));
                 _messageController.clear();
               } else if (_isRecording) {
                 _stopRecording(callback: (String path) {
-                  bloc.add(AddNewMessage(message: path));
+                  bloc.add(AddNewMessage(
+                      message: createMessage(messageContent: path)));
                 });
               }
             },
@@ -434,6 +464,46 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
         ) //
       ]);
     });
+  }
+
+  Message createMessage({
+    int? messageId,
+    int? messageGroupId,
+    int? messageTypeId,
+    int? messageStateId,
+    String? messageContent,
+    String? messageContentEn,
+    String? userFullName,
+    String? userFullNameEn,
+    bool? visibled,
+    bool? isRemoved,
+    String? createdDatetime,
+    int? createdByPersonId,
+    String? updateDatetime,
+    int? updatedByPersonId,
+    String? messageGalleryName,
+    String? messageGalleryMediaLink,
+    String? messageGalleryMediaType,
+  }) {
+    return Message(
+      messageId: messageId,
+      messageGroupId: messageGroupId,
+      messageTypeId: messageTypeId,
+      messageStateId: messageStateId,
+      messageContent: messageContent,
+      messageContentEn: messageContentEn,
+      userFullName: userFullName,
+      userFullNameEn: userFullNameEn,
+      visibled: visibled,
+      isRemoved: isRemoved,
+      createdDatetime: createdDatetime,
+      createdByPersonId: createdByPersonId,
+      updateDatetime: updateDatetime,
+      updatedByPersonId: updatedByPersonId,
+      messageGalleryName: messageGalleryName,
+      messageGalleryMediaLink: messageGalleryMediaLink,
+      messageGalleryMediaType: messageGalleryMediaType,
+    );
   }
 
   bool getBoolValueForSend() {
@@ -582,7 +652,8 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
   void openCamera() {
     KeyboardUtil.hideKeyboard(context);
     Navigator.pushNamed(context, RouteConstants.camera).then((value) {
-      bloc.add(AddNewMessage(message: value.toString()));
+      bloc.add(AddNewMessage(
+          message: createMessage(messageContent: value.toString())));
       FocusScope.of(context).requestFocus(_focusNode);
     });
   }

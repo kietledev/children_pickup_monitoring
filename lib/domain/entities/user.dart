@@ -66,5 +66,6 @@ class User extends Equatable {
         "LOGIN_TIME": loginTime,
         "FROM_PARENT_ID": fromParentId,
         "TO_PUPIL_ID": toPupilId,
+        
       };
 }

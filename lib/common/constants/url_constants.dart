@@ -20,4 +20,9 @@ class UrlConstatns {
 
   static const String apiDeleteParent= urlServer + "deleteParent";
   static const String apiPostPassword= urlServer + "changePassWord";
+
+  /* Chat */
+  static const String apiGetAllConversations = urlServer + "getListConversationByPersonId";
+  static const String getAllMessageInGroupByGroupId = urlServer + "getAllMessageInGroupByGroupId";
+
 }

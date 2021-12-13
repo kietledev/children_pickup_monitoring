@@ -1,15 +1,12 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
-import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/achievement/achievement_bloc.dart';
-import 'package:children_pickup_monitoring/presentation/widgets/custom_appbar.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/item_title_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AchievementsPage extends StatelessWidget {
   const AchievementsPage({Key? key}) : super(key: key);
@@ -27,8 +24,7 @@ class AchievementsPage extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-
-        body: AchievementsBody(),
+        body: const AchievementsBody(),
       ),
     );
   }

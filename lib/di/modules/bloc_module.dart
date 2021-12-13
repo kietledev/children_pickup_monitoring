@@ -2,6 +2,7 @@ import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/language/language_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/local_user/local_user_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/message_page/message_page_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/parents/parents_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/password/password_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/relationship_type/relationship_type_bloc.dart';
@@ -32,7 +33,7 @@ class BlocModule extends DIModule {
 
     /* Message detail */
     injector.registerFactory<MessageDetailBloc>(
-        () => MessageDetailBloc(MessageDetailState(), injector()));
+        () => MessageDetailBloc(MessageDetailState(), injector(), injector()));
 
     /* Home */
     injector.registerFactory<AlarmBloc>(() => AlarmBloc());
@@ -40,24 +41,32 @@ class BlocModule extends DIModule {
         () => SchoolNotificationBloc());
 
     /* Profile User */
-    injector.registerFactory<ProfileBloc>(() => ProfileBloc(injector(),injector()));
+    injector.registerFactory<ProfileBloc>(
+        () => ProfileBloc(injector(), injector()));
     /* Create a pick up code */
     // injector.registerFactory<Pick>(()=>ProfileBloc(injector()));
     /* Parent */
-    injector.registerFactory<ParentsBloc>(() =>ParentsBloc(injector(),injector(),injector()));
+    injector.registerFactory<ParentsBloc>(
+        () => ParentsBloc(injector(), injector(), injector()));
     /* Users */
-    injector.registerFactory<UsersBloc>(() =>UsersBloc(injector()));
+    injector.registerFactory<UsersBloc>(() => UsersBloc(injector()));
     /* Relationship Type */
-    injector.registerFactory<RelationshipTypeBloc>(() =>RelationshipTypeBloc(injector()));
+    injector.registerFactory<RelationshipTypeBloc>(
+        () => RelationshipTypeBloc(injector()));
 
-    injector.registerFactory<MenuBloc>(() =>MenuBloc(injector()));
+    injector.registerFactory<MenuBloc>(() => MenuBloc(injector()));
     /* Password */
-    injector.registerFactory<PasswordBloc>(() =>PasswordBloc(injector()));
+    injector.registerFactory<PasswordBloc>(() => PasswordBloc(injector()));
 
-    injector.registerFactory<PickUpPlaceBloc>(() =>PickUpPlaceBloc(injector()));
+    injector
+        .registerFactory<PickUpPlaceBloc>(() => PickUpPlaceBloc(injector()));
 
-    injector.registerFactory<PupilByParentBloc>(() =>PupilByParentBloc(injector()));
+    injector.registerFactory<PupilByParentBloc>(
+        () => PupilByParentBloc(injector()));
     //injector.registerFactory<LanguageBloc>(() =>LanguageBloc(injector()));
 
+    /* Message Page Bloc */
+    injector
+        .registerFactory<MessagePageBloc>(() => MessagePageBloc(injector()));
   }
 }

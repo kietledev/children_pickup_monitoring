@@ -22,12 +22,12 @@ class UserRepositoryImpl implements UserRepository {
         'username': params.username,
         'password': getBytes(params.password),
       };
-      print(getBytes(params.password));
 
       final httpResponse = await _loginApiService.postLogin(
           body: body, k: key, dm: dm, tk: getTokenApi(), ttl: ttl);
 
-      if (httpResponse.response.statusCode == HttpStatus.ok &&
+      if (httpResponse.response.data['errorCode'] == 0 &&
+          httpResponse.response.statusCode == HttpStatus.ok &&
           httpResponse.data.data.toString().isNotEmpty) {
         if (httpResponse.data.errorCode == 0) {
           final person = UserModel.fromJson(httpResponse.data.data);

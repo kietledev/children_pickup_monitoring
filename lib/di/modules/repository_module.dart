@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/data/repositories/achievements_repository_impl.dart';
+import 'package:children_pickup_monitoring/data/repositories/message_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/parent_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/relationship_type_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/repositories.dart';
@@ -64,6 +65,16 @@ class RepositoryModule extends DIModule {
     /* password repository */
     injector.registerSingleton<PasswordRepository>(
       PasswordRepositoryImpl(injector()),
+    );
+
+    /* Message Page */
+    injector.registerSingleton<GetAllConversationsRepository>(
+      ConversationsRepositoryImpl(injector()),
+    );
+
+    /* Message Detail */
+    injector.registerSingleton<GetAllMessagesRepository>(
+      MessagesRepositoryImpl(injector()),
     );
   }
 }

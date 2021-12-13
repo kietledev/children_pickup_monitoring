@@ -10,3 +10,5 @@ export 'relationship_type_repository.dart';
 export 'pickup_place_repository.dart';
 export 'pupil_by_parent_repository.dart';
 export 'password_repository.dart';
+export 'get_all_conversations_repository.dart';
+export 'get_all_messages_repository.dart';

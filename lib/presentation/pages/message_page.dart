@@ -2,9 +2,14 @@ import 'dart:async';
 
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/di/injection.dart';
+import 'package:children_pickup_monitoring/domain/entities/entities.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/message_page/message_page_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Chat {
@@ -28,9 +33,16 @@ class MessagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: MessageBody(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MessagePageBloc>(
+          create: (BuildContext context) => injector<MessagePageBloc>(),
+        ),
+      ],
+      child: const Scaffold(
+        body: SafeArea(
+          child: MessageBody(),
+        ),
       ),
     );
   }
@@ -62,110 +74,18 @@ class _MessageBodyState extends State<MessageBody> {
 
   bool isShowDelete = false;
 
-  List<Chat> conversations = <Chat>[];
+  List<Conversation> conversations = <Conversation>[];
 
   List<Chat> contacts = <Chat>[];
 
   final GlobalKey<AnimatedListState> conversationListKey = GlobalKey();
+  late MessagePageBloc _messagePageBloc;
 
   @override
   void initState() {
     super.initState();
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 0,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 0,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 0,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 0,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 0,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 0,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 1,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 2,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 3,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 3,
-        delete: false));
-    conversations.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 3,
-        delete: false));
-    contacts.add(Chat(
-      name: 'Nguyễn Hạnh Phúc',
-      message: 'Chào mọi người',
-      status: 3,
-      delete: false,
-      online: true,
-    ));
-    contacts.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 3,
-        delete: false,
-        online: false,
-        time: '5 min.'));
-    contacts.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 3,
-        delete: false,
-        online: false,
-        time: '10 min'));
-    contacts.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 3,
-        online: true,
-        delete: false));
-    contacts.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 3,
-        delete: false,
-        online: false,
-        time: '10 min'));
-    contacts.add(Chat(
-        name: 'Nguyễn Hạnh Phúc',
-        message: 'Chào mọi người',
-        status: 3,
-        online: false,
-        delete: false));
+    _messagePageBloc = BlocProvider.of<MessagePageBloc>(context);
+    _messagePageBloc.add(const GetAllConversations(personId: 4, page: 1));
   }
 
   @override
@@ -316,13 +236,24 @@ class _MessageBodyState extends State<MessageBody> {
           visible: isChat,
           child: Container(
             margin: const EdgeInsets.only(top: 24),
-            child: AnimatedList(
-              key: conversationListKey,
-              initialItemCount: conversations.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index, animation) {
-                return buildItemChat(context, index, animation);
+            child: BlocBuilder<MessagePageBloc, MessagePageState>(
+              builder: (context, state) {
+                if (state is MessagePageLoadingState) {
+                  // return ErrorOutput(message: state.message);
+                }
+                if (state is MessagePageSuccessState) {
+                  conversations.addAll(state.conversations!);
+                  return AnimatedList(
+                    key: conversationListKey,
+                    initialItemCount: conversations.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index, animation) {
+                      return buildItemChat(context, index, animation);
+                    },
+                  );
+                }
+                return Container();
               },
             ),
           ),
@@ -400,7 +331,7 @@ class _MessageBodyState extends State<MessageBody> {
       sizeFactor: animation,
       child: SlideMenu(
         key: UniqueKey(),
-        press: () => pushToChatDetail(),
+        press: () => pushToChatDetail(index),
         menuItems: [
           Container(
             color: Colors.transparent,
@@ -419,8 +350,7 @@ class _MessageBodyState extends State<MessageBody> {
             ),
           ),
         ],
-        // ignore: sized_box_for_whitespace
-        child: Container(
+        child: SizedBox(
           height: 88,
           child: Container(
             color: Colors.white,
@@ -442,7 +372,8 @@ class _MessageBodyState extends State<MessageBody> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        conversations[index].name!,
+                        conversations[index].groupTitle! +
+                            conversations[index].userFullName!,
                         style: Utils.setStyle(
                             color: const Color(0xFF24272E),
                             weight: FontWeight.w600),
@@ -451,7 +382,7 @@ class _MessageBodyState extends State<MessageBody> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        conversations[index].message!,
+                        conversations[index].lastMessage!.messageContent!,
                         style: Utils.setStyle(
                             color: const Color(0xFF797D88), size: 14),
                         maxLines: 1,
@@ -460,6 +391,7 @@ class _MessageBodyState extends State<MessageBody> {
                     ],
                   ),
                 ),
+                /*
                 Container(
                   height: 52,
                   width: 52,
@@ -472,6 +404,7 @@ class _MessageBodyState extends State<MessageBody> {
                     ),
                   ),
                 ),
+                */
               ],
             ),
           ),
@@ -484,7 +417,7 @@ class _MessageBodyState extends State<MessageBody> {
     return SizedBox(
         height: 72,
         child: GestureDetector(
-          onTap: () => pushToChatDetail(),
+          onTap: () => pushToChatDetail(index),
           child: Container(
             color: Colors.white,
             margin: const EdgeInsets.only(bottom: 12),
@@ -603,7 +536,7 @@ class _MessageBodyState extends State<MessageBody> {
     });
   }
 
-  void pushToChatDetail() {
-    Navigator.pushNamed(context, RouteConstants.messageDetail);
+  void pushToChatDetail(int index) {
+    Navigator.pushNamed(context, RouteConstants.messageDetail, arguments: conversations[index]);
   }
 }

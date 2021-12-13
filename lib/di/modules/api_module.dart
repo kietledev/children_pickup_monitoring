@@ -1,3 +1,4 @@
+import 'package:children_pickup_monitoring/data/datasources/remote/get_all_conversations_api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:children_pickup_monitoring/data/datasources/remote/remote.dart';
 
@@ -14,42 +15,59 @@ class ApiModule extends DIModule {
 
     /* Fetch teachers api */
     injector.registerSingleton<PostTeachersApiService>(
-    PostTeachersApiService(injector()));
+        PostTeachersApiService(injector()));
 
     /* Fetch pupils api */
     injector.registerSingleton<PostPupilsApiService>(
-    PostPupilsApiService(injector()));
+        PostPupilsApiService(injector()));
 
     /* Fetch Achievement api */
     injector.registerSingleton<PostAchievementsApiService>(
-    PostAchievementsApiService(injector()));
+        PostAchievementsApiService(injector()));
 
     /* Profile api */
-    injector.registerSingleton<ProfileApiService>(ProfileApiService(injector()));
-    injector.registerSingleton<PostProfileApiService>(PostProfileApiService(injector()));
+    injector
+        .registerSingleton<ProfileApiService>(ProfileApiService(injector()));
+    injector.registerSingleton<PostProfileApiService>(
+        PostProfileApiService(injector()));
 
     /* Parents api */
-    injector.registerSingleton<GetParentsApiService>(GetParentsApiService(injector()));
-    injector.registerSingleton<PostParentApiService>(PostParentApiService(injector()));
-    injector.registerSingleton<DeleteParentApiService>(DeleteParentApiService(injector()));
+    injector.registerSingleton<GetParentsApiService>(
+        GetParentsApiService(injector()));
+    injector.registerSingleton<PostParentApiService>(
+        PostParentApiService(injector()));
+    injector.registerSingleton<DeleteParentApiService>(
+        DeleteParentApiService(injector()));
 
     /* Menu api */
-    injector.registerSingleton<PostMenusApiService>(PostMenusApiService(injector()));
+    injector.registerSingleton<PostMenusApiService>(
+        PostMenusApiService(injector()));
 
     /* Users api */
-    injector.registerSingleton<GetUsersByPersonApiService>(GetUsersByPersonApiService(injector()));
+    injector.registerSingleton<GetUsersByPersonApiService>(
+        GetUsersByPersonApiService(injector()));
 
     /* Relationship Type api */
-    injector.registerSingleton<GetRelationshipTypeApiService>(GetRelationshipTypeApiService(injector()));
+    injector.registerSingleton<GetRelationshipTypeApiService>(
+        GetRelationshipTypeApiService(injector()));
 
     /* Password api */
-    injector.registerSingleton<PostPasswordApiService>(PostPasswordApiService(injector()));
+    injector.registerSingleton<PostPasswordApiService>(
+        PostPasswordApiService(injector()));
 
     /* pickup place api */
-    injector.registerSingleton<GetPickupPlacesApiService>(GetPickupPlacesApiService(injector()));
+    injector.registerSingleton<GetPickupPlacesApiService>(
+        GetPickupPlacesApiService(injector()));
 
     /* pupil parent api */
-    injector.registerSingleton<GetPupilByParentApiService>(GetPupilByParentApiService(injector()));
+    injector.registerSingleton<GetPupilByParentApiService>(
+        GetPupilByParentApiService(injector()));
 
+    /* Message Page Api */
+    injector.registerSingleton<GetAllConversationsApiService>(
+        GetAllConversationsApiService(injector()));
+    /* Message Detail Api */
+    injector.registerSingleton<GetMessagesApiService>(
+        GetMessagesApiService(injector()));
   }
 }
