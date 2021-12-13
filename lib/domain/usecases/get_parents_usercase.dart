@@ -10,6 +10,8 @@ class GetParentsUseCase implements UseCase<DataState<List<ParentModel>>, Parents
 
   @override
   Future<DataState<List<ParentModel>>> call({ParentsRequest? params}) {
+
+
     return _parentsRepository.getParents(params!);
   }
 }

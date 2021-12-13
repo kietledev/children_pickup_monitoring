@@ -71,4 +71,52 @@ class MenusStyle {
       fontWeight: FontWeight.w600,
       fontFamily:FontsConstants.notoSans);
 }
+class QRCodeStyle{
+  static const contentStyle = TextStyle(
+      fontSize: 16,
+      color: ColorConstants.neutralColor2,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle2 = TextStyle(
+      fontSize: 14,
+      color: ColorConstants.neutralColor1,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle1= TextStyle(
+      fontSize: 16,
+      color: ColorConstants.white,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle3= TextStyle(
+      fontSize: 16,
+      color: ColorConstants.neutralColor1,
+      fontWeight: FontWeight.w600,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle4= TextStyle(
+      fontSize: 14,
+      color: ColorConstants.neutralColor1,
+      height: 1,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle5= TextStyle(
+      fontSize: 16,
+      color: ColorConstants.brandColor,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle6 = TextStyle(
+      fontSize: 16,
+      color: ColorConstants.neutralColor1,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle7 = TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+      color: ColorConstants.brandColor,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle8 = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      color: ColorConstants.secondaryColor2,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle9 = TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.w400,
+      color: ColorConstants.neutralColor2,
+      fontFamily: FontsConstants.notoSans);
+
+}
 

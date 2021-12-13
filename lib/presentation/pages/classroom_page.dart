@@ -2,7 +2,7 @@ import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ClassroomPage extends StatelessWidget {
   const ClassroomPage({Key? key}) : super(key: key);
 
@@ -24,26 +24,23 @@ class ClassroomBody extends StatefulWidget {
 }
 
 class _ClassroomBodyState extends State<ClassroomBody> {
-  final List<ItemMenu> listItemsClassroom = [
-    ItemMenu(
-        1,
-        "Thông tin lớp học",
-        "assets/icons/ic_information_classroom.svg",
-        RouteConstants.classInformation),
-    ItemMenu(2, "Xem Camera", "assets/icons/ic_camera.svg",
-        RouteConstants.classInformation),
-    ItemMenu(3, "Gửi yêu cầu đón trẻ", "assets/icons/ic_create_qr.svg",
-        RouteConstants.generatedQCode),
-    ItemMenu(4, "Lịch sử đón trẻ", "assets/icons/ic_history.svg",
-        RouteConstants.classInformation),
-  ];
 
   int currentIndex = -1;
 
   @override
   Widget build(BuildContext context) {
-    print(ttl);
-    print(getTokenApi());
+    final List<ItemMenu> listItemsClassroom = [
+      ItemMenu(
+          1,(AppLocalizations.of(context)!.classInformation),
+          "assets/icons/ic_information_classroom.svg",
+          RouteConstants.classInformation),
+      ItemMenu(2, (AppLocalizations.of(context)!.viewCamera), "assets/icons/ic_camera.svg",
+          RouteConstants.classInformation),
+      ItemMenu(3, (AppLocalizations.of(context)!.sendRequest), "assets/icons/ic_create_qr.svg",
+          RouteConstants.generatedQCode),
+      ItemMenu(4, (AppLocalizations.of(context)!.childPickupHistory), "assets/icons/ic_history.svg",
+          RouteConstants.classInformation),
+    ];
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(

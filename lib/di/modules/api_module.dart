@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/data/datasources/remote/get_all_conversations_api_service.dart';
+import 'package:children_pickup_monitoring/data/datasources/remote/post_notification_read_api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:children_pickup_monitoring/data/datasources/remote/remote.dart';
 
@@ -69,5 +70,24 @@ class ApiModule extends DIModule {
     /* Message Detail Api */
     injector.registerSingleton<GetMessagesApiService>(
         GetMessagesApiService(injector()));
+    /* POST card api */
+    injector.registerSingleton<PostPickUpCardApiService>(
+        PostPickUpCardApiService(injector()));
+    /* DELETE card api */
+    injector.registerSingleton<DeletePickupDestroyedApiService>(
+        DeletePickupDestroyedApiService(injector()));
+
+    /* get list notification api */
+    injector.registerSingleton<GetListNotificationApiService>(
+        GetListNotificationApiService(injector()));
+    /* get list classroom api */
+    injector.registerSingleton<PostListClassByTeacherApiService>(
+        PostListClassByTeacherApiService(injector()));
+    /* post Notification by Teacher api */
+    injector.registerSingleton<PostTeacherSendNotificationApiService>(
+        PostTeacherSendNotificationApiService(injector()));
+    /* post Notification Read api */
+    injector.registerSingleton<PostNotificationReadApiService>(
+        PostNotificationReadApiService(injector()));
   }
 }

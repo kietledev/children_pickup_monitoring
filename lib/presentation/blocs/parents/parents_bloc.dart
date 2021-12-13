@@ -35,6 +35,7 @@ class ParentsBloc extends Bloc<ParentsEvent, ParentsState> {
       );
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final parents = dataState.data!;
+
         yield FetchParentsSuccessState(parents: parents);
 
       } else {

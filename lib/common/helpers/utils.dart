@@ -83,8 +83,8 @@ Future<int> getPupilID() async {
   final int pupilID = await preferences.getIDpupil();
   return pupilID;
 }
-Future<int> getIndexPupil() async {
+Future<NotificationModel?> getNotification() async {
   final preferences = Preferences();
-  final int index = await preferences.getIndexPupil();
-  return index;
+  final NotificationModel? notificationModel = await preferences.getNotification();
+  return notificationModel;
 }

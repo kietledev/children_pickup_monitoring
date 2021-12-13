@@ -18,6 +18,7 @@ class AchievementDetailsPage extends StatelessWidget {
       hideBack: true,
     title: TitlesConstants.details,
     menuItem: [],
+
     actionBack: () {
     Navigator.pop(context);
     },

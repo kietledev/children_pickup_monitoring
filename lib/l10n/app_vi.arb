@@ -1,4 +1,6 @@
 {
+  "addNotificationNew": "Thêm thông báo mới",
+  "notificationHome": "Thông Báo",
   "school": "Trường học",
   "profileBottom": "Cá nhân",
   "home": "Trang chủ",
@@ -40,5 +42,19 @@
   "helloWorld": "Xin chào",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
-  }
+  },
+  "generateQrCode": "Mã đã tạo",
+  "sendRequest": "Gửi yêu cầu đón trẻ",
+  "classInformation": "Thông tin lớp học",
+  "viewCamera": "Xem camera",
+  "pupilPickupHistory": "Lịch sử đón trẻ",
+  "teacherInformation": "Thông tin giáo viên",
+  "classDetail": "Chi tiết lớp học",
+  "foodMenu": "Thực đơn của bé",
+  "achievements": "Thành tích",
+  "teacherDetail": "Chi tiết giáo viên",
+  "homeroomTeacher": "Chủ nhiệm",
+  "position": "Chức Vụ",
+  "email": "Email",
+  "introduce": "Giới thiệu"
 }

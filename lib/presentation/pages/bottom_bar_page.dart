@@ -1,28 +1,47 @@
 import 'package:children_pickup_monitoring/common/config/local_notification_service.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/common/helpers/utils.dart';
+import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/notification/notification_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/pages/classroom_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/home_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
 import 'package:children_pickup_monitoring/presentation/pages/profile_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/school_page.dart';
+import 'package:children_pickup_monitoring/presentation/pages/warning_page.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class BottomBarPage extends StatefulWidget {
+class BottomBarPage extends StatelessWidget {
   const BottomBarPage({Key? key}) : super(key: key);
+@override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+   return BlocProvider(
+     create: (context) => injector<NotificationBloc>(),
+     child: Scaffold(
+         body: BodyBottomBarPage()
+     ),
+   );
+  }
+}
+class BodyBottomBarPage extends StatefulWidget {
+  const BodyBottomBarPage({Key? key}) : super(key: key);
   @override
-  _BottomBarPageState createState() => _BottomBarPageState();
+  _BodyBottomBarPage createState() => _BodyBottomBarPage();
 }
 
-class _BottomBarPageState extends State<BottomBarPage> {
+class _BodyBottomBarPage extends State<BodyBottomBarPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isParent = false;
   final String _bgAppbar = 'assets/images/bg_appbar_a.png';
@@ -39,23 +58,26 @@ class _BottomBarPageState extends State<BottomBarPage> {
   final _classroom = const ClassroomPage();
   final _message = const MessagePage();
   final _profile = const ProfilePage();
-
-
-
   final _itemQR = const BottomNavigationBarItem(label: '', icon: Icon(null));
-
+  UserModel? userModel;
+  NotificationModel? notificationModel;
+  int personId = -1;
   @override
   void initState() {
     super.initState();
+    getUserId();
+    getNotification().then((value){
+      setState(() {
+        notificationModel = value;
+      });
+    });
     if (_role == 0) _isParent = true;
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     messaging.getInitialMessage();
-
     messaging.getToken().then((value) {
       String? token = value;
       // print("Instance ID: $token");
     });
-
     //Forground
     FirebaseMessaging.onMessage.listen((message) {
       LocalNotificationService.display(message);
@@ -75,13 +97,16 @@ class _BottomBarPageState extends State<BottomBarPage> {
       // }
     });
   }
-
+  getUserId() async {
+    userModel = await getUser();
+    personId = userModel!.personId.toInt();
+    BlocProvider.of<NotificationBloc>(context).add(GetNotificationEvent(page: 1, pageSize: 10, personId: personId));
+  }
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     _itemHome = BottomNavigationBarItem(
@@ -126,7 +151,23 @@ class _BottomBarPageState extends State<BottomBarPage> {
       body: Builder(
         builder: (BuildContext context) {
           return Scaffold(
-            appBar: appBar(title: getTitle(_currentIndex), isParent: _isParent),
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: BlocBuilder<NotificationBloc, NotificationState>(builder: (context, state) {
+                if (state is NotificationSuccessState) {
+                  notificationModel = state.notificationModel;
+                  EasyLoading.dismiss();
+                  return appBar(title: getTitle(_currentIndex), isParent: _isParent,notificationModel: notificationModel);
+                } else if (state is NotificationFailureState) {
+                  EasyLoading.dismiss();
+                  return appBar(title: getTitle(_currentIndex), isParent: _isParent);
+                } else {
+                  EasyLoading.dismiss();
+                  return appBar(title: getTitle(_currentIndex), isParent: _isParent);
+                }
+              }
+              ),
+            ),
             body: PageView(
               controller: _pageController,
               onPageChanged: (int index) {
@@ -145,7 +186,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
             ),
             floatingActionButton: buildFloatingActionButton(showFab),
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
+            FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: buildBottomNavigationBar(context),
           );
         },
@@ -207,7 +248,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
     );
   }
 
-  AppBar appBar({required String title, bool isParent = false}) {
+  AppBar appBar({required String title, bool isParent = false,NotificationModel? notificationModel}) {
     return AppBar(
       elevation: 0.0,
       flexibleSpace: Container(
@@ -237,16 +278,38 @@ class _BottomBarPageState extends State<BottomBarPage> {
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 10),
-          child: IconButton(
-            onPressed: () {
-              // Navigator.pushNamed(context, NotificationScreen.routeName);
-            },
-            icon: SvgPicture.asset(
-              'assets/icons/ic_notification.svg',
-              width: 20,
-              height: 18,
-              color: ColorConstants.brandColor,
-            ),
+          child: Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, RouteConstants.notification,
+                          arguments: notificationModel)
+                      .then((value) => getUser().then((value) => context
+                          .read<NotificationBloc>()
+                          .add(GetNotificationEvent(personId: value!.personId,page: 1,pageSize: 10))));
+                },
+                icon: SvgPicture.asset(
+                  'assets/icons/ic_notification.svg',
+                  width: 30,
+                  height: 18,
+                  color: ColorConstants.brandColor,
+                ),
+              ),
+              Positioned(
+                  right: 12,
+                  top: 10,
+                  child: Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        color: ColorConstants.secondaryColor2),
+                    child: (notificationModel != null)
+                            ?Text(notificationModel.unreadCount.toString(),textAlign: TextAlign.center, style: TextStyle(fontSize: 8),)
+                            :Text("0",textAlign: TextAlign.center, style: TextStyle(fontSize: 8),),
+                  )
+              )
+            ],
           ),
         )
       ],

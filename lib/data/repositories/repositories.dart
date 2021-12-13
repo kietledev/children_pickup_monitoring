@@ -8,3 +8,5 @@ export 'pupil_by_parent_repository_impl.dart';
 export 'parent_repository_impl.dart';
 export 'password_repository_impl.dart';
 export 'conversations_repository_impl.dart';
+export 'pickup_card_repository_impl.dart';
+

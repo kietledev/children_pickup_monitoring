@@ -1,8 +1,10 @@
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/class_room/class_room_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/language/language_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/local_user/local_user_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_page/message_page_bloc.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/notification/notification_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/parents/parents_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/password/password_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/relationship_type/relationship_type_bloc.dart';
@@ -64,6 +66,12 @@ class BlocModule extends DIModule {
     injector.registerFactory<PupilByParentBloc>(
         () => PupilByParentBloc(injector()));
     //injector.registerFactory<LanguageBloc>(() =>LanguageBloc(injector()));
+    /* list notification */
+    injector.registerFactory<NotificationBloc>(() =>NotificationBloc(injector(),injector(),injector()));
+    /* list classRoom */
+    injector.registerFactory<ClassRoomBloc>(() =>ClassRoomBloc(injector()));
+
+    injector.registerFactory<PickUpBloc>(() =>PickUpBloc(injector(), injector()));
 
     /* Message Page Bloc */
     injector

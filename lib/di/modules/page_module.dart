@@ -1,9 +1,12 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/data/datasources/local/app_database.dart';
 import 'package:children_pickup_monitoring/presentation/pages/achievements_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/camera_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_detail_page.dart';
+import 'package:children_pickup_monitoring/presentation/pages/notification_detail_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pupil_detail_page.dart';
+import 'package:children_pickup_monitoring/presentation/pages/qr_card_info_page.dart';
 import 'package:flutter/material.dart';
 
 import '../injection.dart';
@@ -80,5 +83,16 @@ class PageModule extends DIModule {
         instanceName: RouteConstants.informationApp);
     injector.registerFactory<Widget>(() => AppHelpPage(),
         instanceName: RouteConstants.helpApp);
+    injector.registerFactory<Widget>(() => NotificationPage(),
+        instanceName: RouteConstants.notification);
+    injector.registerFactory<Widget>(() => NotificationDetailPage(),
+        instanceName: RouteConstants.notificationDetail);
+    injector.registerFactory<Widget>(() => NotificationAddPage(),
+        instanceName: RouteConstants.notificationAdd);
+    injector.registerFactory<Widget>(() => CreateQRCodePage(),
+        instanceName: RouteConstants.createQCode);
+    injector.registerFactory<Widget>(() => QRCardInfomationPage(),
+        instanceName: RouteConstants.qrInformation);
+
   }
 }

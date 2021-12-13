@@ -1,9 +1,12 @@
 import 'package:children_pickup_monitoring/data/repositories/achievements_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/message_repository_impl.dart';
+import 'package:children_pickup_monitoring/data/repositories/list_class_by_teacher_repository_impl.dart';
+import 'package:children_pickup_monitoring/data/repositories/notification_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/parent_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/relationship_type_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/repositories.dart';
 import 'package:children_pickup_monitoring/data/repositories/users_by_person_repository_impl.dart';
+import 'package:children_pickup_monitoring/domain/repositories/list_class_by_teacher_repository.dart';
 import 'package:children_pickup_monitoring/domain/repositories/parents_repository.dart';
 import 'package:children_pickup_monitoring/domain/repositories/repositories.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
@@ -76,5 +79,18 @@ class RepositoryModule extends DIModule {
     injector.registerSingleton<GetAllMessagesRepository>(
       MessagesRepositoryImpl(injector()),
     );
+    /* Notification repository */
+    injector.registerSingleton<NotificationRepository>(
+      NotificationRepositoryImpl(injector(),injector(),injector()),
+    );
+    /* List Classroom repository */
+    injector.registerSingleton<ClassByTeacherRepository>(
+      ClassByTeacherRepositoryImpl(injector()),
+    );
+    /* pickup card repository */
+    injector.registerSingleton<PickUpRepository>(
+      PickUpCardRepositoryImpl(injector(),injector()),
+    );
+
   }
 }
