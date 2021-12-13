@@ -95,6 +95,7 @@ class _BodyBottomBarPage extends State<BodyBottomBarPage> {
       // } else if (routeFromMessage == 'personal_information') {
       //   Navigator.of(context).push<void>(PersonalInformationsPage.route());
       // }
+
     });
   }
   getUserId() async {
