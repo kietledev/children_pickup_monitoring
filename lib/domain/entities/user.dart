@@ -74,6 +74,7 @@ class User extends Equatable {
         "ROLE_ALLOW_DELETE": roleAllowDelete,
         "FROM_PARENT_ID": fromParentId,
         "TO_PUPIL_ID": toPupilId,
+        
         "STAFF_ID_NUMBER": staffIdNumber,
       };
 }

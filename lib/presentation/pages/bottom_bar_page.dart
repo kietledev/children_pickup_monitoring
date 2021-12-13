@@ -76,7 +76,7 @@ class _BodyBottomBarPage extends State<BodyBottomBarPage> {
     messaging.getInitialMessage();
     messaging.getToken().then((value) {
       String? token = value;
-      print("Instance ID: $token");
+      // print("Instance ID: $token");
     });
     //Forground
     FirebaseMessaging.onMessage.listen((message) {

@@ -25,8 +25,9 @@ class UserRepositoryImpl implements UserRepository {
 
       final httpResponse = await _loginApiService.postLogin(
           body: body, k: key, dm: dm, tk: getTokenApi(), ttl: ttl);
-  print("Login-----${httpResponse.response.data}");
-      if (httpResponse.response.statusCode == HttpStatus.ok &&
+
+      if (httpResponse.response.data['errorCode'] == 0 &&
+          httpResponse.response.statusCode == HttpStatus.ok &&
           httpResponse.data.data.toString().isNotEmpty) {
         if (httpResponse.data.errorCode == 0) {
           final person = UserModel.fromJson(httpResponse.data.data);

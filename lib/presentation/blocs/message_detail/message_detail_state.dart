@@ -11,9 +11,9 @@ class MessageDetailInitial extends MessageDetailState {
 
 class ListMessageState extends MessageDetailState {
   final ListMessageStatus? status;
-  final String? message;
+  final List<Message>? messages;
 
-  ListMessageState({this.status, this.message});
+  ListMessageState({this.status, this.messages});
 }
 
 class MoreHeightState extends MessageDetailState {

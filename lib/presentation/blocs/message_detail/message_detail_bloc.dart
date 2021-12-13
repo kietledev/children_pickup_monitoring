@@ -1,6 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:children_pickup_monitoring/common/constants/constants.dart';
+import 'package:children_pickup_monitoring/common/core/params/get_all_messages_request.dart';
+import 'package:children_pickup_monitoring/common/core/resources/resources.dart';
+import 'package:children_pickup_monitoring/domain/entities/entities.dart';
+import 'package:children_pickup_monitoring/domain/usecases/message_detail_usecase.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 part 'message_detail_event.dart';
@@ -39,7 +44,9 @@ class MessageDetailRepository {
 
 class MessageDetailBloc extends Bloc<MessageDetailEvent, MessageDetailState> {
   MessageDetailRepository repository;
-  MessageDetailBloc(MessageDetailState initialState, this.repository)
+  final MessageDetailUseCase _useCase;
+  MessageDetailBloc(
+      MessageDetailState initialState, this.repository, this._useCase)
       : super(initialState);
 
   @override
@@ -48,10 +55,13 @@ class MessageDetailBloc extends Bloc<MessageDetailEvent, MessageDetailState> {
   ) async* {
     if (event is DownloadMessageDetail) {
       yield MessageDetailInitial(status: DownloadStatus.loading);
-      _mapDowloadMessageToState();
+      _mapDowloadMessageToState(event);
     } else if (event is DownloadSuccess) {
-      yield MessageDetailInitial(status: DownloadStatus.success);
-      yield ListMessageState(status: ListMessageStatus.success);
+      yield MessageDetailInitial(
+        status: DownloadStatus.success,
+      );
+      yield ListMessageState(
+          status: ListMessageStatus.success, messages: event.listMessage);
     } else if (event is DownloadFailure) {
       yield MessageDetailInitial(
           status: DownloadStatus.failure, message: event.msg);
@@ -65,8 +75,10 @@ class MessageDetailBloc extends Bloc<MessageDetailEvent, MessageDetailState> {
           showGallery: event.showGallery ?? false,
           isRecording: event.isRecording ?? false);
     } else if (event is AddNewMessage) {
+      final List<Message> messages = [];
+      messages.add(event.message!);
       yield ListMessageState(
-          status: ListMessageStatus.add, message: event.message);
+          status: ListMessageStatus.add, messages: messages);
     } else if (event is GalleryEvent) {
       if (event.show) {
         _mapFetchAssetsToState();
@@ -96,13 +108,19 @@ class MessageDetailBloc extends Bloc<MessageDetailEvent, MessageDetailState> {
     }
   }
 
-  Future _mapDowloadMessageToState() async {
-    try {
-      Timer(const Duration(milliseconds: 400), () {
-        add(DownloadSuccess());
-      });
-    } on Exception {
-      add(DownloadFailure('errorMessage'));
+  Future _mapDowloadMessageToState(MessageDetailEvent event) async {
+    if (event is DownloadMessageDetail) {
+      final dataState = await _useCase(
+          params: GetAllMessagesRequest(
+              personId: event.personId,
+              groupId: event.groupId,
+              page: event.page));
+      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
+        final messages = dataState.data!;
+        add(DownloadSuccess(messages));
+      } else {
+        add(DownloadFailure(dataState.error!.message));
+      }
     }
   }
 }
