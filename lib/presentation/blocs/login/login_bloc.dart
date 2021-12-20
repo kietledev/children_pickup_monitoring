@@ -33,6 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final user = dataState.data!;
+          print("Bloc--${user.roleId}");
         // await _saveUserUseCase(params: user);
         _savePreference( user as UserModel);
         yield LoginSuccessState(user: user);

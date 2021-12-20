@@ -15,7 +15,8 @@ class AchievementsRepositoryImpl implements AchievementsRepository {
   const AchievementsRepositoryImpl(this._achievementsApiService);
 
   @override
-  Future<DataState<List<Achievement>>> postAchievements(PostAchievementsRequest params)async {
+  Future<DataState<List<Achievement>>> postAchievements(
+      PostAchievementsRequest params) async {
     try {
       final Map<String, dynamic> body = <String, dynamic>{
         'pupilId': params.pupilId,
@@ -26,7 +27,8 @@ class AchievementsRepositoryImpl implements AchievementsRepository {
           dm: dm,
           tk: getTokenApi(id: params.pupilId.toString()),
           ttl: ttl);
-      if (httpResponse.response.statusCode == HttpStatus.ok &&
+      if (httpResponse.response.data['errorCode'] == 0 &&
+          httpResponse.response.statusCode == HttpStatus.ok &&
           httpResponse.data.data.toString().isNotEmpty) {
         final List<Achievement> pupils = [];
         for (final dynamic item in httpResponse.data.data) {
@@ -48,6 +50,4 @@ class AchievementsRepositoryImpl implements AchievementsRepository {
       return DataFailed(e);
     }
   }
-
-  
 }

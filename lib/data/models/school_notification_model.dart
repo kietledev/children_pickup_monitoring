@@ -26,4 +26,15 @@ class SchoolNotificationModel extends SchoolNotification {
       isRead: json['IS_READ'] as bool? ?? false,
     );
   }
+  factory SchoolNotificationModel.json(Map<String, dynamic> json) {
+    return SchoolNotificationModel(
+      annoucementId: json['ANNOUCEMENT_ID'] as int? ?? -1,
+      title: json['TITLE'] as String? ?? '',
+      content: json['CONTENT'] as String? ?? '',
+      dateTimeReceived: json['DATE_TIME_RECEIVED'] as String? ?? '',
+      isRead: json['IS_READ'] as bool? ?? false,
+    );
+  }
+
+
 }

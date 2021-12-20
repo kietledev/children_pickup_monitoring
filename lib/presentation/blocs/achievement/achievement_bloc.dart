@@ -25,7 +25,6 @@ class AchievementBloc extends Bloc<AchievementEvent, AchievementState> {
           pupilId: event.pupilId,
         ),
       );
-      print(dataState.data);
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final achievement = dataState.data!;
         yield FetchAchievementSuccessState(achievement: achievement);

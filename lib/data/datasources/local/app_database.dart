@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:children_pickup_monitoring/common/constants/db_constants.dart';
 import 'package:children_pickup_monitoring/data/datasources/local/DAOs/parent_dao.dart';
 import 'package:children_pickup_monitoring/data/datasources/local/DAOs/pupil_dao.dart';
-import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/domain/entities/table_parent.dart';
 import 'package:floor/floor.dart';
@@ -21,6 +19,4 @@ abstract class AppDatabase extends FloorDatabase {
   PersonDao get appPersonDao;
   ParentDao get appParentDao;
   PupilDao get appPupilDao;
-
-
 }

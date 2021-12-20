@@ -7,11 +7,13 @@ class ItemNotificationSchool extends StatefulWidget {
   final int index;
   final BuildContext context;
   final SchoolNotification item;
+  final VoidCallback onPress;
   const ItemNotificationSchool({
     Key? key,
     required this.index,
     required this.context,
     required this.item,
+    required this.onPress,
   }) : super(key: key);
 
   @override
@@ -21,8 +23,9 @@ class ItemNotificationSchool extends StatefulWidget {
 class _ItemNotificationSchool extends State<ItemNotificationSchool> {
   @override
   Widget build(BuildContext context) {
+    final titleColor = widget.item.isRead! ? ColorConstants.neutralColor1 : ColorConstants.secondaryColor2 ;
     return  GestureDetector(
-      onTap: ()=>Navigator.pushNamed(context, RouteConstants.notificationDetail,arguments: widget.item),
+      onTap: widget.onPress,
       child: Container(
         margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
         decoration: BoxDecoration(
@@ -45,7 +48,7 @@ class _ItemNotificationSchool extends State<ItemNotificationSchool> {
               Text(
                   "${widget.item.title}",
                   style: TextStyle(
-                    color: ColorConstants.neutralColor1,
+                    color: titleColor,
                     fontFamily: FontsConstants.notoSans,
                     fontWeight: FontWeight.w400,
                     fontSize: 14,

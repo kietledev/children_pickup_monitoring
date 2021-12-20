@@ -14,6 +14,8 @@ export 'get_pupil_by_parent_api_service.dart';
 
 export 'delete_parent_api_service.dart';
 export 'post_password_api_service.dart';
+export 'get_all_conversations_api_service.dart';
+export 'get_messages_api_service.dart';
 export 'post_pickup_card_service.dart';
 export 'delete_pickup_destroyed_api_service.dart';
 export 'get_notification_api_service.dart';

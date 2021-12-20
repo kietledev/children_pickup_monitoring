@@ -14,7 +14,8 @@ part 'notification_state.dart';
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   final GetNotificationUseCase _getNotificationUseCase;
   final PostNotificationByTeacherUseCase _postNotificationByTeacherUseCase;
-  NotificationBloc(this._getNotificationUseCase,this._postNotificationByTeacherUseCase ) : super(NotificationInitialState());
+  final PostNotificationReadUseCase _postNotificationReadUseCase;
+  NotificationBloc(this._getNotificationUseCase,this._postNotificationByTeacherUseCase,this._postNotificationReadUseCase ) : super(NotificationInitialState());
 
   @override
   Stream<NotificationState> mapEventToState(
@@ -33,6 +34,8 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final notification = dataState.data!;
         yield NotificationSuccessState(notificationModel:notification );
+        final preferences = Preferences();
+        preferences.setNotification(state.notificationModel!);
       } else {
         yield NotificationFailureState(msg: dataState.error!.message);
       }
@@ -51,6 +54,22 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
 
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         yield PostNotificationSuccessState(msg: dataState.data!);
+      } else {
+        yield NotificationFailureState(msg: dataState.error!.message);
+      }
+    }
+    if (event is PostNotificationReadEvent) {
+      yield const NotificationLoadingState();
+      final dataState = await _postNotificationReadUseCase(
+        params: PostNotificationReadRequest(
+            personId: event.personId,
+            annoucementId: event.annoucementId,
+            page: event.page,
+            pageSize: event.pageSize,
+        ),
+      );
+      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
+        yield PostNotificationReadSuccessState(notificationModel: dataState.data!);
       } else {
         yield NotificationFailureState(msg: dataState.error!.message);
       }

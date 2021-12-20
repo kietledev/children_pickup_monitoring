@@ -3,15 +3,19 @@ part of 'message_detail_bloc.dart';
 class MessageDetailEvent {}
 
 class DownloadMessageDetail extends MessageDetailEvent {
-  final String id;
+  final int personId;
+  final int groupId;
+  final int page;
 
-  DownloadMessageDetail(this.id);
+  DownloadMessageDetail(
+      {required this.personId, required this.groupId, required this.page});
 }
 
-class DownloadSuccess extends MessageDetailEvent {
-  // final List<String>? listMessage;
 
-  // DownloadSuccess(this.listMessage);
+class DownloadSuccess extends MessageDetailEvent {
+  final List<Message>? listMessage;
+
+  DownloadSuccess(this.listMessage);
 }
 
 class DownloadFailure extends MessageDetailEvent {
@@ -27,7 +31,7 @@ class MoreHeightEvent extends MessageDetailEvent {
 }
 
 class AddNewMessage extends MessageDetailEvent {
-  final String? message;
+  final Message? message;
 
   AddNewMessage({this.message});
 }

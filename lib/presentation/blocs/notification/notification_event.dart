@@ -23,3 +23,11 @@ class PostNotificationByTeacherEvent extends NotificationEvent {
   final String contentAnnoucement;
   PostNotificationByTeacherEvent({required this.personId,required this.teacherId,required this.listClassId, required this.titleAnnoucement, required this.contentAnnoucement});
 }
+class PostNotificationReadEvent extends NotificationEvent {
+  final int personId;
+  final int annoucementId;
+  final int page;
+  final int pageSize;
+
+  PostNotificationReadEvent({required this.personId,required this.annoucementId,required this.page, required this.pageSize});
+}

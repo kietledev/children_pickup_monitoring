@@ -14,6 +14,7 @@ class UserModel extends User {
       required bool roleAllowUpdate,
       required bool roleAllowDelete,
       required int fromParentId,
+      required String staffIdNumber,
       required int toPupilId})
       : super(
             userId: userId,
@@ -28,7 +29,9 @@ class UserModel extends User {
             roleAllowUpdate: roleAllowUpdate,
             roleAllowDelete: roleAllowDelete,
             fromParentId: fromParentId,
-            toPupilId: toPupilId);
+            toPupilId: toPupilId,
+            staffIdNumber: staffIdNumber
+  );
 
   factory UserModel.fromJson(Map<String, dynamic> map) {
     return UserModel(
@@ -39,11 +42,12 @@ class UserModel extends User {
         currentMiddleName: map["CURRENT_MIDDLE_NAME"] as String? ?? "",
         loginTime: map["LOGIN_TIME"] as String? ?? "",
         roleId: (map['ROLE_ID'] as double? ?? 0.0).toInt(),
-        roleName: map["ROLE_NAME"] as String? ?? "",
+        roleName: map["ROLE_NAME"] ,
         roleAllowAdd: map["ROLE_ALLOW_ADD"] as bool? ?? false,
         roleAllowUpdate: map["ROLE_ALLOW_UPDATE"] as bool? ?? false,
         roleAllowDelete: map["ROLE_ALLOW_DELETE"] as bool? ?? false,
         fromParentId: (map["FROM_PARENT_ID"] as double? ?? 0.0).toInt(),
+        staffIdNumber: map["STAFF_ID_NUMBER"] as String? ?? "",
         toPupilId: (map["TO_PUPIL_ID"] as double? ?? 0.0).toInt());
   }
 
@@ -61,6 +65,7 @@ class UserModel extends User {
         roleAllowUpdate: map["ROLE_ALLOW_UPDATE"] as bool? ?? false,
         roleAllowDelete: map["ROLE_ALLOW_DELETE"] as bool? ?? false,
         fromParentId: map["FROM_PARENT_ID"] as int? ?? 0,
+        staffIdNumber: map["STAFF_ID_NUMBER"] as String? ?? "",
         toPupilId: map["TO_PUPIL_ID"] as int? ?? 0);
   }
 }

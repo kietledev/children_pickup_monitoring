@@ -1,6 +1,7 @@
 import 'package:children_pickup_monitoring/common/config/local_notification_service.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/common/helpers/utils.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
@@ -59,17 +60,23 @@ class _BodyBottomBarPage extends State<BodyBottomBarPage> {
   final _profile = const ProfilePage();
   final _itemQR = const BottomNavigationBarItem(label: '', icon: Icon(null));
   UserModel? userModel;
+  NotificationModel? notificationModel;
   int personId = -1;
   @override
   void initState() {
     super.initState();
     getUserId();
+    getNotification().then((value){
+      setState(() {
+        notificationModel = value;
+      });
+    });
     if (_role == 0) _isParent = true;
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     messaging.getInitialMessage();
     messaging.getToken().then((value) {
       String? token = value;
-      print("Instance ID: $token");
+      // print("Instance ID: $token");
     });
     //Forground
     FirebaseMessaging.onMessage.listen((message) {
@@ -148,8 +155,9 @@ class _BodyBottomBarPage extends State<BodyBottomBarPage> {
               preferredSize: const Size.fromHeight(kToolbarHeight),
               child: BlocBuilder<NotificationBloc, NotificationState>(builder: (context, state) {
                 if (state is NotificationSuccessState) {
+                  notificationModel = state.notificationModel;
                   EasyLoading.dismiss();
-                  return appBar(title: getTitle(_currentIndex), isParent: _isParent,notificationModel: state.notificationModel!);
+                  return appBar(title: getTitle(_currentIndex), isParent: _isParent,notificationModel: notificationModel);
                 } else if (state is NotificationFailureState) {
                   EasyLoading.dismiss();
                   return appBar(title: getTitle(_currentIndex), isParent: _isParent);
@@ -274,7 +282,11 @@ class _BodyBottomBarPage extends State<BodyBottomBarPage> {
             children: [
               IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, RouteConstants.notification,arguments: notificationModel);
+                  Navigator.pushNamed(context, RouteConstants.notification,
+                          arguments: notificationModel)
+                      .then((value) => getUser().then((value) => context
+                          .read<NotificationBloc>()
+                          .add(GetNotificationEvent(personId: value!.personId,page: 1,pageSize: 10))));
                 },
                 icon: SvgPicture.asset(
                   'assets/icons/ic_notification.svg',

@@ -18,13 +18,7 @@ class SchoolNotification extends Equatable {
     this.dateTimeReceived,
     this.isRead,
   });
-  // String getFullName() {
-  //   if (currentMiddleName!.isEmpty) {
-  //     return '${currentLastName!.trim()} ${currentFirstName!.trim()}';
-  //   } else {
-  //     return '${currentLastName!.trim()} ${currentMiddleName!.trim()} ${currentFirstName!.trim()}';
-  //   }
-  // }
+
   @override
   List<Object> get props {
     return [
@@ -37,4 +31,14 @@ class SchoolNotification extends Equatable {
   }
   @override
   bool get stringify => true;
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    "ANNOUCEMENT_ID": annoucementId,
+    "TITLE": title,
+    "CONTENT": content,
+    "DATE_TIME_RECEIVED": dateTimeReceived,
+    "IS_READ": isRead,
+
+  };
+
 }

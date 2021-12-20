@@ -1,4 +1,5 @@
 
+import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:equatable/equatable.dart';
 
@@ -22,8 +23,12 @@ class Notification extends Equatable {
       schoolNotification!,
     ];
   }
-
   @override
   bool get stringify => true;
 
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    "UNREAD_COUNT": unreadCount,
+    "SystemNotifications": systemNotification,
+    "SchoolNotifications": schoolNotification,
+  };
 }
