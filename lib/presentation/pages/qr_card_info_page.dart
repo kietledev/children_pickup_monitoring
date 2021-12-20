@@ -1,10 +1,8 @@
 import 'dart:typed_data';
-
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/constants/text_constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
-import 'package:children_pickup_monitoring/data/datasources/local/app_database.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/pickup/pickup_bloc.dart';
@@ -15,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'dart:ui' as ui;
 import 'package:wc_flutter_share/wc_flutter_share.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class QRCardInfomationPage extends StatelessWidget {
   const QRCardInfomationPage({Key? key}) : super(key: key);
 
@@ -25,7 +24,7 @@ class QRCardInfomationPage extends StatelessWidget {
     return Scaffold(
       appBar:  WidgetAppBar(
         hideBack: true,
-        title: TitlesConstants.details,
+        title: (AppLocalizations.of(context)!.detail),
         menuItem: [],
         actionBack: () {
           Navigator.of(context).popUntil((context) => count++ >= 3);
@@ -99,7 +98,7 @@ class QRCardInfomationBody extends StatelessWidget {
                             padding:  const EdgeInsets.all(12.0),
                             child: Column(
                               children: [
-                                Text('Thông tin người đón',
+                                Text((AppLocalizations.of(context)!.pupilPickupInformation),
                                   style: QRCodeStyle.contentStyle8,),
                                 Container(
                                   child: CircleAvatar(
@@ -123,13 +122,13 @@ class QRCardInfomationBody extends StatelessWidget {
                                             crossAxisAlignment: CrossAxisAlignment
                                                 .start,
                                             children: [
-                                              Text('Họ và tên người đón',
+                                              Text((AppLocalizations.of(context)!.fullName),
                                                 style: QRCodeStyle.contentStyle9,),
                                               SizedBox(height: 6,),
                                               Text(qrCart.parentPickUp!.getFullName(),
                                                 style: QRCodeStyle.contentStyle3,),
                                               SizedBox(height: 6,),
-                                              Text('Di động',
+                                              Text((AppLocalizations.of(context)!.phone),
                                                 style: QRCodeStyle.contentStyle9,),
                                               SizedBox(height: 6,),
                                               Text(qrCart.parentPickUp!.personDetail!.currentPhoneNumber1!,
@@ -144,7 +143,7 @@ class QRCardInfomationBody extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text('Mối quan hệ với bé',
+                                            Text((AppLocalizations.of(context)!.relationshipWithPupil),
                                               style: QRCodeStyle.contentStyle9,),
                                             SizedBox(height: 6,),
                                             Text(

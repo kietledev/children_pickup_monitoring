@@ -77,7 +77,7 @@ class _BodyPasswordChange extends State<BodyPasswordChange>{
                     children: [
                       Align(
                           alignment: Alignment.topLeft,
-                          child: CustomButtonBorder(width: 133,text: (AppLocalizations.of(context)!.cancle),press: (){Navigator.pop(context);},)
+                          child: CustomButtonBorder(width: 133,text: (AppLocalizations.of(context)!.cancel),press: (){Navigator.pop(context);},)
                       ),
                       Align(
                         alignment: Alignment.bottomRight,

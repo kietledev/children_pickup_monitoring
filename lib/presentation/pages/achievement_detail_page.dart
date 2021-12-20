@@ -5,7 +5,7 @@ import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AchievementDetailsPage extends StatelessWidget {
   const AchievementDetailsPage({Key? key}) : super(key: key);
 
@@ -16,7 +16,7 @@ class AchievementDetailsPage extends StatelessWidget {
     return Scaffold(
     appBar:  WidgetAppBar(
       hideBack: true,
-    title: TitlesConstants.details,
+    title: (AppLocalizations.of(context)!.detail),
     menuItem: [],
 
     actionBack: () {

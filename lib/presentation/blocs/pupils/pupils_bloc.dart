@@ -22,6 +22,7 @@ class PupilsBloc extends Bloc<PupilsEvent, PupilsState> {
       final dataState = await _postPupilsUseCase(
         params: PostPupilsRequest(
           classId: event.classId,
+          date: event.date,
         ),
       );
 

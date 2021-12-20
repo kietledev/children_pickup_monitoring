@@ -7,6 +7,8 @@ import 'package:children_pickup_monitoring/presentation/widgets/item_title_date.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AchievementsPage extends StatelessWidget {
   const AchievementsPage({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class AchievementsPage extends StatelessWidget {
           injector<AchievementBloc>()..add(const FetchAchievements(pupilId: 4)),
       child: Scaffold(
         appBar:  WidgetAppBar(
-          title: TitlesConstants.achievements,
+          title: (AppLocalizations.of(context)!.achievements),
           menuItem: [],
           hideBack:true,
           actionBack: () {

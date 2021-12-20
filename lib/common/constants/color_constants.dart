@@ -19,6 +19,10 @@ class ColorConstants {
   static const neutralColor7 = Color(0xFF219653);
   static const neutralColor8 = Color(0xFFF3F5FF);
   static const SecondarySchool6 = Color(0xFF6545B4);
+  static const Secondary2 = Color(0xFF2D5ACD);
+  static const Pattette2 = Color(0x33797D88);
+  static const Pattette1 = Color(0xFF24272E);
+  static const BLerror = Color(0xFFE25822);
   static const lineColor = Color(0xFFE3EEF2);
 
 

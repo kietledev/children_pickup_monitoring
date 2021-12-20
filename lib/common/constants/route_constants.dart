@@ -32,4 +32,7 @@ class RouteConstants {
   static const String notification= "/Notification";
   static const String notificationDetail= "/NotificationDetail";
   static const String notificationAdd= "/NotificationAdd";
+  static const String editPupilDetail= "/EditPupilDetail";
+  static const String classAttendance= "/ClassAttendance";
+  static const String editAttendance= "/EditAttendance";
 }

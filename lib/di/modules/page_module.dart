@@ -93,6 +93,12 @@ class PageModule extends DIModule {
         instanceName: RouteConstants.createQCode);
     injector.registerFactory<Widget>(() => QRCardInfomationPage(),
         instanceName: RouteConstants.qrInformation);
+    injector.registerFactory<Widget>(() => EditPupilDetailPage(),
+        instanceName: RouteConstants.editPupilDetail);
+    injector.registerFactory<Widget>(() => ClassAttendancePage(),
+        instanceName: RouteConstants.classAttendance);
+    injector.registerFactory<Widget>(() => EditAttendancePage(),
+        instanceName: RouteConstants.editAttendance);
 
   }
 }

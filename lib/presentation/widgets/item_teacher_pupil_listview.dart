@@ -57,9 +57,14 @@ class _ItemTeacherPupilListViewState extends State<ItemTeacherPupilListView> {
       onTap: widget.onSelect,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
         decoration: BoxDecoration(
-            color: bgColor, borderRadius: BorderRadius.circular(12.0)),
+          color: bgColor,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [BoxShadow(color: Color(0xFFF3F5FF).withOpacity(1), spreadRadius: 3, blurRadius: 4, offset: Offset(0, 3),
+          ),
+          ],
+        ),
         child: Row(
           children: [
             // SvgPicture.asset(widget.item.avatarPicture!),
@@ -69,43 +74,54 @@ class _ItemTeacherPupilListViewState extends State<ItemTeacherPupilListView> {
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: widget.genderId == 1 ?
-                  ColorConstants.secondaryColor3 : ColorConstants.primaryColor1,
-                  width: 1.5,
+                  ColorConstants.secondaryColor2 : ColorConstants.primaryColor1,
+                  width: 2,
                 ),
               ),
-                child: widget.genderId == 1  ?
-                 CircleAvatar(
-                    radius: 20,
-                    backgroundImage:
-                    AssetImage(
-                        widget.avtDefaultMale!)
+                child:
 
-                ): CircleAvatar(
-                    radius: 20,
-                    backgroundImage:
-                    AssetImage(
-                        widget.avtDefaultFemale!)
+                widget.genderId == 1  ?
+                Padding(
+                  padding: EdgeInsets.all(2),
+                   child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage:
+                      AssetImage(
+                          widget.avtDefaultMale!)
 
                 ),
+                 ):     Padding(
+                  padding: EdgeInsets.all(2),
+                   child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage:
+                      AssetImage(
+                          widget.avtDefaultFemale!)
+
+                ),
+                 ),
             ):
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: widget.genderId == 1 ?
-                  ColorConstants.secondaryColor3 : ColorConstants.primaryColor1,
-                  width: 1.5,
+                  ColorConstants.secondaryColor2 : ColorConstants.primaryColor1,
+                  width: 2,
                 ),
               ),
-              child: CircleAvatar(
-              radius: 20,
-              backgroundImage: MemoryImage(bytesImage!)
+              child:     Padding(
+                padding: EdgeInsets.all(2),
+                child: CircleAvatar(
+                radius: 20,
+                backgroundImage: MemoryImage(bytesImage!)
+                ),
               ),
             ),
+
             const SizedBox(width: 12),
             Text(widget.position == true ? widget.fullName + " \n("+(AppLocalizations.of(context)!.homeroomTeacher)+")": widget.fullName,
-                style: Utils.setStyle(
-                    color: titleColor, weight: FontWeight.w600)),
+                style:TeacherStyle.contentStyle),
             const Spacer(),
             widget.pupilIds!.length == 0  ? SvgPicture.asset(
               'assets/icons/ic_arrow_right.svg',

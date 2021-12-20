@@ -6,7 +6,7 @@ class UrlConstatns {
   static const String apiPostTeachersByClassId =
       urlServer + "api/getListTeachersByClassId";
   static const String apiPostPupilsByClassId =
-      urlServer + "api/getListChildrensByClassId";
+      urlServer + "api/getListPupilsByClassId";
   static const String apiPostMenusByClassTypeId =
       urlServer + "api/getListMenuForWeekByClassTypeId";
   static const String apiPostAchievements =

@@ -43,9 +43,11 @@ class _ClassInformationBodyState extends State<ClassInformationBody> {
           RouteConstants.teacherInformation),
       ItemMenu(2,  (AppLocalizations.of(context)!.classDetail), "assets/icons/ic_detail_class.svg",
           RouteConstants.classDetails),
-      ItemMenu(3,  (AppLocalizations.of(context)!.foodMenu), "assets/icons/ic_menu_baby.svg",
+      ItemMenu(3,  (AppLocalizations.of(context)!.classAttendance), "assets/icons/ic_attendance.svg",
+          RouteConstants.classAttendance),
+      ItemMenu(4,  (AppLocalizations.of(context)!.foodMenu), "assets/icons/ic_menu_baby.svg",
           RouteConstants.menu),
-      ItemMenu(4, (AppLocalizations.of(context)!.achievements), "assets/icons/ic_achievements.svg",
+      ItemMenu(5, (AppLocalizations.of(context)!.achievements), "assets/icons/ic_achievements.svg",
           RouteConstants.achievement),
     ];
     return Container(

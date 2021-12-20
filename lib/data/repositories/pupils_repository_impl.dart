@@ -19,6 +19,7 @@ class PupilsRepositoryImpl implements PupilsRepository {
     try {
       final Map<String, dynamic> body = <String, dynamic>{
         'classId': params.classId,
+        'Date': params.date,
       };
       final httpResponse = await _postPupilsApiService.postPupils(
           body: body,

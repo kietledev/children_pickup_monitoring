@@ -8,7 +8,7 @@ part of 'post_pupils_api_services.dart';
 
 class _PostPupilsApiService implements PostPupilsApiService {
   _PostPupilsApiService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getListChildrensByClassId';
+    baseUrl ??= 'http://dtuct.ddns.net:9999/api/getListPupilsByClassId';
   }
 
   final Dio _dio;

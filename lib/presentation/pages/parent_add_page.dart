@@ -191,7 +191,7 @@ class _ParentAddPage extends State<ParentAddPage>{
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       CustomButtonBorder(
-                                          text: (AppLocalizations.of(context)!.cancle),
+                                          text: (AppLocalizations.of(context)!.cancel),
                                           width: 133,
                                           press: () {}
                                       ),

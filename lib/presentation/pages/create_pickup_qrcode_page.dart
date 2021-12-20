@@ -48,7 +48,8 @@ class _CreateQRCodeState extends State<CreateQRCodePage> {
         ),
         BlocProvider<ParentsBloc>(
             create: (BuildContext context) => injector<ParentsBloc>()
-              ..add(const FetchParents(pupilId: 1, relationshipTypeId: 0),)
+            // create: (BuildContext context) => injector<ParentsBloc>()
+            //   ..add(const FetchParents(pupilId: 13, relationshipTypeId: 0),)
         ),
         BlocProvider<PickUpBloc>(
             create: (BuildContext context) => injector<PickUpBloc>()
@@ -110,6 +111,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
   int? pupil_1 = 0;
   int? pupil_2 = 0;
   int? pupil_3 = 0;
+  int pupilId = -1;
   // PickUpGenerated _pickUpGenerated =  new PickUpGenerated(null,null,null,null,null,null,null,null,null,null);
   String? dateTimeRequest = '';
   int _timeIndex = 1;
@@ -122,7 +124,9 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
   late final AppDatabase appDatabase;
   @override
   void initState() {
+
     super.initState();
+    initBloc();
     $FloorAppDatabase
         .databaseBuilder('app_database.db')
         .build()
@@ -140,7 +144,10 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
     pin2FocusNode = FocusNode();
 
   }
-
+  initBloc() async{
+    pupilId = await getPupilID();
+    BlocProvider.of<ParentsBloc>(context).add(FetchParents(pupilId: pupilId, relationshipTypeId: 0));
+  }
   Future<void> saveQRCode( TablePickUpGenerated pickUpGenerated) async {
     return await appDatabase.appQRGeneratedDao.insertQRGenerated(pickUpGenerated);
   }
@@ -214,7 +221,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
-                  child:  Text('Chọn giờ đón',style: QRCodeStyle.contentStyle3,),
+                  child:  Text((AppLocalizations.of(context)!.choosePickupTime),style: QRCodeStyle.contentStyle3,),
                   alignment: Alignment.centerLeft,
                 ),
                 _buildTimePickup(),
@@ -228,7 +235,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                   height: 12.0,
                 ),
                 Align(
-                  child:  Text('Chọn điểm đón',style: QRCodeStyle.contentStyle3,),
+                  child:  Text((AppLocalizations.of(context)!.choosePickupPlace),style: QRCodeStyle.contentStyle3,),
                   alignment: Alignment.centerLeft,
                 ),
                 SizedBox(
@@ -248,7 +255,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                   height: 12.0,
                 ),
                 Align(
-                  child:  Text('Người đón',style: QRCodeStyle.contentStyle3,),
+                  child:  Text((AppLocalizations.of(context)!.pickupPerson),style: QRCodeStyle.contentStyle3,),
                   alignment: Alignment.centerLeft,
                 ),
                 Container(
@@ -275,7 +282,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                             ),
                           ),
                           new Text(
-                            "Phụ huynh",
+                            (AppLocalizations.of(context)!.parent),
                             style: QRCodeStyle.contentStyle2,
                           ),
                         ],
@@ -301,7 +308,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                             ),
                           ),
                           new Text(
-                            "Khác",
+                            (AppLocalizations.of(context)!.other),
                             style:EditProfileStyle.contentStyle,
                           )
                         ],
@@ -319,7 +326,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                   height: 12.0,
                 ),
                 Align(
-                  child:  Text('Họ và tên',style: QRCodeStyle.contentStyle3,),
+                  child:  Text((AppLocalizations.of(context)!.fullName),style: QRCodeStyle.contentStyle3,),
                   alignment: Alignment.centerLeft,
                 ),
                 SizedBox(
@@ -339,7 +346,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                   height: 12.0,
                 ),
                 Align(
-                  child:  Text('Chọn trẻ đón',style: QRCodeStyle.contentStyle3,),
+                  child:  Text((AppLocalizations.of(context)!.choosePupilPickup),style: QRCodeStyle.contentStyle3,),
                   alignment: Alignment.centerLeft,
                 ),
                 SizedBox(
@@ -536,7 +543,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       hint: Text(
-                        'chọn địa điểm đón',
+                        (AppLocalizations.of(context)!.choosePickupPlace),
                         style: ProfileStyle.contentStyle2 ,
                       ),
                       icon: Icon(
@@ -593,83 +600,83 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
           if (state is FetchParentsFailureState) {
             return Text("khong co dl");
           } else if (state is FetchParentsSuccessState) {
-
-            selectedParents= [];
-            currentParents= [];
-            _parents = state.parents!;
-
-            for (Parent p in _parents) {
-              if (p.parentId == int.parse(parentIDSelected!)) {
-
-                selectedParents.add(p);
+            if (state.parents!.length != 0){
+              _parents = [];
+              selectedParents= [];
+              currentParents= [];
+              _parents = state.parents!;
+              for (Parent p in _parents) {
+                if (p.parentId == int.parse(parentIDSelected!)) {
+                  selectedParents.add(p);
+                }
+                if(p.parentId == int.parse(currentParentID!)){
+                  currentParents.add(p);
+                }
               }
-              if(p.parentId == int.parse(currentParentID!)){
-
-                currentParents.add(p);
-              }
-            }
-            return Container(
-              child: isselected == 0?
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16,10,16,0),
-                child: Text(currentParentName!,
-                    style: QRCodeStyle.contentStyle2),
-              )
-                  :
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16,0,16,0),
-                    child: DropdownButtonHideUnderline(
-                       child: DropdownButton<String>(
-                          hint: Text(
-                            'chọn người đón hộ',
-                            style: ProfileStyle.contentStyle2 ,
-                          ),
-                          icon: Icon(
-                            Icons.keyboard_arrow_down,
-                            color: ColorConstants.neutralColor1,
-                          ),
-                          value: parentIDSelected,
-                          isDense: true,
-                          onChanged: (newValue) {
-                            setState(() {
-                              parentIDSelected = newValue;
-                              for (Parent i in _parents) {
-                                  if (i.parentId == int.parse(parentIDSelected!)) {
-                                  parentNameSelected = i.getFullName();
-                                  }
-                                  }
-
-                              getParentId(parentIDSelected!);
-                            });
-
-                          },
-                          items: _parents.map((Parent value) {
-                            return DropdownMenuItem<String>(
-                              value: value.parentId.toString(),
-                              child: Text(value.getFullName(),style: QRCodeStyle.contentStyle2),
-                            );
-                          }).toList(),
+              return Container(
+                child: isselected == 0?
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16,10,16,0),
+                  child: Text(currentParentName!,
+                      style: QRCodeStyle.contentStyle2),
+                )
+                    :
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16,0,16,0),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      hint: Text(
+                        'chọn người đón hộ',
+                        style: ProfileStyle.contentStyle2 ,
                       ),
-                    ),
-                        ),
-                    height: 40.h,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFFF3F5FF).withOpacity(1),
-                          spreadRadius: 3,
-                          blurRadius: 4,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                  );
+                      icon: Icon(
+                        Icons.keyboard_arrow_down,
+                        color: ColorConstants.neutralColor1,
+                      ),
 
+                      value: parentIDSelected,
+                      isDense: true,
+                      onChanged: (newValue) {
+                        setState(() {
+                          parentIDSelected = newValue;
+                          for (Parent i in _parents) {
+
+                            if (i.parentId == int.parse(parentIDSelected!)) {
+                              parentNameSelected = i.getFullName();
+                            }
+                          }
+
+                          getParentId(parentIDSelected!);
+                        });
+                      },
+                      items: _parents.map((Parent value) {
+                        return DropdownMenuItem<String>(
+                          value: value.parentId.toString(),
+                          child: Text(value.getFullName(),style: QRCodeStyle.contentStyle2),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                height: 40.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFFF3F5FF).withOpacity(1),
+                      spreadRadius: 3,
+                      blurRadius: 4,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+              );
+            }else{
+              return const SizedBox.shrink();
+            }
                 }else{
-                  print("LỖI");
                   return const SizedBox.shrink();
                 }
               });
@@ -702,7 +709,6 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
               )
           );
         }else{
-          print("LỖI");
           return const SizedBox.shrink();
         }
       },

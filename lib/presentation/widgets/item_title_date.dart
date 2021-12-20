@@ -38,7 +38,12 @@ class _ItemTitleDateListViewState extends State<ItemTitleDateListView> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
         decoration: BoxDecoration(
-            color: bgColor, borderRadius: BorderRadius.circular(12.0)),
+          color: bgColor,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [BoxShadow(color: Color(0xFFF3F5FF).withOpacity(1), spreadRadius: 3, blurRadius: 4, offset: Offset(0, 3),
+          ),
+          ],
+        ),
         child: Row(
           children: [
             Container(
@@ -56,8 +61,7 @@ class _ItemTitleDateListViewState extends State<ItemTitleDateListView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.title,
-                style: Utils.setStyle(
-                    color: titleColor, weight: FontWeight.w600)),
+                style:TeacherStyle.contentStyle),
                 Text(Utils.formatDateTime(widget.date),
                     style:AchievementsStyle.contentStyle2),
               ],

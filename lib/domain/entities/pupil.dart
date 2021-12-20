@@ -12,6 +12,16 @@ class Pupil extends Equatable {
   final String? currentMiddleNameParent;
   final String? currentPhoneNumber1Parent;
   final String? currentPhoneNumber2Parent;
+  final int? pupilWeight;
+  final int? pupilHeight;
+  final int? pupilToPupilStatusRelationshipTypeId;
+  final String? pupilToPupilStatusRelationshipTypeName;
+  final String? pupilToPupilStatusRelationshipTypeNameEn;
+  final String? datetime;
+  final String? reason;
+
+
+
   final Person? personDetail;
 
   const Pupil({
@@ -25,6 +35,13 @@ class Pupil extends Equatable {
     this.currentMiddleNameParent,
     this.currentPhoneNumber1Parent,
     this.currentPhoneNumber2Parent,
+    this.pupilWeight,
+    this.pupilHeight,
+    this.pupilToPupilStatusRelationshipTypeId,
+    this.pupilToPupilStatusRelationshipTypeName,
+    this.pupilToPupilStatusRelationshipTypeNameEn,
+    this.datetime,
+    this.reason,
     this.personDetail,
 
   });
@@ -42,6 +59,13 @@ class Pupil extends Equatable {
       currentMiddleNameParent!,
       currentPhoneNumber1Parent!,
       currentPhoneNumber2Parent!,
+      pupilWeight!,
+      pupilHeight!,
+      pupilToPupilStatusRelationshipTypeId!,
+      pupilToPupilStatusRelationshipTypeName!,
+      pupilToPupilStatusRelationshipTypeNameEn!,
+      datetime!,
+      reason!,
       personDetail!,
 
     ];
