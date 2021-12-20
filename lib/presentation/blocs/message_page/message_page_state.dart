@@ -8,8 +8,10 @@ abstract class MessagePageState extends Equatable {
   @override
   List<Object> get props => [conversations!, msg!];
 }
-
-class MessagePageLoadingState extends MessagePageState {}
+class MessageInitialState extends MessagePageState {}
+class MessagePageLoadingState extends MessagePageState {
+  const MessagePageLoadingState();
+}
 
 class MessagePageSuccessState extends MessagePageState {
   const MessagePageSuccessState({required List<Conversation> conversations})

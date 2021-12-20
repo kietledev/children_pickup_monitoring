@@ -64,9 +64,9 @@ class _BodyNotificationAddPage extends State<BodyNotificationAddPage>{
               EasyLoading.show();
             } else {
               EasyLoading.dismiss();
-              if (state is FetchClassRoomSuccessState) {
+              if (state is FetchClassRoomByTeacherSuccessState) {
                 setState(() {
-                  listClassRoom = state.classRooms!;
+                  listClassRoom = state.classRoomsTeacher!;
                 });
               } else if (state is FetchClassRoomFailureState) {
                 print("Loix");

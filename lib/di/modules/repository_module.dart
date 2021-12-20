@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/data/repositories/achievements_repository_impl.dart';
+import 'package:children_pickup_monitoring/data/repositories/class_rooms_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/message_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/list_class_by_teacher_repository_impl.dart';
 import 'package:children_pickup_monitoring/data/repositories/notification_repository_impl.dart';
@@ -77,7 +78,7 @@ class RepositoryModule extends DIModule {
 
     /* Message Detail */
     injector.registerSingleton<GetAllMessagesRepository>(
-      MessagesRepositoryImpl(injector()),
+      MessagesRepositoryImpl(injector(),injector()),
     );
     /* Notification repository */
     injector.registerSingleton<NotificationRepository>(
@@ -90,6 +91,10 @@ class RepositoryModule extends DIModule {
     /* pickup card repository */
     injector.registerSingleton<PickUpRepository>(
       PickUpCardRepositoryImpl(injector(),injector()),
+    );
+    /* class Room repository */
+    injector.registerSingleton<ClassRoomsRepository>(
+      ClassRoomsRepositoryImpl(injector()),
     );
 
   }

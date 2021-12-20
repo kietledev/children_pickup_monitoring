@@ -32,8 +32,9 @@ class MoreHeightEvent extends MessageDetailEvent {
 
 class AddNewMessage extends MessageDetailEvent {
   final Message? message;
+  final int personId;
 
-  AddNewMessage({this.message});
+  AddNewMessage({this.message, required this.personId});
 }
 
 class InputEvent extends MessageDetailEvent {

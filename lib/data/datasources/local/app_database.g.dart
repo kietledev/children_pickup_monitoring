@@ -94,7 +94,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `qrgenerated_table` (`requestId` INTEGER PRIMARY KEY AUTOINCREMENT, `timePickUp` TEXT, `pupilId1` INTEGER, `pupilId2` INTEGER, `pupilId3` INTEGER, `cardId` TEXT, `datePickUp` TEXT, `placePickUp` TEXT, `parentId` INTEGER, `addressSchool` TEXT, `stringQrcode` TEXT, `status` INTEGER)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `person_table` (`personId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `employeeIdNumber` TEXT, `currentPersonalTitleId` INTEGER, `currentPersonalTitle` TEXT, `currentPersonalTitleEn` TEXT, `academicTitleId` INTEGER, `academicTitle` TEXT, `academicTitleEn` TEXT, `currentLastName` TEXT, `currentFirstName` TEXT, `currentMiddleName` TEXT, `currentNickname` TEXT, `currentGenderId` INTEGER, `currentGender` TEXT, `currentGenderEn` TEXT, `birthDate` TEXT, `birthPlace` TEXT, `birthPlaceCity` TEXT, `birthPlaceProvince` TEXT, `birthPlaceState` TEXT, `birthPlaceCountry` TEXT, `currentMaritalStatusId` INTEGER, `currentMaritalStatus` TEXT, `currentMaritalStatusEn` TEXT, `currentPeopleIdNumber` TEXT, `currentPeopleIdIssueDate` TEXT, `currentPeopleIdIssuePlace` TEXT, `currentSocialSecurityNumber` TEXT, `currentMajorCitizenship` TEXT, `currentPassportNumber` TEXT, `currentPassportIssuePlace` TEXT, `currentPassportIssueDate` TEXT, `currentPassportExpirationDate` TEXT, `homeAddress1` TEXT, `homeAddress2` TEXT, `homeWard` TEXT, `homeDistrict` TEXT, `homeCity` TEXT, `homeProvince` TEXT, `homeState` TEXT, `homeCountry` TEXT, `homePostalCode` TEXT, `currentAddress1` TEXT, `currentAddress2` TEXT, `currentWard` TEXT, `currentDistrict` TEXT, `currentCity` TEXT, `currentProvince` TEXT, `currentState` TEXT, `currentCountry` TEXT, `currentPostalCode` TEXT, `comments` TEXT, `commentsEn` TEXT, `closeupPicture1` TEXT, `closeupPicture2` TEXT, `avatarPicture` TEXT, `signatureImage` TEXT, `createdDatetime` TEXT, `createdByUserId` INTEGER, `updatedDatetime` TEXT, `updatedByUserId` INTEGER, `currentEmail` TEXT, `currentPhoneNumber1` TEXT, `currentPhoneNumber2` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `person_table` (`personId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `employeeIdNumber` TEXT, `currentPersonalTitleId` INTEGER, `currentPersonalTitle` TEXT, `currentPersonalTitleEn` TEXT, `academicTitleId` INTEGER, `academicTitle` TEXT, `academicTitleEn` TEXT, `currentLastName` TEXT, `currentFirstName` TEXT, `currentMiddleName` TEXT, `currentNickname` TEXT, `currentGenderId` INTEGER, `currentGender` TEXT, `currentGenderEn` TEXT, `birthDate` TEXT, `birthPlace` TEXT, `birthPlaceCity` TEXT, `birthPlaceProvince` TEXT, `birthPlaceState` TEXT, `birthPlaceCountry` TEXT, `currentMaritalStatusId` INTEGER, `currentMaritalStatus` TEXT, `currentMaritalStatusEn` TEXT, `currentPeopleIdNumber` TEXT, `currentPeopleIdIssueDate` TEXT, `currentPeopleIdIssuePlace` TEXT, `currentSocialSecurityNumber` TEXT, `currentMajorCitizenship` TEXT, `currentPassportNumber` TEXT, `currentPassportIssuePlace` TEXT, `currentPassportIssueDate` TEXT, `currentPassportExpirationDate` TEXT, `homeAddress1` TEXT, `homeAddress2` TEXT, `homeWard` TEXT, `homeDistrict` TEXT, `homeCity` TEXT, `homeProvince` TEXT, `homeState` TEXT, `homeCountry` TEXT, `homePostalCode` TEXT, `currentAddress1` TEXT, `currentAddress2` TEXT, `currentWard` TEXT, `currentDistrict` TEXT, `currentCity` TEXT, `currentProvince` TEXT, `currentState` TEXT, `currentCountry` TEXT, `currentPostalCode` TEXT, `comments` TEXT, `commentsEn` TEXT, `closeupPicture1` TEXT, `closeupPicture2` TEXT, `avatarPicture` TEXT, `signatureImage` TEXT, `createdDatetime` TEXT, `createdByUserId` INTEGER, `updatedDatetime` TEXT, `updatedByUserId` INTEGER, `currentEmail` TEXT, `currentPhoneNumber1` TEXT, `currentPhoneNumber2` TEXT, `staffId` INTEGER)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `parent_table` (`parentId` INTEGER PRIMARY KEY AUTOINCREMENT, `personToPersonPersonalRelationshipTypeName` TEXT, `personToPersonPersonalRelationshipTypeNameEn` TEXT, `approved` INTEGER, `approvedByUserId` INTEGER, `approvedDatetime` TEXT, `personId` INTEGER, `accountUser` INTEGER)');
         await database.execute(
@@ -410,7 +410,8 @@ class _$PersonDao extends PersonDao {
                   'updatedByUserId': item.updatedByUserId,
                   'currentEmail': item.currentEmail,
                   'currentPhoneNumber1': item.currentPhoneNumber1,
-                  'currentPhoneNumber2': item.currentPhoneNumber2
+                  'currentPhoneNumber2': item.currentPhoneNumber2,
+                  'staffId': item.staffId
                 }),
         _personDeletionAdapter = DeletionAdapter(
             database,
@@ -482,7 +483,8 @@ class _$PersonDao extends PersonDao {
                   'updatedByUserId': item.updatedByUserId,
                   'currentEmail': item.currentEmail,
                   'currentPhoneNumber1': item.currentPhoneNumber1,
-                  'currentPhoneNumber2': item.currentPhoneNumber2
+                  'currentPhoneNumber2': item.currentPhoneNumber2,
+                  'staffId': item.staffId
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -568,7 +570,8 @@ class _$PersonDao extends PersonDao {
             updatedByUserId: row['updatedByUserId'] as int?,
             currentEmail: row['currentEmail'] as String?,
             currentPhoneNumber1: row['currentPhoneNumber1'] as String?,
-            currentPhoneNumber2: row['currentPhoneNumber2'] as String?));
+            currentPhoneNumber2: row['currentPhoneNumber2'] as String?,
+            staffId: row['staffId'] as int?));
   }
 
   @override
@@ -644,7 +647,8 @@ class _$PersonDao extends PersonDao {
             updatedByUserId: row['updatedByUserId'] as int?,
             currentEmail: row['currentEmail'] as String?,
             currentPhoneNumber1: row['currentPhoneNumber1'] as String?,
-            currentPhoneNumber2: row['currentPhoneNumber2'] as String?),
+            currentPhoneNumber2: row['currentPhoneNumber2'] as String?,
+            staffId: row['staffId'] as int?),
         arguments: [personId]);
   }
 

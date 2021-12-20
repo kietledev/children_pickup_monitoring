@@ -45,6 +45,7 @@ class ProfileBody extends StatefulWidget {
 
 class _ProfileBody extends State<ProfileBody>{
   PersonModel? user;
+  PersonModel? profile;
   UserModel? userModel;
   String avatar = "";
   int personId = -1;
@@ -53,6 +54,12 @@ class _ProfileBody extends State<ProfileBody>{
   void initState() {
     getUserId();
     super.initState();
+  }
+  getProfileAll() async {
+    profile = await getProfile();
+    setState(() {
+      user = profile;
+    });
   }
    getUserId() async {
     userModel = await getUser();
@@ -71,9 +78,9 @@ class _ProfileBody extends State<ProfileBody>{
           } else {
             EasyLoading.dismiss();
             if (state is ProfileSuccessState) {
-              setState(() {
-                user = state.person;
-              });
+              final preferences = Preferences();
+              preferences.setProfilePreference(state.person!);
+              getProfileAll();
             } else if (state is ProfileFailureState) {
               UiHelper.showMyDialog(
                 context: context,

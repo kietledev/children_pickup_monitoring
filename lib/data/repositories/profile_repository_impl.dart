@@ -25,6 +25,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       };
       final httpResponse = await _profileApiService.getProfile(
           query: body, k: key, dm: dm, tk: getTokenApi(id: query.personId.toString()), ttl: ttl);
+      print("Nhuan---${httpResponse.data.data}");
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         final List<PersonModel> listProfile = <PersonModel>[];
         for (final dynamic item in httpResponse.data.data) {

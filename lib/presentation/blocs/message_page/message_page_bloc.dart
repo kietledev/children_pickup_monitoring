@@ -11,7 +11,7 @@ part 'message_page_event.dart';
 part 'message_page_state.dart';
 
 class MessagePageBloc extends Bloc<MessagePageEvent, MessagePageState> {
-  MessagePageBloc(this._useCase) : super(MessagePageLoadingState());
+  MessagePageBloc(this._useCase) : super(MessageInitialState());
   final MessagePageUseCase _useCase;
 
   @override
@@ -19,6 +19,7 @@ class MessagePageBloc extends Bloc<MessagePageEvent, MessagePageState> {
     MessagePageEvent event,
   ) async* {
     if (event is GetAllConversations) {
+      yield const MessagePageLoadingState();
       final dataState = await _useCase(
           params: GetAllConversationsRequest(
               personId: event.personId, page: event.page));

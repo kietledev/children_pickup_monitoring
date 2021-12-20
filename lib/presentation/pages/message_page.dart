@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
@@ -10,6 +11,7 @@ import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Chat {
@@ -74,18 +76,25 @@ class _MessageBodyState extends State<MessageBody> {
 
   bool isShowDelete = false;
 
-  List<Conversation> conversations = <Conversation>[];
+  List<Conversation>? conversations;
 
   List<Chat> contacts = <Chat>[];
 
   final GlobalKey<AnimatedListState> conversationListKey = GlobalKey();
   late MessagePageBloc _messagePageBloc;
-
+  UserModel? userModel;
+  int personId = -1;
   @override
   void initState() {
     super.initState();
+    getUserId();
     _messagePageBloc = BlocProvider.of<MessagePageBloc>(context);
-    _messagePageBloc.add(const GetAllConversations(personId: 4, page: 1));
+
+  }
+  getUserId() async {
+    userModel = await getUser();
+    personId = userModel!.personId.toInt();
+    _messagePageBloc.add(GetAllConversations(personId: personId, page: 1));
   }
 
   @override
@@ -100,40 +109,43 @@ class _MessageBodyState extends State<MessageBody> {
           alignment: Alignment.topCenter,
         ),
       ),
-      child: SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        child: Column(
-          children: [
-            Container(
-                width: double.infinity,
-                height: 60,
-                margin: const EdgeInsets.only(top: 16, left: 24, right: 24),
-                child: buildHeaderTab()),
-            Container(
-              margin: const EdgeInsets.only(
-                  left: 24, top: 10, right: 24, bottom: 16),
-              height: 36,
-              child: CupertinoSearchTextField(
-                  padding: const EdgeInsetsDirectional.fromSTEB(4, 6, 5, 8),
-                  prefixInsets: const EdgeInsetsDirectional.only(start: 12),
-                  backgroundColor: const Color(0xFFE3EEF2),
-                  style: Utils.setStyle(color: const Color(0xFF797D88))
+      child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Column(
+            children: [
+              Container(
+                  width: double.infinity,
+                  height: 60,
+                  margin: const EdgeInsets.only(top: 16, left: 24, right: 24),
+                  child: buildHeaderTab()),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: 24, top: 10, right: 24, bottom: 16),
+                height: 36,
+                child: CupertinoSearchTextField(
+                    padding: const EdgeInsetsDirectional.fromSTEB(4, 6, 5, 8),
+                    prefixInsets: const EdgeInsetsDirectional.only(start: 12),
+                    backgroundColor: const Color(0xFFE3EEF2),
+                    style: Utils.setStyle(color: const Color(0xFF797D88))
                   // focusNode: focusSearch,
-                  ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 24),
-              height: 80,
-              child: ListView.builder(
-                itemCount: 3,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return buildItemHorizontalContact(context, index);
-                },
+                ),
               ),
-            ),
-            buildBodyTab(),
-          ],
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                height: 80,
+                child: ListView.builder(
+                  itemCount: 3,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return buildItemHorizontalContact(context, index);
+                  },
+                ),
+              ),
+              buildBodyTab(),
+            ],
+          ),
         ),
       ),
     );
@@ -239,19 +251,21 @@ class _MessageBodyState extends State<MessageBody> {
             child: BlocBuilder<MessagePageBloc, MessagePageState>(
               builder: (context, state) {
                 if (state is MessagePageLoadingState) {
-                  // return ErrorOutput(message: state.message);
-                }
-                if (state is MessagePageSuccessState) {
-                  conversations.addAll(state.conversations!);
-                  return AnimatedList(
-                    key: conversationListKey,
-                    initialItemCount: conversations.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index, animation) {
-                      return buildItemChat(context, index, animation);
-                    },
-                  );
+
+                }else{
+                  if (state is MessagePageSuccessState) {
+                    EasyLoading.dismiss();
+                    conversations= state.conversations;
+                    return AnimatedList(
+                      key: conversationListKey,
+                      initialItemCount: conversations!.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index, animation) {
+                        return buildItemChat(context, index, animation);
+                      },
+                    );
+                  }
                 }
                 return Container();
               },
@@ -372,8 +386,8 @@ class _MessageBodyState extends State<MessageBody> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        conversations[index].groupTitle! +
-                            conversations[index].userFullName!,
+                        conversations![index].groupTitle! +
+                            conversations![index].userFullName!,
                         style: Utils.setStyle(
                             color: const Color(0xFF24272E),
                             weight: FontWeight.w600),
@@ -382,7 +396,7 @@ class _MessageBodyState extends State<MessageBody> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        conversations[index].lastMessage!.messageContent!,
+                        conversations![index].lastMessage!.messageContent!,
                         style: Utils.setStyle(
                             color: const Color(0xFF797D88), size: 14),
                         maxLines: 1,
@@ -532,11 +546,11 @@ class _MessageBodyState extends State<MessageBody> {
         index, (context, animation) => buildItemChat(context, index, animation),
         duration: const Duration(milliseconds: 250));
     Timer(const Duration(milliseconds: 250), () {
-      conversations.removeAt(index);
+      conversations!.removeAt(index);
     });
   }
 
   void pushToChatDetail(int index) {
-    Navigator.pushNamed(context, RouteConstants.messageDetail, arguments: conversations[index]);
+    Navigator.pushNamed(context, RouteConstants.messageDetail, arguments: conversations![index]).then((value) => getUser().then((value) => context.read<MessagePageBloc>().add(GetAllConversations(personId: personId, page: 1))));
   }
 }

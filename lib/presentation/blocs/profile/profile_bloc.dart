@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:children_pickup_monitoring/common/core/params/params.dart';
 import 'package:children_pickup_monitoring/common/core/resources/resources.dart';
+import 'package:children_pickup_monitoring/common/helpers/preferences.dart';
 import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/domain/usecases/get_profile_usercase.dart';
@@ -30,6 +31,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
         final person = dataState.data!;
         yield ProfileSuccessState(person: person as PersonModel);
+
       } else {
         yield ProfileFailureState(msg: dataState.error!.message);
         print('error');

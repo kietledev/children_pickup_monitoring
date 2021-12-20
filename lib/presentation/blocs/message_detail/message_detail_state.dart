@@ -12,10 +12,20 @@ class MessageDetailInitial extends MessageDetailState {
 class ListMessageState extends MessageDetailState {
   final ListMessageStatus? status;
   final List<Message>? messages;
+  final bool checkMessage;
 
-  ListMessageState({this.status, this.messages});
+  ListMessageState({this.status, this.messages, required this.checkMessage});
 }
-
+class SendMessageSuccessState extends MessageDetailState{
+  final bool checkMessage;
+  final List<Message>? messages;
+  SendMessageSuccessState({required this.checkMessage, this.messages});
+}
+class SendMessageFailureState extends MessageDetailState{
+  final bool checkMessage;
+  final List<Message>? messages;
+  SendMessageFailureState({required this.checkMessage, this.messages});
+}
 class MoreHeightState extends MessageDetailState {
   final bool moreHeight;
 

@@ -96,4 +96,27 @@ class SystemNotification extends Equatable {
   }
   @override
   bool get stringify => true;
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    "PERSON_ID": personId,
+    "ANNOUCEMENT_ID": annoucementId,
+    "ANNOUCEMENT_TYPE_ID": annoucementTypeId,
+    "TITLE": title,
+    "CONTENT": content,
+    "REQUEST_ID": requestId,
+    "PUPIL_ID_1": pupilId1,
+    "PUPIL_LAST_NAME_1": pupilLastName1,
+    "PUPIL_MIDDLE_NAME_1": pupilMiddleName1,
+    "PUPIL_FIRST_NAME_1": pupilFirstName1,
+    "PUPIL_ID_2": pupilId2,
+    "PUPIL_LAST_NAME_2": pupilLastName2,
+    "PUPIL_MIDDLE_NAME_2": pupilMiddleName2,
+    "PUPIL_FIRST_NAME_2": pupilFirstName2,
+    "PUPIL_ID_3": pupilId3,
+    "PUPIL_LAST_NAME_3": pupilLastName3,
+    "PUPIL_MIDDLE_NAME_3": pupilMiddleName3,
+    "PUPIL_FIRST_NAME_3": pupilFirstName3,
+    "DATE_TIME_RECEIVED": dateTimeReceived,
+    "IS_READ": isRead
+
+  };
 }

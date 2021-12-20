@@ -1,4 +1,6 @@
 import 'package:children_pickup_monitoring/common/constants/db_constants.dart';
+import 'package:children_pickup_monitoring/domain/entities/entities.dart';
+import 'package:children_pickup_monitoring/domain/entities/staff_class_detail.dart';
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
 
@@ -69,6 +71,8 @@ class Person extends Equatable {
   final String? currentEmail;
   final String? currentPhoneNumber1;
   final String? currentPhoneNumber2;
+  final int? staffId;
+  final List<StaffClassDetail>? staffClassDetail;
 
   const Person({
     required this.personId,
@@ -134,7 +138,10 @@ class Person extends Equatable {
     this.updatedByUserId,
     this.currentEmail,
     this.currentPhoneNumber1,
-    this.currentPhoneNumber2});
+    this.currentPhoneNumber2,
+    this.staffId,
+    this.staffClassDetail
+  });
   String getFullName() {
     if (currentMiddleName!.isEmpty) {
       return '${currentLastName!.trim()} ${currentFirstName!.trim()}';
@@ -214,6 +221,8 @@ class Person extends Equatable {
       currentEmail!,
       currentPhoneNumber1!,
       currentPhoneNumber2!,
+      staffId!,
+      staffClassDetail!
     ];
   }
 
@@ -286,5 +295,7 @@ class Person extends Equatable {
     "CURRENT_EMAIL":currentEmail,
     "CURRENT_PHONE_NUMBER_1":currentPhoneNumber1,
     "CURRENT_PHONE_NUMBER_2":currentPhoneNumber2,
+    "STAFF_ID":staffId,
+    "StaffClassDetail":staffClassDetail,
   };
 }

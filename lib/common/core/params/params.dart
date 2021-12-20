@@ -23,3 +23,4 @@ export 'post_pickup_request.dart';
 export 'delete_pickup_destroyed_request.dart';
 
 export 'post_notification_read_request.dart';
+export 'get_list_class_rooms_request.dart';

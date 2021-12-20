@@ -4,6 +4,7 @@ import 'package:children_pickup_monitoring/presentation/blocs/language/language_
 import 'package:children_pickup_monitoring/presentation/blocs/local_user/local_user_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_page/message_page_bloc.dart';
+
 import 'package:children_pickup_monitoring/presentation/blocs/notification/notification_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/parents/parents_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/password/password_bloc.dart';
@@ -35,7 +36,7 @@ class BlocModule extends DIModule {
 
     /* Message detail */
     injector.registerFactory<MessageDetailBloc>(
-        () => MessageDetailBloc(MessageDetailState(), injector(), injector()));
+        () => MessageDetailBloc(MessageDetailState(), injector(), injector(),injector()));
 
     /* Home */
     injector.registerFactory<AlarmBloc>(() => AlarmBloc());
@@ -69,12 +70,13 @@ class BlocModule extends DIModule {
     /* list notification */
     injector.registerFactory<NotificationBloc>(() =>NotificationBloc(injector(),injector(),injector()));
     /* list classRoom */
-    injector.registerFactory<ClassRoomBloc>(() =>ClassRoomBloc(injector()));
+    injector.registerFactory<ClassRoomBloc>(() =>ClassRoomBloc(injector(),injector()));
 
     injector.registerFactory<PickUpBloc>(() =>PickUpBloc(injector(), injector()));
 
     /* Message Page Bloc */
     injector
         .registerFactory<MessagePageBloc>(() => MessagePageBloc(injector()));
+
   }
 }
