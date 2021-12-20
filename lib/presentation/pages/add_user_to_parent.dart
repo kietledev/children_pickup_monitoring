@@ -300,7 +300,7 @@ class _FormAddUserToParent extends State<FormAddUserToParent>{
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       CustomButtonBorder(
-                                          text: (AppLocalizations.of(context)!.cancle),
+                                          text: (AppLocalizations.of(context)!.cancel),
                                           width: 133,
                                           press: () {}
                                       ),

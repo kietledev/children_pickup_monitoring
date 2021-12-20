@@ -16,7 +16,7 @@ class ClassDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => injector<PupilsBloc>()..add(const FetchPupils(classId: 5)),
+      create: (_) => injector<PupilsBloc>(),
       child:  Scaffold(
         appBar:  WidgetAppBar(
           title: (AppLocalizations.of(context)!.classDetail),
@@ -43,8 +43,23 @@ class ClassDetailsBody extends StatefulWidget {
 
 class _ClassDetailsBodyState extends State<ClassDetailsBody> {
   int currentIndex = -1;
-  int _role = 1;
+  int _role = 2;
   List<int> pupilIds = [1,2];
+  int classId = -1;
+  @override
+  void initState() {
+    super.initState();
+    initBloc();
+  }
+  initBloc() async{
+    // classId = await get();
+    print( DateTime.now().toString());
+    BlocProvider.of<PupilsBloc>(context).add(FetchPupils(classId: 5, date: DateTime.now().toString()));
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PupilsBloc, PupilsState>(builder: (context, state) {
@@ -65,7 +80,7 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
               children: [
                 const SizedBox(height: 12),
                 Text(
-                  StringConstatns.numberOfPupils + (pupils.length).toString() + "/"+(pupils.length).toString(),
+                  (AppLocalizations.of(context)!.classSize) +": " + (pupils.length).toString() + "/"+(pupils.length).toString(),
                   style:
                       Utils.setStyle(color: ColorConstants.neutralColor1),
                 ),

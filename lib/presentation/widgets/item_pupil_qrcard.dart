@@ -1,7 +1,7 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemPupilQRCard extends StatefulWidget {
    final List<Pupil> pupils;
 
@@ -31,8 +31,8 @@ class _ItemPupilQRCardState extends State<ItemPupilQRCard> {
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
-                        flex: 1, child: Text('Họ và Tên', style: QRCodeStyle.contentStyle9)),
-                    Expanded(flex: 0, child: Text('Lớp', style: QRCodeStyle.contentStyle9)),
+                        flex: 1, child: Text((AppLocalizations.of(context)!.fullName), style: QRCodeStyle.contentStyle9)),
+                    Expanded(flex: 0, child: Text((AppLocalizations.of(context)!.class1), style: QRCodeStyle.contentStyle9)),
                   ],
                 ),
                 SizedBox(

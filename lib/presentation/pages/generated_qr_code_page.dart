@@ -6,6 +6,7 @@ import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
+import 'package:children_pickup_monitoring/presentation/pages/warning_page.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class GeneratedQRCodePage extends StatefulWidget {
   // const GeneratedQRCodePage({Key? key}) : super(key: key);
-
   @override
   State<GeneratedQRCodePage> createState() => _GeneratedQRCodeState();
 }
@@ -73,7 +73,6 @@ void dispose() {
       "status": 1,
       "USER_ID": userID
     };
-    print("body " + body.toString());
     BlocProvider.of<PickUpBloc>(context).add(DeletePickUpRequestEvent(requestId: requestId!, body: body,roleId: 1));
   }
 _getCard(int index, PickUpGenerated pickUpGenerated, int? requestID){
@@ -116,13 +115,11 @@ Future<List<PickUpGenerated>> getAllQRCode( ) async{
         pickupParent, i.parentId, i.addressSchool, i.stringQrcode, i.status);
     pickUpGenerateds.add(pickupQR);
   }
-  print("HUE 1ddđ"+ pickUpGenerateds.length.toString());
   return pickUpGenerateds;
 }
 
 @override
   Widget build(BuildContext context) {
-  print("pickUpGenerateds"+pickUpGenerateds.toString());
     return Scaffold(
         appBar: WidgetAppBar(
           title: (AppLocalizations.of(context)!.generateQrCode),
@@ -163,14 +160,16 @@ Future<List<PickUpGenerated>> getAllQRCode( ) async{
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
-                        return new Text('Chưa có mã đã tạo!');
+                        return new Text('Chưa có mã đã tạo 1111!');
                       case ConnectionState.waiting:
                         break;
                       case ConnectionState.done:
                         if (snapshot.hasError)
-                          return new Text('Chưa có mã đã tạo!');
-                        else {
+                          return new Text('Chưa có mã đã tạo2222!');
+                        else if( snapshot.data!.length != 0) {
                           pickUpGenerateds = snapshot.data!;
+                        }else{
+                          return WarningPage(type:1,);
                         }
                         break;
                       default:
@@ -195,11 +194,11 @@ Future<List<PickUpGenerated>> getAllQRCode( ) async{
                                       (BuildContext context, int index) {
                                     var status = '';
                                     if (pickUpGenerateds[index].status == 0) {
-                                      status = ' (Đang chờ đón)';
+                                      status = ' ('+(AppLocalizations.of(context)!.waitting)+')';
                                     } else if (pickUpGenerateds[index].status == 1) {
-                                      status = ' (Đã hủy)';
+                                      status = ' ('+(AppLocalizations.of(context)!.cancelled)+')';
                                     } else {
-                                      status = ' (Đã đón)';
+                                      status = ' ('+(AppLocalizations.of(context)!.pickedup)+')';
                                     }
                                     return InkWell(
                                       onTap: () {

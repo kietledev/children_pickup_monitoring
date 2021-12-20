@@ -27,6 +27,9 @@ export 'notification_page.dart';
 export 'notification_add_page.dart';
 export 'notification_detail_page.dart';
 export 'qr_card_info_page.dart';
+export 'edit_pupil_detail_page.dart';
+export 'class_attendance_page.dart';
+export 'edit_attendance_page.dart';
 
 
 

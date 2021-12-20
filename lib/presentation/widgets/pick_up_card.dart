@@ -19,7 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PickUpCard extends StatefulWidget {
   late PickUpGenerated? pickUpGenerated;
   late VoidCallback onPress;
@@ -77,7 +77,7 @@ class _PickUpCardState extends State<PickUpCard> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 32, 0, 0,),
                         child: Text(
-                          "Thẻ Đón Trẻ",
+                          (AppLocalizations.of(context)!.pickUpCard),
                           style:QRCodeStyle.contentStyle8,
                         ),
                       ),
@@ -132,7 +132,7 @@ class _PickUpCardState extends State<PickUpCard> {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Thời gian',
+                                  (AppLocalizations.of(context)!.time),
                                   style: QRCodeStyle.contentStyle9,
                                 ),
                                 SizedBox(
@@ -163,7 +163,7 @@ class _PickUpCardState extends State<PickUpCard> {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Điểm đón',
+                                  (AppLocalizations.of(context)!.location),
                                   style:  QRCodeStyle.contentStyle9,
                                 ),
                                 SizedBox(
@@ -197,7 +197,7 @@ class _PickUpCardState extends State<PickUpCard> {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Người đón',
+                                  (AppLocalizations.of(context)!.pickupPerson),
                                   style:  QRCodeStyle.contentStyle9,
                                 ),
                                 SizedBox(
@@ -223,7 +223,7 @@ class _PickUpCardState extends State<PickUpCard> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Đại chỉ trường',
+                          (AppLocalizations.of(context)!.addressSchool),
                           style:  QRCodeStyle.contentStyle9,
                         ),
                         SizedBox(
@@ -281,7 +281,7 @@ class _PickUpCardState extends State<PickUpCard> {
               widget.checkShow == 1 &&  widget.pickUpGenerated!.status == 0 ?
               Center(
                 child:  SizedBox(
-                  width: 130,
+                  width: 140,
                   height: 40,
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
@@ -299,9 +299,9 @@ class _PickUpCardState extends State<PickUpCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          'Hủy thẻ',
+                          (AppLocalizations.of(context)!.cancelCard),
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.w100,
                             color: Colors.black,
                           ),
@@ -330,11 +330,12 @@ class _PickUpCardState extends State<PickUpCard> {
         context: context,
         builder: (context) => AlertDialog(
           content: Container(
-            height: 30,
+          height: 50,
             child: Column(
               children: [
+
                 Text(
-                  'Bạn muốn hủy thẻ đã tạo?',
+                  (AppLocalizations.of(context)!.doYouWantToCancel),
                   style:  QRCodeStyle.contentStyle,
                 ),
               ],
@@ -345,7 +346,7 @@ class _PickUpCardState extends State<PickUpCard> {
               Expanded(
                 flex: 1,
                 child: CustomButtonBorder(
-                    text: 'Hủy',
+                    text:(AppLocalizations.of(context)!.cancel),
                     press: () {
                       Navigator.pop(context);
                     },
@@ -357,7 +358,7 @@ class _PickUpCardState extends State<PickUpCard> {
               Expanded(
                 flex: 1,
                 child: CustomButtonText(
-                    text: 'Tiếp tục',
+                    text: (AppLocalizations.of(context)!.continue1),
                     press: widget.onPress,
 
                     width: 117),

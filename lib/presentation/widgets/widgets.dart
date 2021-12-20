@@ -29,4 +29,5 @@ export 'button_icon_left.dart';
 export 'item_notification_system.dart';
 export 'item_notification_school.dart';
 export 'dropdown_selected.dart';
+export 'item_attencance.dart';
 

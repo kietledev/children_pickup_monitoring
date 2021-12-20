@@ -20,6 +20,18 @@ class Utils {
       fontSize: size,
     );
   }
+  static String formatDate(String datetime) {
+    if (datetime == "") {
+      return " ";
+    } else {
+      DateTime parseDate =
+      new DateFormat("yyyy-MM-dd").parse(datetime);
+      var inputDate = DateTime.parse(parseDate.toString());
+      var outputFormat = DateFormat('dd-MM-yyyy');
+      var outputDate = outputFormat.format(inputDate);
+      return outputDate;
+    }
+  }
  static String formatDateTime(String datetime) {
     if (datetime == "") {
       return " ";

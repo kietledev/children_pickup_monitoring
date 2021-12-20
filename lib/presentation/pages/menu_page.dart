@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'menu_detail_page.dart';
 
 class MenuPage extends StatelessWidget {
@@ -24,7 +24,7 @@ class MenuPage extends StatelessWidget {
       injector<MenuBloc>()..add(const FetchMenu(classTypeId:1,currentDate:"2021-07-26")),
       child:  Scaffold(
       appBar:  WidgetAppBar(
-        title: TitlesConstants.menu,
+        title:  (AppLocalizations.of(context)!.menu),
         menuItem: [],
         hideBack:true,
         actionBack: () {
@@ -129,8 +129,8 @@ class _MenuBodyState extends State<MenuBody> {
                                   height: 20.h,
                                 ),
                               ),
-                              const Text(
-                                'Hôm nay',
+                              Text(
+                                (AppLocalizations.of(context)!.today),
                                 style: MenusStyle.contentStyle2,
                               ),
                             ],
@@ -153,8 +153,8 @@ class _MenuBodyState extends State<MenuBody> {
                                 height: 20.h,
                               ),
                             ),
-                            const Text(
-                              'Tuần này',
+                            Text(
+                              (AppLocalizations.of(context)!.week),
                               style: MenusStyle.contentStyle2,
                             ),
                           ]),
@@ -217,7 +217,7 @@ class _MenuBodyState extends State<MenuBody> {
                                         textBaseline: TextBaseline.alphabetic,
                                         children: <Widget>[
                                           Text(    foodMenuShow.isNotEmpty
-                                              ? "${StringConstatns.day} ${Utils.formatDateTime(foodMenuShow[index].date)}"
+                                              ? "${ (AppLocalizations.of(context)!.date)} ${Utils.formatDateTime(foodMenuShow[index].date)}"
                                               : '',style: _lengthList == 1 ? MenusStyle.contentStyle1:MenusStyle.contentStyle),
                                           IconButton(
                                           onPressed: () {

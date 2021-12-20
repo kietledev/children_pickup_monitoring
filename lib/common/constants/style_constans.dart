@@ -48,10 +48,11 @@ class AddUserToParentStyle{
 }
 class  AchievementsStyle {
   static const contentStyle2 = TextStyle(
-      fontSize: 14,
+      fontSize: 10,
       color: ColorConstants.neutralColor2,
       fontFamily: FontsConstants.notoSans,
       fontWeight: FontWeight.w100);
+
 
 }
 class MenusStyle {
@@ -117,6 +118,43 @@ class QRCodeStyle{
       fontWeight: FontWeight.w400,
       color: ColorConstants.neutralColor2,
       fontFamily: FontsConstants.notoSans);
+
+
+}
+class AttendanceStyle{
+  static const contentStyle = TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      color: ColorConstants.Pattette1,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle1 = TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.w400,
+      color: ColorConstants.secondaryColor4,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle2 = TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.w400,
+      color: ColorConstants.BLerror,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle3 = TextStyle(
+      color: ColorConstants.brandColor,
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      fontFamily:FontsConstants.notoSans);
+}
+class TeacherStyle{
+  static const contentStyle = TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      color: ColorConstants.Pattette1,
+      fontFamily: FontsConstants.notoSans);
+  static const contentStyle1 = TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.w400,
+      color: ColorConstants.secondaryColor4,
+      fontFamily: FontsConstants.notoSans);
+
 
 }
 
