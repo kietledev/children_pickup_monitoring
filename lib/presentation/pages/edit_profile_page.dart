@@ -264,7 +264,7 @@ class _EditProfileBody extends State<EditProfileBody> {
                           child: Row(
                             children: [
                               CustomButtonBorder(
-                                text: (AppLocalizations.of(context)!.cancle),
+                                text: (AppLocalizations.of(context)!.cancel),
                                 width: 135,
                                 press: () {
                                   setState(() {
