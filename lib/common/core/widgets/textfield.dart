@@ -403,7 +403,7 @@ class TextFieldCustom extends StatelessWidget{
   }
   Widget textFieldName(){
     return Padding(
-      padding: EdgeInsets.only(top: 48),
+      padding: EdgeInsets.only(top: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

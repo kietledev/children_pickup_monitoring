@@ -89,5 +89,12 @@ class ApiModule extends DIModule {
     /* post Notification Read api */
     injector.registerSingleton<PostNotificationReadApiService>(
         PostNotificationReadApiService(injector()));
+    /* post message to group by goup id */
+    injector.registerSingleton<PostMessageToGroupByGroupIdApiService>(
+        PostMessageToGroupByGroupIdApiService(injector()));
+    /*get list class room */
+    injector.registerSingleton<GetListClassRoomsApiService>(
+        GetListClassRoomsApiService(injector()));
   }
+
 }

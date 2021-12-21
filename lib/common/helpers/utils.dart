@@ -90,6 +90,11 @@ Future<UserModel?> getUser() async {
   final UserModel? user = await preferences.getUserPreference();
   return user;
 }
+Future<PersonModel?> getProfile() async {
+  final preferences = Preferences();
+  final PersonModel? user = await preferences.getProfilePreference();
+  return user;
+}
 Future<int> getPupilID() async {
   final preferences = Preferences();
   final int pupilID = await preferences.getIDpupil();

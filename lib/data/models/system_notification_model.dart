@@ -74,12 +74,12 @@ class SystemNotificationModel extends SystemNotification {
   factory SystemNotificationModel.json(Map<String, dynamic> json) {
     return SystemNotificationModel(
       personId: json['PERSON_ID'] as int? ??-1,
-      annoucementId: json['ANNOUCEMENT_ID'] as int? ??-1,
+      annoucementId: json['ANNOUCEMENT_ID'] ,
       annoucementTypeId: json['ANNOUCEMENT_TYPE_ID'] as int? ??-1,
       title: json['TITLE'] as String? ?? '',
       content: json['CONTENT'] as String? ?? '',
       requestId: json['REQUEST_ID'] as int? ??-1,
-      pupilId1: (json['PUPIL_ID_1'] as double? ?? -1.0).toInt(),
+      pupilId1: json['PUPIL_ID_1'] as int? ??-1,
       pupilLastName1: json['PUPIL_LAST_NAME_1'] as String? ?? '',
       pupilMiddleName1: json['PUPIL_MIDDLE_NAME_1'] as String? ?? '',
       pupilFirstName1: json['PUPIL_FIRST_NAME_1'] as String? ?? '',

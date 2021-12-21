@@ -14,3 +14,4 @@ export 'get_all_conversations_repository.dart';
 export 'get_all_messages_repository.dart';
 export 'pickup_reponsitory.dart';
 export 'notification_repository.dart';
+export 'list_class_rooms_repository.dart';

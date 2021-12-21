@@ -20,3 +20,4 @@ export 'school_notification.dart';
 export 'notification.dart';
 export 'list_class_by_teacher.dart';
 export 'person_table.dart';
+export 'class_room.dart';

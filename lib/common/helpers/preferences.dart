@@ -10,9 +10,10 @@ class Preferences {
   static const String USER_ID = 'USER_ID';
   static const String PUPIL_ID = 'PUPIL_ID';
   static const String IS_REMEMBER = 'IS_REMEMBER';
+  static const String IS_SCROLL = 'IS_SCROLL';
   static const String SHOOL_FINISH_TIME = 'SHOOL_FINISH_TIME';
   static const String WARNING_TIME = 'WARNING_TIME';
-
+  static const String PROFILE_PREFERENCE = 'PROFILE_PREFERENCE';
   static const String TOKEN_PREFERENCE = 'TOKEN_PREFERENCE';
   static const String PUPIL_PREFERENCE = 'PUPIL_PREFERENCE';
   static const String LANGUAGE_PREFERENCE = 'LANGUAGE_PREFERENCE';
@@ -59,6 +60,17 @@ class Preferences {
         jsonDecode(userString) as Map<String, dynamic>;
     return UserModel.json(map);
   }
+  /* Profole Preference */
+  void setProfilePreference(PersonModel user) {
+    final Map<String, dynamic> userString = user.toJson();
+    preferences.set(PROFILE_PREFERENCE, userString);
+  }
+
+  Future<PersonModel?> getProfilePreference() async {
+    final String userString = await preferences.getObject(PROFILE_PREFERENCE);
+    final Map<String, dynamic> map = jsonDecode(userString) as Map<String, dynamic>;
+    return PersonModel.json(map);
+  }
 
   /* Login time */
   void setLoginTime(String value) {
@@ -96,6 +108,16 @@ class Preferences {
   Future<bool?> getIsRemember() async {
     final SharedPreferences prefs = await _prefs;
     return prefs.getBool(IS_REMEMBER);
+  }
+  /* Is Scroll Profile */
+  Future setIsScroll(bool isScroll) async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.setBool(IS_SCROLL, isScroll);
+  }
+
+  Future<bool?> getIsScroll() async {
+    final SharedPreferences prefs = await _prefs;
+    return prefs.getBool(IS_SCROLL);
   }
 
   Future setIDpupil(int pupilID) async {

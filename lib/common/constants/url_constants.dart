@@ -24,13 +24,16 @@ class UrlConstatns {
   /* Chat */
   static const String apiGetAllConversations = urlServer + "getListConversationByPersonId";
   static const String getAllMessageInGroupByGroupId = urlServer + "getAllMessageInGroupByGroupId";
+  static const String apiPostMessageToGroupByGroupId = urlServer + "sendMessageToGroupByGroupId";
+
 
   static const String apiPostPickUpCard= urlServer + "sendPickUpRequest";
-
   static const String apiGetPickUpCards= urlServer + "api/getListPickUpRequestByUserId";
   static const String apiPutPickUpCards= urlServer + "updatePickUpDestroyed";
   static const String apiGetListNotification= urlServer + "getListUnreadNotificationByPersonId";
   static const String apiPostListClassByTeacherId = urlServer + "getListClassByTeacherId";
   static const String apiPostTeacherSendNotification = urlServer + "teacherSendAnnoucementToClass";
   static const String apiPostNotificationRead = urlServer + "maskAnnoucementAsReadByAnnoucementId";
+  static const String apiGetListClassRooms= urlServer + "api/getListClassRooms";
+
 }

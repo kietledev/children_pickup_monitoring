@@ -23,6 +23,10 @@ class ColorConstants {
   static const Pattette2 = Color(0x33797D88);
   static const Pattette1 = Color(0xFF24272E);
   static const BLerror = Color(0xFFE25822);
+  static const lineColor = Color(0xFFE3EEF2);
+
+
+
 
   static const white = Color(0xFFFFFFFF);
 }

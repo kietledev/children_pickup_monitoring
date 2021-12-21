@@ -67,6 +67,7 @@ class UseCaseModule extends DIModule {
         .registerSingleton<MessagePageUseCase>(MessagePageUseCase(injector()));
         injector
         .registerSingleton<MessageDetailUseCase>(MessageDetailUseCase(injector()));
+    // injector.registerSingleton<PostPasswordUseCase>(PostPasswordUseCase(injector()));
 
     /*Get list notification Usecase */
     injector.registerSingleton<GetNotificationUseCase>(GetNotificationUseCase(injector()));
@@ -80,5 +81,9 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<PostPickUpUseCase>(PostPickUpUseCase(injector()));
     /*delete pickup card */
     injector.registerSingleton<DeletePickupCardUseCase>(DeletePickupCardUseCase(injector()));
+    /*message send */
+    injector.registerSingleton<MessageSendUseCase>(MessageSendUseCase(injector()));
+    /*classRoom */
+    injector.registerSingleton<GetListClassRoomUseCase>(GetListClassRoomUseCase(injector()));
   }
 }

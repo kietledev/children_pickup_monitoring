@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:children_pickup_monitoring/common/constants/color_constants.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/data/models/models.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/message_detail/message_detail_bloc.dart';
@@ -21,22 +22,21 @@ class MessageDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final conversation =
-        ModalRoute.of(context)!.settings.arguments as Conversation;
+    ModalRoute.of(context)!.settings.arguments as Conversation;
     final message = conversation.lastMessage;
     return BlocProvider<MessageDetailBloc>(
       create: (_) => injector<MessageDetailBloc>()
-        ..add(DownloadMessageDetail(
-            personId: 4, groupId: message!.messageGroupId!, page: page)),
+        ..add(DownloadMessageDetail(personId: 4, groupId: message!.messageGroupId!, page: page)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appBar(context),
-        body: const MessageDetailBody(),
+        appBar: appBar(context,conversation),
+        body: MessageDetailBody(conversation: conversation,),
       ),
     );
   }
 }
 
-AppBar appBar(BuildContext context) {
+AppBar appBar(BuildContext context, Conversation conversation) {
   return AppBar(
     leading: Align(
       alignment: Alignment.centerLeft,
@@ -65,7 +65,7 @@ AppBar appBar(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Đoàn Ngọc Viên',
+                '${conversation.groupTitle}',
                 style: Utils.setStyle(
                     color: ColorConstants.neutralColor1,
                     weight: FontWeight.w600),
@@ -73,24 +73,24 @@ AppBar appBar(BuildContext context) {
               const SizedBox(height: 0),
               Visibility(
                   child: Row(
-                children: [
-                  Container(
-                    height: 15,
-                    margin: const EdgeInsets.only(right: 6),
-                    width: 15,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF5AD439),
-                      border: Border.all(color: Colors.white, width: 2.5),
-                      borderRadius: BorderRadius.circular(7.5),
-                    ),
-                  ),
-                  Text(
-                    'Trực tuyến',
-                    style: Utils.setStyle(
-                        color: ColorConstants.neutralColor2, size: 12),
-                  ),
-                ],
-              ))
+                    children: [
+                      Container(
+                        height: 15,
+                        margin: const EdgeInsets.only(right: 6),
+                        width: 15,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF5AD439),
+                          border: Border.all(color: Colors.white, width: 2.5),
+                          borderRadius: BorderRadius.circular(7.5),
+                        ),
+                      ),
+                      Text(
+                        'Trực tuyến',
+                        style: Utils.setStyle(
+                            color: ColorConstants.neutralColor2, size: 12),
+                      ),
+                    ],
+                  ))
             ],
           ),
         ),
@@ -122,9 +122,8 @@ GestureDetector buildActionAppbar({
 }
 
 class MessageDetailBody extends StatefulWidget {
-  const MessageDetailBody({
-    Key? key,
-  }) : super(key: key);
+  final Conversation? conversation;
+  const MessageDetailBody({required this.conversation});
 
   @override
   State<MessageDetailBody> createState() => _MessageDetailBodyState();
@@ -142,18 +141,19 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
   bool _hasValue = false;
   bool _showGallery = false;
   bool _isRecording = false;
-
   int _recordDuration = 0;
   int _timeDuration = 0;
   Timer? _timer;
   Timer? _ampTimer;
   final _audioRecorder = Record();
-
+  int personId = -1;
+  UserModel? userModel;
   final String unsent = 'assets/icons/ic_unsent.svg';
   final String sent = 'assets/icons/ic_sent.svg';
+  final String sentError = 'assets/icons/ic_sent_error.svg';
   final String received = 'assets/icons/ic_received.svg';
   String path = '';
-
+  bool checkMessage = true;
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _messageController = TextEditingController();
 
@@ -164,13 +164,19 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
   @override
   void initState() {
     super.initState();
-
     styleMessage1 =
         Utils.setStyle(color: ColorConstants.neutralColor1, size: 17);
     styleMessage2 = Utils.setStyle(color: ColorConstants.neutralColor1);
     bloc = BlocProvider.of<MessageDetailBloc>(context);
-    _keyboardListener = CustomKeyboardListener()
-      ..addListener(onChange: _keyboardHandle);
+  _keyboardListener = CustomKeyboardListener()..addListener(onChange: _keyboardHandle);
+    getUserId();
+  }
+  getUserId() async {
+    userModel = await getUser();
+    setState(() {
+      personId = userModel!.personId.toInt();
+    });
+
   }
 
   @override
@@ -206,6 +212,7 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
     return Expanded(
       child: BlocBuilder<MessageDetailBloc, MessageDetailState>(
         builder: (context, state) {
+          print(state);
           if (state is ListMessageState) {
             if (state.status == ListMessageStatus.success) {
               _listMessages.addAll(state.messages!);
@@ -230,7 +237,13 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
                 }
               }
             } else {}
-          }
+          }else if (state is SendMessageSuccessState){
+            _listMessages.insert(0, state.messages![0]);
+            checkMessage = state.checkMessage;
+          }else if (state is SendMessageFailureState){
+            _listMessages.insert(0, state.messages![0]);
+            checkMessage = state.checkMessage;
+          };
           return AnimatedSize(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOutCubic,
@@ -240,7 +253,6 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
               itemCount: _listMessages.length,
               reverse: true,
               itemBuilder: (context, index) {
-                const int personId = 4;
                 final item = _listMessages[index];
                 if (item.createdByPersonId == personId) {
                   return Row(
@@ -265,15 +277,14 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
                       const SizedBox(width: 4),
                       Container(
                         margin: const EdgeInsets.only(right: 18, bottom: 1),
-                        child: SvgPicture.asset(
-                          sent,
-                          width: 12,
-                          height: 12,
-                        ),
+                        child: (checkMessage)
+                                ? SvgPicture.asset(sent, width: 12, height: 12, color: ColorConstants.primaryColor2)
+                                : SvgPicture.asset(sentError, width: 12, height: 12, color: ColorConstants.primaryColor2),
                       )
                     ],
                   );
-                } else {
+                }
+                else {
                   return Row(
                     children: [
                       const SizedBox(width: 12),
@@ -316,154 +327,158 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
   Widget buildInputActions() {
     return BlocBuilder<MessageDetailBloc, MessageDetailState>(
         builder: (context, state) {
-      if (state is InputState) {
-        _onFocus = state.onFocus!;
-        _hasValue = state.hasValue!;
-        _showGallery = state.showGallery!;
-        _isRecording = state.isRecording!;
+          if (state is InputState) {
+            _onFocus = state.onFocus!;
+            _hasValue = state.hasValue!;
+            _showGallery = state.showGallery!;
+            _isRecording = state.isRecording!;
 
-        if (!_showGallery) {
-          bloc.add(GalleryEvent(show: false));
-        }
-      }
-      return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-        if (!_isRecording)
-          if (_onFocus)
-            GestureDetector(
-              onTap: () {
-                bloc.add(
-                  InputEvent(
-                      onFocus: !_onFocus,
-                      hasValue: _hasValue,
-                      showGallery: _showGallery),
-                );
-              },
+            if (!_showGallery) {
+              bloc.add(GalleryEvent(show: false));
+            }
+          }
+          return Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            if (!_isRecording)
+              if (_onFocus)
+                GestureDetector(
+                  onTap: () {
+                    bloc.add(
+                      InputEvent(
+                          onFocus: !_onFocus,
+                          hasValue: _hasValue,
+                          showGallery: _showGallery),
+                    );
+                  },
+                  child: Container(
+                    height: 52,
+                    color: Colors.transparent,
+                    margin: const EdgeInsets.only(left: 16, right: 12),
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 16, right: 12),
+                      child: SvgPicture.asset(
+                        'assets/icons/ic_right.svg',
+                        height: 18,
+                        width: 9,
+                      ),
+                    ),
+                  ),
+                )
+              else
+                Row(
+                  children: [
+                    const SizedBox(width: 3),
+                    buildAction(press: () {}, icon: 'assets/icons/ic_menu_dot.svg'),
+                    buildAction(
+                        press: () {
+                          openCamera();
+                        },
+                        icon: 'assets/icons/ic_camera_chat.svg'),
+                    buildAction(
+                        press: () {
+                          openGallery();
+                        },
+                        icon: 'assets/icons/ic_picture_chat.svg'),
+                    buildAction(
+                        press: () {
+                          _startRecording();
+                        },
+                        icon: 'assets/icons/ic_microphone_chat.svg'),
+                  ],
+                ),
+            Expanded(
               child: Container(
-                height: 52,
-                color: Colors.transparent,
-                margin: const EdgeInsets.only(left: 16, right: 12),
+                key: const Key('buildInputText'),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(children: [
+                    buildInputText(),
+                    AnimatedContainer(
+                      color: Colors.white,
+                      duration: const Duration(seconds: 5),
+                      curve: Curves.fastOutSlowIn,
+                      child: _isRecording
+                          ? Row(
+                        children: [
+                          const SizedBox(width: 5),
+                          GestureDetector(
+                              onTap: () {
+                                _stopRecording(callback: (String path) {
+                                  // bloc.add(AddNewMessage(message: path));
+                                });
+                              },
+                              child: const Icon(Icons.delete,
+                                  color: Colors.red, size: 28)),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Container(
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: ColorConstants.brandColor,
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Spacer(),
+                                  _buildTimer(),
+                                  const SizedBox(width: 12)
+                                ],
+                              ),
+                            ),
+                          ),
+                          // _buildTimer()
+                        ],
+                      )
+                          : null,
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+
+            Visibility(
+              visible: getBoolValueForSend(),
+              child: GestureDetector(
+                onTap: () {
+                  if (_messageController.text.trim().isNotEmpty) {
+                    bloc.add(AddNewMessage(message: createMessage(
+                        messageContent: _messageController.text.trim(),
+                        messageContentEn:_messageController.text.trim() ,
+                        messageGroupId: widget.conversation!.messageGroupId!,
+                        messageTypeId: widget.conversation!.lastMessage!.messageTypeId!,
+                        createdByPersonId: personId,
+                    ), personId: personId));
+                    _messageController.clear();
+                  } else if (_isRecording) {
+                    _stopRecording(callback: (String path) {
+                      bloc.add(AddNewMessage(
+                          message: createMessage(messageContent: path), personId: personId));
+                    });
+                  }
+                },
                 child: Container(
-                  margin: const EdgeInsets.only(left: 16, right: 12),
-                  child: SvgPicture.asset(
-                    'assets/icons/ic_right.svg',
-                    height: 18,
-                    width: 9,
+                  height: 52,
+                  color: Colors.transparent,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 16, right: 15.5),
+                    child: SvgPicture.asset(
+                      'assets/icons/ic_send_message.svg',
+                      width: 24,
+                      height: 24,
+                    ),
                   ),
                 ),
               ),
-            )
-          else
-            Row(
-              children: [
-                const SizedBox(width: 3),
-                buildAction(press: () {}, icon: 'assets/icons/ic_menu_dot.svg'),
-                buildAction(
-                    press: () {
-                      openCamera();
-                    },
-                    icon: 'assets/icons/ic_camera_chat.svg'),
-                buildAction(
-                    press: () {
-                      openGallery();
-                    },
-                    icon: 'assets/icons/ic_picture_chat.svg'),
-                buildAction(
-                    press: () {
-                      _startRecording();
-                    },
-                    icon: 'assets/icons/ic_microphone_chat.svg'),
-              ],
             ),
-        Expanded(
-          child: Container(
-            key: const Key('buildInputText'),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(children: [
-                buildInputText(),
-                AnimatedContainer(
-                  color: Colors.white,
-                  duration: const Duration(seconds: 5),
-                  curve: Curves.fastOutSlowIn,
-                  child: _isRecording
-                      ? Row(
-                          children: [
-                            const SizedBox(width: 5),
-                            GestureDetector(
-                                onTap: () {
-                                  _stopRecording(callback: (String path) {
-                                    // bloc.add(AddNewMessage(message: path));
-                                  });
-                                },
-                                child: const Icon(Icons.delete,
-                                    color: Colors.red, size: 28)),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Container(
-                                height: 36,
-                                decoration: BoxDecoration(
-                                  color: ColorConstants.brandColor,
-                                  borderRadius: BorderRadius.circular(18),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    const Spacer(),
-                                    _buildTimer(),
-                                    const SizedBox(width: 12)
-                                  ],
-                                ),
-                              ),
-                            ),
-                            // _buildTimer()
-                          ],
-                        )
-                      : null,
-                ),
-              ]),
-            ),
-          ),
-        ),
-
-        Visibility(
-          visible: getBoolValueForSend(),
-          child: GestureDetector(
-            onTap: () {
-              if (_messageController.text.trim().isNotEmpty) {
-                bloc.add(AddNewMessage(
-                    message: createMessage(
-                        messageContent: _messageController.text.trim())));
-                _messageController.clear();
-              } else if (_isRecording) {
-                _stopRecording(callback: (String path) {
-                  bloc.add(AddNewMessage(
-                      message: createMessage(messageContent: path)));
-                });
-              }
-            },
-            child: Container(
-              height: 52,
-              color: Colors.transparent,
+            Visibility(
+              visible: !getBoolValueForSend(),
               child: Container(
-                margin: const EdgeInsets.only(left: 16, right: 15.5),
-                child: SvgPicture.asset(
-                  'assets/icons/ic_send_message.svg',
-                  width: 24,
-                  height: 24,
-                ),
+                margin: const EdgeInsets.only(left: 3, right: 7),
+                child: buildAction(press: () {}, icon: 'assets/icons/ic_heart.svg'),
               ),
-            ),
-          ),
-        ),
-        Visibility(
-          visible: !getBoolValueForSend(),
-          child: Container(
-            margin: const EdgeInsets.only(left: 3, right: 7),
-            child: buildAction(press: () {}, icon: 'assets/icons/ic_heart.svg'),
-          ),
-        ) //
-      ]);
-    });
+            ) //
+          ]);
+        });
   }
 
   Message createMessage({
@@ -517,41 +532,41 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
   Widget buildGallery() {
     return BlocBuilder<MessageDetailBloc, MessageDetailState>(
         builder: (context, state) {
-      if (state is MoreHeightState) {
-        if (state.moreHeight) {
-          defaulHeight = constantHeight;
-        } else {
-          defaulHeight = 0;
-          bloc.add(InputEvent(
-              onFocus: false, hasValue: _hasValue, showGallery: _showGallery));
-        }
-      } else if (state is GalleryState) {
-        if (state.show!) {
-          _assets = state.assets!;
-          bloc.add(MoreHeightEvent(moreHeight: true));
-        } else {
-          _assets.clear();
-        }
-      }
+          if (state is MoreHeightState) {
+            if (state.moreHeight) {
+              defaulHeight = constantHeight;
+            } else {
+              defaulHeight = 0;
+              bloc.add(InputEvent(
+                  onFocus: false, hasValue: _hasValue, showGallery: _showGallery));
+            }
+          } else if (state is GalleryState) {
+            if (state.show!) {
+              _assets = state.assets!;
+              bloc.add(MoreHeightEvent(moreHeight: true));
+            } else {
+              _assets.clear();
+            }
+          }
 
-      return AnimatedSize(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-        reverseDuration: const Duration(milliseconds: 250),
-        // vsync: this,
-        child: SizedBox(
-          height: defaulHeight,
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, crossAxisSpacing: 2, mainAxisSpacing: 2),
-            itemCount: _assets.length,
-            itemBuilder: (_, index) {
-              return AssetThumbnail(asset: _assets[index]);
-            },
-          ),
-        ),
-      );
-    });
+          return AnimatedSize(
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeInOut,
+            reverseDuration: const Duration(milliseconds: 250),
+            // vsync: this,
+            child: SizedBox(
+              height: defaulHeight,
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3, crossAxisSpacing: 2, mainAxisSpacing: 2),
+                itemCount: _assets.length,
+                itemBuilder: (_, index) {
+                  return AssetThumbnail(asset: _assets[index]);
+                },
+              ),
+            ),
+          );
+        });
   }
 
   Widget buildInputText() {
@@ -590,7 +605,7 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
         hintText: "Aa",
         fillColor: const Color(0xFFF3F5FF),
         contentPadding:
-            const EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
+        const EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
         border: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.transparent),
           borderRadius: BorderRadius.circular(18),
@@ -653,7 +668,7 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
     KeyboardUtil.hideKeyboard(context);
     Navigator.pushNamed(context, RouteConstants.camera).then((value) {
       bloc.add(AddNewMessage(
-          message: createMessage(messageContent: value.toString())));
+          message: createMessage(messageContent: value.toString()),personId: personId));
       FocusScope.of(context).requestFocus(_focusNode);
     });
   }
@@ -695,23 +710,23 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
   Widget _buildTimer() {
     return BlocBuilder<MessageDetailBloc, MessageDetailState>(
         builder: (context, state) {
-      if (state is AmplitudeState) {
-        if (state.recordDuration % 1000 == 0) {
-          _timeDuration = state.recordDuration ~/ 1000;
-        }
+          if (state is AmplitudeState) {
+            if (state.recordDuration % 1000 == 0) {
+              _timeDuration = state.recordDuration ~/ 1000;
+            }
 
-        _listAmp.add(state.currentAmplitude);
-      } else {
-        _timeDuration = 0;
-        _listAmp.clear();
-      }
-      final String minutes = _formatNumber(_timeDuration ~/ 60);
-      final String seconds = _formatNumber(_timeDuration % 60);
-      return Text(
-        '$minutes : $seconds',
-        style: Utils.setStyle(color: Colors.white, size: 12),
-      );
-    });
+            _listAmp.add(state.currentAmplitude);
+          } else {
+            _timeDuration = 0;
+            _listAmp.clear();
+          }
+          final String minutes = _formatNumber(_timeDuration ~/ 60);
+          final String seconds = _formatNumber(_timeDuration % 60);
+          return Text(
+            '$minutes : $seconds',
+            style: Utils.setStyle(color: Colors.white, size: 12),
+          );
+        });
   }
 
   String _formatNumber(int number) {
@@ -744,9 +759,9 @@ class _MessageDetailBodyState extends State<MessageDetailBody>
 
     _ampTimer =
         Timer.periodic(const Duration(milliseconds: 200), (Timer t) async {
-      _recordDuration = _recordDuration + 200;
-      final Amplitude _amplitude = await _audioRecorder.getAmplitude();
-      bloc.add(AmplitudeEvent(_amplitude.current, _recordDuration.toDouble()));
-    });
+          _recordDuration = _recordDuration + 200;
+          final Amplitude _amplitude = await _audioRecorder.getAmplitude();
+          bloc.add(AmplitudeEvent(_amplitude.current, _recordDuration.toDouble()));
+        });
   }
 }

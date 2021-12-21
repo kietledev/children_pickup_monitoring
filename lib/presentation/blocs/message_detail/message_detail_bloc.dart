@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/params/get_all_messages_request.dart';
+import 'package:children_pickup_monitoring/common/core/params/send_message_to_group_by_group_id.dart';
 import 'package:children_pickup_monitoring/common/core/resources/resources.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/domain/usecases/message_detail_usecase.dart';
+import 'package:children_pickup_monitoring/domain/usecases/usecases.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 part 'message_detail_event.dart';
@@ -45,14 +47,15 @@ class MessageDetailRepository {
 class MessageDetailBloc extends Bloc<MessageDetailEvent, MessageDetailState> {
   MessageDetailRepository repository;
   final MessageDetailUseCase _useCase;
+  final MessageSendUseCase _messageSendUseCase;
   MessageDetailBloc(
-      MessageDetailState initialState, this.repository, this._useCase)
+      MessageDetailState initialState, this.repository, this._useCase, this._messageSendUseCase)
       : super(initialState);
 
   @override
   Stream<MessageDetailState> mapEventToState(
-    MessageDetailEvent event,
-  ) async* {
+      MessageDetailEvent event,
+      ) async* {
     if (event is DownloadMessageDetail) {
       yield MessageDetailInitial(status: DownloadStatus.loading);
       _mapDowloadMessageToState(event);
@@ -61,14 +64,16 @@ class MessageDetailBloc extends Bloc<MessageDetailEvent, MessageDetailState> {
         status: DownloadStatus.success,
       );
       yield ListMessageState(
-          status: ListMessageStatus.success, messages: event.listMessage);
+          status: ListMessageStatus.success, messages: event.listMessage,checkMessage: true);
     } else if (event is DownloadFailure) {
       yield MessageDetailInitial(
           status: DownloadStatus.failure, message: event.msg);
-      yield ListMessageState(status: ListMessageStatus.success);
-    } else if (event is MoreHeightEvent) {
+      yield ListMessageState(status: ListMessageStatus.success,checkMessage: true);
+    }
+    else if (event is MoreHeightEvent) {
       yield MoreHeightState(moreHeight: event.moreHeight);
-    } else if (event is InputEvent) {
+    }
+    else if (event is InputEvent) {
       yield InputState(
           onFocus: event.onFocus,
           hasValue: event.hasValue,
@@ -77,8 +82,26 @@ class MessageDetailBloc extends Bloc<MessageDetailEvent, MessageDetailState> {
     } else if (event is AddNewMessage) {
       final List<Message> messages = [];
       messages.add(event.message!);
-      yield ListMessageState(
-          status: ListMessageStatus.add, messages: messages);
+      final dataState = await _messageSendUseCase(
+        params: SendMessageToGroupByGroupId(
+            personId: event.personId,
+            groupId: messages[0].messageGroupId!,
+            messageType: messages[0].messageTypeId!,
+            messageMediaType: 0,
+            textContent: messages[0].messageContent!,
+            textContentEn:messages[0].messageContent! ,
+            galleryId: 0,
+            link: "",
+            createdDate: "2021-12-13T08:05:14.664Z"
+        ),
+      );
+      if (dataState is DataSuccess && dataState.data.toString().isNotEmpty) {
+        final msg = dataState.data!;
+        yield SendMessageSuccessState(checkMessage: true,messages: messages);
+       // yield ListMessageState(status: ListMessageStatus.add, messages: messages,checkMessage: true);
+      } else {
+       yield SendMessageFailureState(checkMessage: false, messages: messages);
+      }
     } else if (event is GalleryEvent) {
       if (event.show) {
         _mapFetchAssetsToState();
