@@ -1,5 +1,6 @@
 
 import 'package:children_pickup_monitoring/data/models/models.dart';
+import 'package:children_pickup_monitoring/data/models/person_table_model.dart';
 import 'package:children_pickup_monitoring/domain/entities/parent.dart';
 
 class ParentModel extends Parent{
@@ -11,7 +12,7 @@ class ParentModel extends Parent{
     int? approvedByUserId,
     String? approvedDatetime,
     bool? accountUser,
-    PersonModel? personDetail
+    PersonTableModel? personDetail
   }) : super(
       parentId: parentId,
       personToPersonPersonalRelationshipTypeName: personToPersonPersonalRelationshipTypeName,
@@ -25,7 +26,7 @@ class ParentModel extends Parent{
 
   factory ParentModel.fromJson(Map<String, dynamic> json) {
     var personDetail = json['PERSON_DETAIL'];
-    PersonModel person = PersonModel.fromJson(personDetail);
+    PersonTableModel person = PersonTableModel.fromJson(personDetail);
     return ParentModel(
         parentId: (json['PARENT_ID'] as double? ?? -1.0).toInt(),
         personToPersonPersonalRelationshipTypeName: json['PERSON_TO_PERSON_PERSONAL_RELATIONSHIP_TYPE_NAME'] as String? ?? '',

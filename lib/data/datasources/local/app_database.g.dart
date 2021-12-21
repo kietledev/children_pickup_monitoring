@@ -94,7 +94,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `qrgenerated_table` (`requestId` INTEGER PRIMARY KEY AUTOINCREMENT, `timePickUp` TEXT, `pupilId1` INTEGER, `pupilId2` INTEGER, `pupilId3` INTEGER, `cardId` TEXT, `datePickUp` TEXT, `placePickUp` TEXT, `parentId` INTEGER, `addressSchool` TEXT, `stringQrcode` TEXT, `status` INTEGER)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `person_table` (`personId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `employeeIdNumber` TEXT, `currentPersonalTitleId` INTEGER, `currentPersonalTitle` TEXT, `currentPersonalTitleEn` TEXT, `academicTitleId` INTEGER, `academicTitle` TEXT, `academicTitleEn` TEXT, `currentLastName` TEXT, `currentFirstName` TEXT, `currentMiddleName` TEXT, `currentNickname` TEXT, `currentGenderId` INTEGER, `currentGender` TEXT, `currentGenderEn` TEXT, `birthDate` TEXT, `birthPlace` TEXT, `birthPlaceCity` TEXT, `birthPlaceProvince` TEXT, `birthPlaceState` TEXT, `birthPlaceCountry` TEXT, `currentMaritalStatusId` INTEGER, `currentMaritalStatus` TEXT, `currentMaritalStatusEn` TEXT, `currentPeopleIdNumber` TEXT, `currentPeopleIdIssueDate` TEXT, `currentPeopleIdIssuePlace` TEXT, `currentSocialSecurityNumber` TEXT, `currentMajorCitizenship` TEXT, `currentPassportNumber` TEXT, `currentPassportIssuePlace` TEXT, `currentPassportIssueDate` TEXT, `currentPassportExpirationDate` TEXT, `homeAddress1` TEXT, `homeAddress2` TEXT, `homeWard` TEXT, `homeDistrict` TEXT, `homeCity` TEXT, `homeProvince` TEXT, `homeState` TEXT, `homeCountry` TEXT, `homePostalCode` TEXT, `currentAddress1` TEXT, `currentAddress2` TEXT, `currentWard` TEXT, `currentDistrict` TEXT, `currentCity` TEXT, `currentProvince` TEXT, `currentState` TEXT, `currentCountry` TEXT, `currentPostalCode` TEXT, `comments` TEXT, `commentsEn` TEXT, `closeupPicture1` TEXT, `closeupPicture2` TEXT, `avatarPicture` TEXT, `signatureImage` TEXT, `createdDatetime` TEXT, `createdByUserId` INTEGER, `updatedDatetime` TEXT, `updatedByUserId` INTEGER, `currentEmail` TEXT, `currentPhoneNumber1` TEXT, `currentPhoneNumber2` TEXT, `staffId` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `person_table` (`personId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `employeeIdNumber` TEXT, `currentPersonalTitleId` INTEGER, `currentPersonalTitle` TEXT, `currentPersonalTitleEn` TEXT, `academicTitleId` INTEGER, `academicTitle` TEXT, `academicTitleEn` TEXT, `currentLastName` TEXT, `currentFirstName` TEXT, `currentMiddleName` TEXT, `currentNickname` TEXT, `currentGenderId` INTEGER, `currentGender` TEXT, `currentGenderEn` TEXT, `birthDate` TEXT, `birthPlace` TEXT, `birthPlaceCity` TEXT, `birthPlaceProvince` TEXT, `birthPlaceState` TEXT, `birthPlaceCountry` TEXT, `currentMaritalStatusId` INTEGER, `currentMaritalStatus` TEXT, `currentMaritalStatusEn` TEXT, `currentPeopleIdNumber` TEXT, `currentPeopleIdIssueDate` TEXT, `currentPeopleIdIssuePlace` TEXT, `currentSocialSecurityNumber` TEXT, `currentMajorCitizenship` TEXT, `currentPassportNumber` TEXT, `currentPassportIssuePlace` TEXT, `currentPassportIssueDate` TEXT, `currentPassportExpirationDate` TEXT, `homeAddress1` TEXT, `homeAddress2` TEXT, `homeWard` TEXT, `homeDistrict` TEXT, `homeCity` TEXT, `homeProvince` TEXT, `homeState` TEXT, `homeCountry` TEXT, `homePostalCode` TEXT, `currentAddress1` TEXT, `currentAddress2` TEXT, `currentWard` TEXT, `currentDistrict` TEXT, `currentCity` TEXT, `currentProvince` TEXT, `currentState` TEXT, `currentCountry` TEXT, `currentPostalCode` TEXT, `comments` TEXT, `commentsEn` TEXT, `closeupPicture1` TEXT, `closeupPicture2` TEXT, `avatarPicture` TEXT, `signatureImage` TEXT, `createdDatetime` TEXT, `createdByUserId` INTEGER, `updatedDatetime` TEXT, `updatedByUserId` INTEGER, `currentEmail` TEXT, `currentPhoneNumber1` TEXT, `currentPhoneNumber2` TEXT)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `parent_table` (`parentId` INTEGER PRIMARY KEY AUTOINCREMENT, `personToPersonPersonalRelationshipTypeName` TEXT, `personToPersonPersonalRelationshipTypeNameEn` TEXT, `approved` INTEGER, `approvedByUserId` INTEGER, `approvedDatetime` TEXT, `personId` INTEGER, `accountUser` INTEGER)');
         await database.execute(
@@ -341,10 +341,10 @@ class _$QRGeneratedDao extends QRGeneratedDao {
 class _$PersonDao extends PersonDao {
   _$PersonDao(this.database, this.changeListener)
       : _queryAdapter = QueryAdapter(database),
-        _personInsertionAdapter = InsertionAdapter(
+        _personTableInsertionAdapter = InsertionAdapter(
             database,
             'person_table',
-            (Person item) => <String, Object?>{
+            (PersonTable item) => <String, Object?>{
                   'personId': item.personId,
                   'employeeIdNumber': item.employeeIdNumber,
                   'currentPersonalTitleId': item.currentPersonalTitleId,
@@ -410,14 +410,13 @@ class _$PersonDao extends PersonDao {
                   'updatedByUserId': item.updatedByUserId,
                   'currentEmail': item.currentEmail,
                   'currentPhoneNumber1': item.currentPhoneNumber1,
-                  'currentPhoneNumber2': item.currentPhoneNumber2,
-                  'staffId': item.staffId
+                  'currentPhoneNumber2': item.currentPhoneNumber2
                 }),
-        _personDeletionAdapter = DeletionAdapter(
+        _personTableDeletionAdapter = DeletionAdapter(
             database,
             'person_table',
             ['personId'],
-            (Person item) => <String, Object?>{
+            (PersonTable item) => <String, Object?>{
                   'personId': item.personId,
                   'employeeIdNumber': item.employeeIdNumber,
                   'currentPersonalTitleId': item.currentPersonalTitleId,
@@ -483,8 +482,7 @@ class _$PersonDao extends PersonDao {
                   'updatedByUserId': item.updatedByUserId,
                   'currentEmail': item.currentEmail,
                   'currentPhoneNumber1': item.currentPhoneNumber1,
-                  'currentPhoneNumber2': item.currentPhoneNumber2,
-                  'staffId': item.staffId
+                  'currentPhoneNumber2': item.currentPhoneNumber2
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -493,14 +491,14 @@ class _$PersonDao extends PersonDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Person> _personInsertionAdapter;
+  final InsertionAdapter<PersonTable> _personTableInsertionAdapter;
 
-  final DeletionAdapter<Person> _personDeletionAdapter;
+  final DeletionAdapter<PersonTable> _personTableDeletionAdapter;
 
   @override
-  Future<List<Person>> getPersons() async {
+  Future<List<PersonTable>> getPersons() async {
     return _queryAdapter.queryList('SELECT * FROM person_table',
-        mapper: (Map<String, Object?> row) => Person(
+        mapper: (Map<String, Object?> row) => PersonTable(
             personId: row['personId'] as int,
             employeeIdNumber: row['employeeIdNumber'] as String?,
             currentPersonalTitleId: row['currentPersonalTitleId'] as int?,
@@ -570,14 +568,13 @@ class _$PersonDao extends PersonDao {
             updatedByUserId: row['updatedByUserId'] as int?,
             currentEmail: row['currentEmail'] as String?,
             currentPhoneNumber1: row['currentPhoneNumber1'] as String?,
-            currentPhoneNumber2: row['currentPhoneNumber2'] as String?,
-            staffId: row['staffId'] as int?));
+            currentPhoneNumber2: row['currentPhoneNumber2'] as String?));
   }
 
   @override
-  Future<Person?> getPersonById(int personId) async {
+  Future<PersonTable?> getPersonById(int personId) async {
     return _queryAdapter.query('SELECT * FROM person_table WHERE personId = ?1',
-        mapper: (Map<String, Object?> row) => Person(
+        mapper: (Map<String, Object?> row) => PersonTable(
             personId: row['personId'] as int,
             employeeIdNumber: row['employeeIdNumber'] as String?,
             currentPersonalTitleId: row['currentPersonalTitleId'] as int?,
@@ -647,19 +644,19 @@ class _$PersonDao extends PersonDao {
             updatedByUserId: row['updatedByUserId'] as int?,
             currentEmail: row['currentEmail'] as String?,
             currentPhoneNumber1: row['currentPhoneNumber1'] as String?,
-            currentPhoneNumber2: row['currentPhoneNumber2'] as String?,
-            staffId: row['staffId'] as int?),
+            currentPhoneNumber2: row['currentPhoneNumber2'] as String?),
         arguments: [personId]);
   }
 
   @override
-  Future<void> insertPerson(Person person) async {
-    await _personInsertionAdapter.insert(person, OnConflictStrategy.replace);
+  Future<void> insertPerson(PersonTable person) async {
+    await _personTableInsertionAdapter.insert(
+        person, OnConflictStrategy.replace);
   }
 
   @override
-  Future<void> deletePerson(Person person) async {
-    await _personDeletionAdapter.delete(person);
+  Future<void> deletePerson(PersonTable person) async {
+    await _personTableDeletionAdapter.delete(person);
   }
 }
 

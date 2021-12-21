@@ -46,9 +46,9 @@ class _ClassroomBodyState extends State<ClassroomBody> {
   }
   @override
   Widget build(BuildContext context) {
-    final List<ItemMenu> listItemsClassroom = [];
+    List<ItemMenu> listItemsClassroom = [];
     if(roleId == 1){
-      List<ItemMenu> listItemsClassroom = [
+    listItemsClassroom = [
         ItemMenu(
             1,(AppLocalizations.of(context)!.classInformation),
             "assets/icons/ic_information_classroom.svg",
@@ -62,7 +62,7 @@ class _ClassroomBodyState extends State<ClassroomBody> {
             RouteConstants.classInformation),
       ];
     }else if (roleId == 2){
-      List<ItemMenu> listItemsClassroom = [
+    listItemsClassroom = [
         ItemMenu(
             1,(AppLocalizations.of(context)!.classInformation),
             "assets/icons/ic_information_classroom.svg",
@@ -70,7 +70,7 @@ class _ClassroomBodyState extends State<ClassroomBody> {
         ItemMenu(2, (AppLocalizations.of(context)!.viewCamera), "assets/icons/ic_camera.svg",
             RouteConstants.classInformation),
         ItemMenu(3, (AppLocalizations.of(context)!.sendRequest), "assets/icons/ic_create_qr.svg",
-            RouteConstants.generatedQCode),
+            RouteConstants.classInformation),
 
         ItemMenu(4, (AppLocalizations.of(context)!.childPickupHistory), "assets/icons/ic_history.svg",
             RouteConstants.classInformation),

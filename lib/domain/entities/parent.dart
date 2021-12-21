@@ -10,7 +10,7 @@ class Parent extends Equatable {
   final bool? approved;
   final int? approvedByUserId;
   final String? approvedDatetime;
-  final Person? personDetail;
+  final PersonTable? personDetail;
   final bool? accountUser;
 
   const Parent(

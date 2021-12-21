@@ -1,4 +1,5 @@
 import 'package:children_pickup_monitoring/data/models/models.dart';
+import 'package:children_pickup_monitoring/data/models/person_table_model.dart';
 import 'package:children_pickup_monitoring/domain/entities/pupil.dart';
 
 class PupilModel extends Pupil {
@@ -20,7 +21,7 @@ class PupilModel extends Pupil {
     String? pupilToPupilStatusRelationshipTypeNameEn,
     String? datetime,
     String? reason,
-    PersonModel? personDetail,
+    PersonTableModel? personDetail,
   }) : super(
     className: className,
     pupilId: pupilId,
@@ -44,7 +45,7 @@ class PupilModel extends Pupil {
 
   factory PupilModel.fromJson(Map<String, dynamic> json) {
     var personDetail = json['PERSON_DETAIL'];
-    PersonModel person = PersonModel.fromJson(personDetail);
+    PersonTableModel person = PersonTableModel.fromJson(personDetail);
     return PupilModel(
       className: json['CLASS_NAME'] as String? ?? '',
       pupilId: (json['PUPIL_ID'] as double? ?? -1.0).toInt(),

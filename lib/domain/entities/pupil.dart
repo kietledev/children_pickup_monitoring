@@ -22,7 +22,7 @@ class Pupil extends Equatable {
 
 
 
-  final Person? personDetail;
+  final PersonTable? personDetail;
 
   const Pupil({
     this.className,
