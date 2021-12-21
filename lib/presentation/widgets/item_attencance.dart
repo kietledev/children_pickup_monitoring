@@ -41,13 +41,11 @@ class ItemAttencanceListView extends StatefulWidget{
 
 }
 class _ItemAttencanceListView extends State<ItemAttencanceListView>{
-
   bool isSwitched = true;
-
   var textValue = 'Switch is OFF';
 
-  String status = "Available";
   void toggleSwitch(bool value) {
+    String status = AppLocalizations.of(context)!.available;
     print(value);
     if(isSwitched == false)
     {
@@ -68,7 +66,7 @@ class _ItemAttencanceListView extends State<ItemAttencanceListView>{
   }
   @override
   Widget build(BuildContext context) {
-
+    String status = AppLocalizations.of(context)!.available;
     final titleColor =
     widget.isSelected ? Colors.white : ColorConstants.neutralColor1;
     final bgColor =

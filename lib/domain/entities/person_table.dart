@@ -2,9 +2,9 @@ import 'package:children_pickup_monitoring/common/constants/db_constants.dart';
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
 
-// @Entity(tableName: DBConstants.kPersonTableName)
-class Person extends Equatable {
-  // @PrimaryKey(autoGenerate: true)
+@Entity(tableName: DBConstants.kPersonTableName)
+class PersonTable extends Equatable {
+  @PrimaryKey(autoGenerate: true)
   final int personId;
   final String? employeeIdNumber;
   final int? currentPersonalTitleId;
@@ -70,7 +70,7 @@ class Person extends Equatable {
   final String? currentPhoneNumber1;
   final String? currentPhoneNumber2;
 
-  const Person({
+  const PersonTable({
     required this.personId,
     this.employeeIdNumber,
     this.currentPersonalTitleId,
@@ -142,11 +142,11 @@ class Person extends Equatable {
       return '${currentLastName!.trim()} ${currentMiddleName!.trim()} ${currentFirstName!.trim()}';
     }
   }
-  static const empty = Person(personId: -1);
+  static const empty = PersonTable(personId: -1);
 
-  bool get isEmpty => this == Person.empty;
+  bool get isEmpty => this == PersonTable.empty;
 
-  bool get isNotEmpty => this != Person.empty;
+  bool get isNotEmpty => this != PersonTable.empty;
   @override
   List<Object> get props {
     return [

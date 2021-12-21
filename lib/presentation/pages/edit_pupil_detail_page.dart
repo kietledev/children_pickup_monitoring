@@ -134,7 +134,7 @@ class _EditPupilDetailPage extends State<EditPupilDetailPage>{
                               width: 135,
                               press: () {
                                 setState(() {
-                                  _enabled = false;
+                                  Navigator.pop(context);
                                   // getUserInit();
                                 });
                               },
@@ -144,6 +144,7 @@ class _EditPupilDetailPage extends State<EditPupilDetailPage>{
                               text: (AppLocalizations.of(context)!.confirm),
                               width: 135,
                               press: () {
+                                updatePupil();
                                 // getUser().then((value) => updateProfile(value!.personId,value.userId));
                               },
                             )
@@ -246,6 +247,15 @@ class _EditPupilDetailPage extends State<EditPupilDetailPage>{
                 ],
               ));
         });
+  }
+  void updatePupil(){
+    print(avatar);
+    print(_lastName.text.trim());
+    print(_firstName.text.trim());
+    print(_middleName.text.trim());
+    print(_height.text.trim());
+    print(_weight.text.trim());
+    print(  year + '-' + month + '-' + day + "T00:00:00.000Z");
   }
   void takePhoto(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);

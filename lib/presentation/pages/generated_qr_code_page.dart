@@ -101,14 +101,14 @@ Future<List<PickUpGenerated>> getAllQRCode( ) async{
     Parent pickupParent = new Parent();
     List<TablePupil?> tPupils = await appDatabase.appPupilDao.getPupilById(i.pupilId1!,i.pupilId2!, i.pupilId3!);
     for (TablePupil? m in tPupils) {
-      Person? person = await appDatabase.appPersonDao.getPersonById(m!.personId!);
+      Person? person = (await appDatabase.appPersonDao.getPersonById(m!.personId!)) as Person?;
       Pupil pupil = new Pupil(pupilId: m.pupilId, classId: m.classId,className: m.className,personToPersonPersonalRelationshipTypeName: m.personToPersonPersonalRelationshipTypeName,
           personToPersonPersonalRelationshipTypeNameEn: m.personToPersonPersonalRelationshipTypeNameEn,currentPhoneNumber2Parent: m.currentPhoneNumber2Parent, currentPhoneNumber1Parent: m.currentPhoneNumber1Parent,
           currentFirstNameParent: m.currentFirstNameParent,currentMiddleNameParent: m.currentMiddleNameParent, currentLastNameParent: m.currentLastNameParent,personDetail: person);
       pickupPupils.add(pupil);
     }
     TableParent? tParent = await appDatabase.appParentDao.getParentById(i.parentId!);
-    Person? personParent = await appDatabase.appPersonDao.getPersonById(tParent!.personId!);
+    Person? personParent = (await appDatabase.appPersonDao.getPersonById(tParent!.personId!)) as Person?;
     pickupParent = new Parent(parentId:tParent.parentId, personToPersonPersonalRelationshipTypeName: tParent.personToPersonPersonalRelationshipTypeName,personToPersonPersonalRelationshipTypeNameEn: tParent.personToPersonPersonalRelationshipTypeNameEn,
         accountUser: tParent.accountUser, approvedDatetime: tParent.approvedDatetime, approvedByUserId: tParent.approvedByUserId, approved: tParent.approved, personDetail: personParent);
     PickUpGenerated pickupQR = new PickUpGenerated(pickupPupils, i.timePickUp, i.requestId, i.pupilId1, i.pupilId2, i.pupilId3, i.cardId, i.datePickUp, i.placePickUp,

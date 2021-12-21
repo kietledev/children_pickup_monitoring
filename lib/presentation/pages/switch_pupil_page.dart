@@ -67,6 +67,7 @@ class _BodySwitchPupilPage extends State<BodySwitchPupilPage>{
       if (state is FetchPupilByParentSuccessState) {
         EasyLoading.dismiss();
         pupils = state.pupils!;
+        //Lưu id trẻ
         return Container(
           decoration: BoxDecoration(
             image: DecorationImage(
