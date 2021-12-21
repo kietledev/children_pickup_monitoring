@@ -12,11 +12,10 @@ import 'DAOs/user_dao.dart';
 import 'DAOs/parent_dao.dart';
 part 'app_database.g.dart';
 
-@Database(version: 1, entities: [User, TablePickUpGenerated, Person, TableParent, TablePupil])
+@Database(version: 1, entities: [User, TablePickUpGenerated, TableParent, TablePupil])
 abstract class AppDatabase extends FloorDatabase {
   UserDao get appUserDao;
   QRGeneratedDao get appQRGeneratedDao;
-  PersonDao get appPersonDao;
   ParentDao get appParentDao;
   PupilDao get appPupilDao;
 }
