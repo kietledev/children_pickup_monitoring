@@ -35,4 +35,6 @@ class RouteConstants {
   static const String editPupilDetail= "/EditPupilDetail";
   static const String classAttendance= "/ClassAttendance";
   static const String editAttendance= "/EditAttendance";
+  static const String pickUpHistory= "/pickUpHistory";
+  static const String pickUpHistoryDetail= "/pickUpHistoryDetail";
 }

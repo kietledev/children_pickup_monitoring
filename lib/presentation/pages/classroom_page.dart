@@ -59,7 +59,7 @@ class _ClassroomBodyState extends State<ClassroomBody> {
             RouteConstants.generatedQCode),
 
         ItemMenu(4, (AppLocalizations.of(context)!.childPickupHistory), "assets/icons/ic_history.svg",
-            RouteConstants.classInformation),
+            RouteConstants.pickUpHistory),
       ];
     }else if (roleId == 2){
     listItemsClassroom = [
@@ -73,7 +73,7 @@ class _ClassroomBodyState extends State<ClassroomBody> {
             RouteConstants.classInformation),
 
         ItemMenu(4, (AppLocalizations.of(context)!.childPickupHistory), "assets/icons/ic_history.svg",
-            RouteConstants.classInformation),
+            RouteConstants.pickUpHistory),
       ];
     }
 

@@ -5,6 +5,8 @@ import 'package:children_pickup_monitoring/presentation/pages/camera_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/message_detail_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/notification_detail_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pages.dart';
+import 'package:children_pickup_monitoring/presentation/pages/pick_up_history.dart';
+import 'package:children_pickup_monitoring/presentation/pages/pick_up_history_detail.dart';
 import 'package:children_pickup_monitoring/presentation/pages/pupil_detail_page.dart';
 import 'package:children_pickup_monitoring/presentation/pages/qr_card_info_page.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +101,9 @@ class PageModule extends DIModule {
         instanceName: RouteConstants.classAttendance);
     injector.registerFactory<Widget>(() => EditAttendancePage(),
         instanceName: RouteConstants.editAttendance);
-
+    injector.registerFactory<Widget>(() => PickUpHistory(),
+        instanceName: RouteConstants.pickUpHistory);
+    injector.registerFactory<Widget>(() => PickUpHistoryDetail(),
+        instanceName: RouteConstants.pickUpHistoryDetail);
   }
 }
