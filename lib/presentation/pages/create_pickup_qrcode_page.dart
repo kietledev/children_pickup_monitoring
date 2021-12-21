@@ -160,7 +160,7 @@ class _CreateQRCodeBody extends State<CreateQRCodeBody> {
     return await appDatabase.appPupilDao.insertPupil(pupil);
   }
 
-  Future<void> savePerson( Person person) async{
+  Future<void> savePerson( PersonTable person) async{
     return await appDatabase.appPersonDao.insertPerson(person);
   }
 

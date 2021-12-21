@@ -68,6 +68,7 @@ class UseCaseModule extends DIModule {
         injector
         .registerSingleton<MessageDetailUseCase>(MessageDetailUseCase(injector()));
     // injector.registerSingleton<PostPasswordUseCase>(PostPasswordUseCase(injector()));
+
     /*Get list notification Usecase */
     injector.registerSingleton<GetNotificationUseCase>(GetNotificationUseCase(injector()));
     /*Get list classRoom Usecase */

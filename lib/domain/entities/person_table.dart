@@ -1,12 +1,10 @@
 import 'package:children_pickup_monitoring/common/constants/db_constants.dart';
-import 'package:children_pickup_monitoring/domain/entities/entities.dart';
-import 'package:children_pickup_monitoring/domain/entities/staff_class_detail.dart';
 import 'package:equatable/equatable.dart';
 import 'package:floor/floor.dart';
 
-// @Entity(tableName: DBConstants.kPersonTableName)
-class Person extends Equatable {
-  // @PrimaryKey(autoGenerate: true)
+@Entity(tableName: DBConstants.kPersonTableName)
+class PersonTable extends Equatable {
+  @PrimaryKey(autoGenerate: true)
   final int personId;
   final String? employeeIdNumber;
   final int? currentPersonalTitleId;
@@ -71,10 +69,8 @@ class Person extends Equatable {
   final String? currentEmail;
   final String? currentPhoneNumber1;
   final String? currentPhoneNumber2;
-  final int? staffId;
-  final List<StaffClassDetail>? staffClassDetail;
 
-  const Person({
+  const PersonTable({
     required this.personId,
     this.employeeIdNumber,
     this.currentPersonalTitleId,
@@ -138,10 +134,7 @@ class Person extends Equatable {
     this.updatedByUserId,
     this.currentEmail,
     this.currentPhoneNumber1,
-    this.currentPhoneNumber2,
-    this.staffId,
-    this.staffClassDetail
-  });
+    this.currentPhoneNumber2});
   String getFullName() {
     if (currentMiddleName!.isEmpty) {
       return '${currentLastName!.trim()} ${currentFirstName!.trim()}';
@@ -149,11 +142,11 @@ class Person extends Equatable {
       return '${currentLastName!.trim()} ${currentMiddleName!.trim()} ${currentFirstName!.trim()}';
     }
   }
-  static const empty = Person(personId: -1);
+  static const empty = PersonTable(personId: -1);
 
-  bool get isEmpty => this == Person.empty;
+  bool get isEmpty => this == PersonTable.empty;
 
-  bool get isNotEmpty => this != Person.empty;
+  bool get isNotEmpty => this != PersonTable.empty;
   @override
   List<Object> get props {
     return [
@@ -221,8 +214,6 @@ class Person extends Equatable {
       currentEmail!,
       currentPhoneNumber1!,
       currentPhoneNumber2!,
-      staffId!,
-      staffClassDetail!
     ];
   }
 
@@ -295,7 +286,5 @@ class Person extends Equatable {
     "CURRENT_EMAIL":currentEmail,
     "CURRENT_PHONE_NUMBER_1":currentPhoneNumber1,
     "CURRENT_PHONE_NUMBER_2":currentPhoneNumber2,
-    "STAFF_ID":staffId,
-    "StaffClassDetail":staffClassDetail,
   };
 }
