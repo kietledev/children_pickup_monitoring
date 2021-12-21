@@ -129,16 +129,9 @@ class _EditProfileBody extends State<EditProfileBody> {
                 EasyLoading.dismiss();
                 if (state is ClassRoomsSuccessState) {
                   setState(() {
-                    //print(state.classRooms!.length);
                     listClassRoom = state.classRooms!;
                   });
                 }
-                // if (state is FetchClassRoomByTeacherSuccessState) {
-                //   setState(() {
-                //     print(state.classRoomsTeacher!.length);
-                //     // listClassRoom = state.classRooms!;
-                //   });
-                // }
                   else if (state is FetchClassRoomFailureState) {
                   print("Loix");
                   UiHelper.showMyDialog(
@@ -180,7 +173,11 @@ class _EditProfileBody extends State<EditProfileBody> {
                         SizedBox(height: 24,),
                         (roleId == 1)
                             ? SizedBox.shrink()
-                            :  TextFieldCustom(controller: _staffId, title: "Mã cán bộ:", enabled: false),
+                            :  TextFieldCustom(
+                            controller: _staffId,
+                            title: "Mã cán bộ:",
+                            enabled: false
+                        ),
                         TextFieldCustom(
                           controller: _fullName,
                           title: (AppLocalizations.of(context)!.fullName),
@@ -376,6 +373,12 @@ class _EditProfileBody extends State<EditProfileBody> {
         _yearOfBirth.text =
             Utils.formatDateTime('${state.person?.birthDate ?? ""}');
         _fullName.text = state.person!.getFullName();
+        final pref = Preferences();
+        pref.getProfilePreference().then((value){
+          setState(() {
+            listStaffClassDetail = value!.staffClassDetail!;
+          });
+        });
         WidgetsBinding.instance!.addPostFrameCallback((_) => CustomWidgetsSnackBar.buildSuccessSnackbar(context, "Cập nhật thông tin thành công"));
         setState(() {
           _enabled = false;
