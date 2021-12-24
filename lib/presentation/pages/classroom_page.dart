@@ -58,7 +58,7 @@ class _ClassroomBodyState extends State<ClassroomBody> {
         ItemMenu(3, (AppLocalizations.of(context)!.sendRequest), "assets/icons/ic_create_qr.svg",
             RouteConstants.generatedQCode),
         ItemMenu(4, (AppLocalizations.of(context)!.childPickupHistory), "assets/icons/ic_history.svg",
-            RouteConstants.classInformation),
+            RouteConstants.pickUpHistory),
       ];
     }else if (roleId == 2){
     listItemsClassroom = [
@@ -71,7 +71,7 @@ class _ClassroomBodyState extends State<ClassroomBody> {
         ItemMenu(3, (AppLocalizations.of(context)!.sendRequest), "assets/icons/ic_create_qr.svg",
             RouteConstants.checkQRCodeTeacher),
         ItemMenu(4, (AppLocalizations.of(context)!.childPickupHistory), "assets/icons/ic_history.svg",
-            RouteConstants.classInformation),
+            RouteConstants.pickUpHistory),
       ];
     }
 

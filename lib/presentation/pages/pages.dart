@@ -32,6 +32,7 @@ export 'class_attendance_page.dart';
 export 'edit_attendance_page.dart';
 export 'check_qrcode_teacher_page.dart';
 
+export 'pick_up_history.dart';
 
 
 
