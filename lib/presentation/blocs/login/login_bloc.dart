@@ -50,6 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     preferences.setSchoolFinishTime(schoolFinishTime);
     preferences.setWarningTime(warningTime);
     preferences.setUserPreference(user);
+    preferences.setClassPupil(user.classId);
     preferences.setIsRemember();
     preferences.setIDpupil(user.toPupilId);
   }

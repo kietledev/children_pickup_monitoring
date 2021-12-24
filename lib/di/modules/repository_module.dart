@@ -26,8 +26,7 @@ class RepositoryModule extends DIModule {
         TeachersRepositoryImpl(injector()));
 
     /* Pupil repository */
-    injector
-        .registerSingleton<PupilsRepository>(PupilsRepositoryImpl(injector()));
+    injector.registerSingleton<PupilsRepository>(PupilsRepositoryImpl(injector(),injector()));
 
     /* Achievement repository */
     injector.registerSingleton<AchievementsRepository>(

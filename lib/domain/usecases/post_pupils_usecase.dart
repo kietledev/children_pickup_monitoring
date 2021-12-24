@@ -14,4 +14,5 @@ class PostPupilsUseCase
   Future<DataState<List<Pupil>>> call({PostPupilsRequest? params}) {
     return _pupilsRepository.postPupil(params!);
   }
+
 }

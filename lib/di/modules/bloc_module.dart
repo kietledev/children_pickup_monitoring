@@ -28,7 +28,7 @@ class BlocModule extends DIModule {
     injector.registerFactory<TeachersBloc>(() => TeachersBloc(injector()));
 
     /* Fetch Pupil */
-    injector.registerFactory<PupilsBloc>(() => PupilsBloc(injector()));
+    injector.registerFactory<PupilsBloc>(() => PupilsBloc(injector(),injector()));
 
     /* Fetch Achievement */
     injector
@@ -75,8 +75,7 @@ class BlocModule extends DIModule {
     injector.registerFactory<PickUpBloc>(() =>PickUpBloc(injector(), injector()));
 
     /* Message Page Bloc */
-    injector
-        .registerFactory<MessagePageBloc>(() => MessagePageBloc(injector()));
+    injector.registerFactory<MessagePageBloc>(() => MessagePageBloc(injector()));
 
   }
 }

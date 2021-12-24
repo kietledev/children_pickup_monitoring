@@ -1,6 +1,7 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/data/models/user_model.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/pupil.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
@@ -43,23 +44,40 @@ class ClassDetailsBody extends StatefulWidget {
 
 class _ClassDetailsBodyState extends State<ClassDetailsBody> {
   int currentIndex = -1;
-  int _role = 2;
-  List<int> pupilIds = [1,2];
+  int roleId = -1;
+  int personId = -1;
+  UserModel? userModel;
+
+  List<int> pupilIds = [];
   int classId = -1;
   @override
   void initState() {
+    getUserId();
+
     super.initState();
-    initBloc();
-  }
-  initBloc() async{
-    // classId = await get();
-    print( DateTime.now().toString());
-    BlocProvider.of<PupilsBloc>(context).add(FetchPupils(classId: 5, date: DateTime.now().toString()));
+
+
   }
 
-
-
-
+  getUserId() async {
+    userModel = await getUser();
+    classId = await getClassID();
+    setState(() {
+      roleId = userModel!.roleId;
+      personId = userModel!.personId;
+      classId = classId;
+    });
+    BlocProvider.of<PupilsBloc>(context).add(FetchPupils(classId: classId, date: DateTime.now().toString()));
+    if(roleId == 1){
+      getPupils();
+    }
+  }
+  getPupils() async{
+    pupilIds = await getListPupilID();
+    setState(() {
+      pupilIds = pupilIds;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PupilsBloc, PupilsState>(builder: (context, state) {
@@ -93,12 +111,11 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       final item = pupils[index];
-
                       return ItemTeacherPupilListView(
                         index: index,
                         genderId: item.personDetail!.currentGenderId!,
                         pupilIds:pupilIds,
-                        role: _role,
+                        role: roleId,
                         pupilId: item.pupilId,
                         avtDefaultMale: 'assets/images/img_child_avt_trai.png',
                         avtDefaultFemale: 'assets/images/img_child_avt_gai.png',
@@ -109,22 +126,17 @@ class _ClassDetailsBodyState extends State<ClassDetailsBody> {
                           setState(() {
                             currentIndex = index;
                           });
-                          if (_role == 1) {
+                          if (roleId == 1) {
                             if ( pupilIds.contains(item.pupilId!) == true){
                               Navigator.pushNamed(
                                   context, RouteConstants.pupilDetails,
                                   arguments: item);
                             }
-
                               }else{
                                 Navigator.pushNamed(
                                 context, RouteConstants.pupilDetails,
                                 arguments: item);
-
                           }
-
-
-
                         },
                       );
                     },

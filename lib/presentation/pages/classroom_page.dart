@@ -57,7 +57,6 @@ class _ClassroomBodyState extends State<ClassroomBody> {
             RouteConstants.classInformation),
         ItemMenu(3, (AppLocalizations.of(context)!.sendRequest), "assets/icons/ic_create_qr.svg",
             RouteConstants.generatedQCode),
-
         ItemMenu(4, (AppLocalizations.of(context)!.childPickupHistory), "assets/icons/ic_history.svg",
             RouteConstants.classInformation),
       ];
@@ -70,8 +69,7 @@ class _ClassroomBodyState extends State<ClassroomBody> {
         ItemMenu(2, (AppLocalizations.of(context)!.viewCamera), "assets/icons/ic_camera.svg",
             RouteConstants.classInformation),
         ItemMenu(3, (AppLocalizations.of(context)!.sendRequest), "assets/icons/ic_create_qr.svg",
-            RouteConstants.classInformation),
-
+            RouteConstants.checkQRCodeTeacher),
         ItemMenu(4, (AppLocalizations.of(context)!.childPickupHistory), "assets/icons/ic_history.svg",
             RouteConstants.classInformation),
       ];

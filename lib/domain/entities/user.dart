@@ -19,6 +19,8 @@ class User extends Equatable {
   final int fromParentId;
   final int toPupilId;
   final String staffIdNumber;
+  final int classId;
+  final String className;
 
   const User({
     required this.userId,
@@ -34,7 +36,9 @@ class User extends Equatable {
     required this.roleAllowDelete,
     required this.fromParentId,
     required this.toPupilId,
-    required this.staffIdNumber
+    required this.staffIdNumber,
+    required this.classId,
+    required this.className
   });
 
   @override
@@ -53,7 +57,9 @@ class User extends Equatable {
       roleAllowDelete,
       fromParentId,
       toPupilId,
-      staffIdNumber
+      staffIdNumber,
+      className,
+      classId
     ];
   }
 
@@ -74,7 +80,8 @@ class User extends Equatable {
         "ROLE_ALLOW_DELETE": roleAllowDelete,
         "FROM_PARENT_ID": fromParentId,
         "TO_PUPIL_ID": toPupilId,
-        
         "STAFF_ID_NUMBER": staffIdNumber,
+        "CLASS_ID": classId,
+        "CLASS_NAME": className,
       };
 }

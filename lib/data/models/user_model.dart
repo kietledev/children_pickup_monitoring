@@ -15,7 +15,10 @@ class UserModel extends User {
       required bool roleAllowDelete,
       required int fromParentId,
       required String staffIdNumber,
-      required int toPupilId})
+      required int toPupilId,
+        required String className,
+        required int classId
+      })
       : super(
             userId: userId,
             personId: personId,
@@ -30,7 +33,9 @@ class UserModel extends User {
             roleAllowDelete: roleAllowDelete,
             fromParentId: fromParentId,
             toPupilId: toPupilId,
-            staffIdNumber: staffIdNumber
+            staffIdNumber: staffIdNumber,
+            classId: classId,
+            className: className
   );
 
   factory UserModel.fromJson(Map<String, dynamic> map) {
@@ -48,7 +53,10 @@ class UserModel extends User {
         roleAllowDelete: map["ROLE_ALLOW_DELETE"] as bool? ?? false,
         fromParentId: (map["FROM_PARENT_ID"] as double? ?? 0.0).toInt(),
         staffIdNumber: map["STAFF_ID_NUMBER"] as String? ?? "",
-        toPupilId: (map["TO_PUPIL_ID"] as double? ?? 0.0).toInt());
+        toPupilId: (map["TO_PUPIL_ID"] as double? ?? 0.0).toInt(),
+        classId: (map["CLASS_ID"]as double? ?? 0.0).toInt(),
+        className: map["CLASS_NAME"] as String? ?? "",
+    );
   }
 
   factory UserModel.json(Map<String, dynamic> map) {
@@ -66,6 +74,8 @@ class UserModel extends User {
         roleAllowDelete: map["ROLE_ALLOW_DELETE"] as bool? ?? false,
         fromParentId: map["FROM_PARENT_ID"] as int? ?? 0,
         staffIdNumber: map["STAFF_ID_NUMBER"] as String? ?? "",
-        toPupilId: map["TO_PUPIL_ID"] as int? ?? 0);
+        toPupilId: map["TO_PUPIL_ID"] as int? ?? 0,
+        classId: map["CLASS_ID"]as int? ?? 0,
+        className: map["CLASS_NAME"] as String? ?? "");
   }
 }

@@ -99,6 +99,8 @@ class PageModule extends DIModule {
         instanceName: RouteConstants.classAttendance);
     injector.registerFactory<Widget>(() => EditAttendancePage(),
         instanceName: RouteConstants.editAttendance);
+    injector.registerFactory<Widget>(() => CheckQRCodeTeacherPage(),
+        instanceName: RouteConstants.checkQRCodeTeacher);
 
   }
 }

@@ -9,6 +9,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemAttencanceListView extends StatefulWidget{
   final int index;
   final bool isSelected;
+  final String pupilToPupilStatusRelationshipTypeName;
+  final int? pupilToPupilStatusRelationshipTypeId;
   final bool? position;
   final int genderId;
   final String avatar;
@@ -28,6 +30,8 @@ class ItemAttencanceListView extends StatefulWidget{
     this.role,
     required this.genderId,
     required this.avatar,
+    this.pupilToPupilStatusRelationshipTypeId,
+    required this.pupilToPupilStatusRelationshipTypeName,
     this.pupilId,
     this.avtDefaultFemale,
     this.avtDefaultMale,
@@ -43,15 +47,29 @@ class ItemAttencanceListView extends StatefulWidget{
 class _ItemAttencanceListView extends State<ItemAttencanceListView>{
   bool isSwitched = true;
   var textValue = 'Switch is OFF';
+  String status ='';
+  @override
+  void initState() {
+    setStatus();
+    super.initState();
 
+  }
+  void setStatus(){
+    status = widget.pupilToPupilStatusRelationshipTypeName;
+    if(widget.pupilToPupilStatusRelationshipTypeId == 1){
+      isSwitched = true;
+    }else{
+      isSwitched = false;
+    }
+  }
   void toggleSwitch(bool value) {
-    String status = AppLocalizations.of(context)!.available;
+
     print(value);
     if(isSwitched == false)
     {
       setState(() {
         isSwitched = true;
-        status = AppLocalizations.of(context)!.available;
+        status = AppLocalizations.of(context)!.present;
       });
       print('Switch Button is ON'+ widget.index.toString());
     }
@@ -59,14 +77,14 @@ class _ItemAttencanceListView extends State<ItemAttencanceListView>{
     {
       setState(() {
         isSwitched = false;
-        status = AppLocalizations.of(context)!.absent;
+        status = AppLocalizations.of(context)!.offStatus;
       });
       print('Switch Button is OFF');
     }
   }
   @override
   Widget build(BuildContext context) {
-    String status = AppLocalizations.of(context)!.available;
+    // String status = widget.pupilToPupilStatusRelationshipTypeName;
     final titleColor =
     widget.isSelected ? Colors.white : ColorConstants.neutralColor1;
     final bgColor =
@@ -77,6 +95,7 @@ class _ItemAttencanceListView extends State<ItemAttencanceListView>{
     }else{
       bytesImage = base64.decode('${widget.avatar}');
     }
+
     return GestureDetector(
       onTap: widget.onSelect,
       child: Container(
@@ -147,7 +166,7 @@ class _ItemAttencanceListView extends State<ItemAttencanceListView>{
           Text(widget.position == true ? widget.fullName + " \n("+(AppLocalizations.of(context)!.homeroomTeacher)+")": widget.fullName,
               style: AttendanceStyle.contentStyle),
           Text(status,
-              style: status == AppLocalizations.of(context)!.available ? AttendanceStyle.contentStyle1: AttendanceStyle.contentStyle2),
+              style: status == AppLocalizations.of(context)!.present ? AttendanceStyle.contentStyle1: AttendanceStyle.contentStyle2),
           ]),
 
             const Spacer(),

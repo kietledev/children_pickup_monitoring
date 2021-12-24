@@ -23,3 +23,4 @@ export 'post_class_by_teacher_api_service.dart';
 export 'post_teacher_send_notification.dart';
 export 'post_message_to_group_by_groupId.dart';
 export 'get_list_class_rooms.dart';
+export 'post_update_profile_pupil_api_service.dart';

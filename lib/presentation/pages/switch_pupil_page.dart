@@ -47,17 +47,18 @@ class _BodySwitchPupilPage extends State<BodySwitchPupilPage>{
   void initState() {
     super.initState();
     getUserId();
-    getPupilID().then((value) => _onSelected(value));
+    getPupilID().then((value) => _onSelected(value, value));
   }
   getUserId() async {
     userModel = await getUser();
     parentId = userModel!.fromParentId;
     BlocProvider.of<PupilByParentBloc>(context).add(FetchPupilByParent(parentId: parentId));
   }
-  _onSelected(int index) {
+  _onSelected(int index, int classId) {
     setState(() {
       currentIndex = index;
       preferences.setIDpupil(index);
+      preferences.setClassPupil(classId);
     });
   }
   @override
@@ -68,6 +69,12 @@ class _BodySwitchPupilPage extends State<BodySwitchPupilPage>{
         EasyLoading.dismiss();
         pupils = state.pupils!;
         //Lưu id trẻ
+        List<int> pupilIDs = [];
+        for(int i = 0; i< pupils.length; i++){
+          pupilIDs.add(pupils[i].pupilId!);
+        }
+        preferences.setListPupilId(pupilIDs);
+
         return Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -86,7 +93,7 @@ class _BodySwitchPupilPage extends State<BodySwitchPupilPage>{
                     avatar: items.personDetail!.avatarPicture!,
                     fullName: items.getFullName(),
                     className: items.className!,
-                    onSelect: ()=>_onSelected(items.pupilId!)
+                    onSelect: ()=>_onSelected(items.pupilId!, items.classId!)
                   );
                 }
             ),

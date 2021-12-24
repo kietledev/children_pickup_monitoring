@@ -95,7 +95,6 @@
   "relationshipWithPupil": "Relationship with pupil",
   "classAttendance" : "Class Attendance",
   "note" : "Note",
-  "available" : "Available",
-  "absent" : "Absent"
+  "requestPickup": "Request Pickup"
 
 }

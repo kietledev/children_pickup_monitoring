@@ -1,8 +1,11 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
+import 'package:children_pickup_monitoring/common/helpers/utils.dart';
+import 'package:children_pickup_monitoring/data/models/user_model.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/blocs.dart';
+import 'package:children_pickup_monitoring/presentation/blocs/class_room/class_room_bloc.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +16,13 @@ class TeacherInformationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) =>
-          injector<TeachersBloc>()..add(const FetchTeaches(classId: 5)),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<TeachersBloc>(
+            create: (context) => injector<TeachersBloc>(),
+          ),
+        ],
+
       child:  Scaffold(
         appBar:  WidgetAppBar(
           title: (AppLocalizations.of(context)!.teacherInformation),
@@ -45,6 +52,28 @@ class _TeacherInformationBodyState extends State<TeacherInformationBody> {
   int currentIndex = -1;
   List<int> pupilIds = [];
   int _role =1;
+  int roleId = -1;
+  int personId = -1;
+  int classId = -1;
+  // int classId = -1;
+  UserModel? userModel;
+  @override
+  void initState() {
+    super.initState();
+    initBloc();
+  }
+  initBloc() async{
+    userModel = await getUser();
+    classId = await getClassID();
+    print(classId);
+    setState(() {
+      roleId = userModel!.roleId;
+      personId = userModel!.personId;
+      classId = classId;
+    });
+    print( DateTime.now().toString());
+    BlocProvider.of<TeachersBloc>(context).add(FetchTeaches(classId: classId));
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TeachersBloc, TeachersState>(builder: (context, state) {

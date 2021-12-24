@@ -30,6 +30,8 @@ export 'qr_card_info_page.dart';
 export 'edit_pupil_detail_page.dart';
 export 'class_attendance_page.dart';
 export 'edit_attendance_page.dart';
+export 'check_qrcode_teacher_page.dart';
+
 
 
 

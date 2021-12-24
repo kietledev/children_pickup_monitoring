@@ -35,4 +35,5 @@ class RouteConstants {
   static const String editPupilDetail= "/EditPupilDetail";
   static const String classAttendance= "/ClassAttendance";
   static const String editAttendance= "/EditAttendance";
+  static const String checkQRCodeTeacher= "/CheckQRCodeTeacher";
 }

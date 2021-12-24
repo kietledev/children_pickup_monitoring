@@ -35,5 +35,6 @@ class UrlConstatns {
   static const String apiPostTeacherSendNotification = urlServer + "teacherSendAnnoucementToClass";
   static const String apiPostNotificationRead = urlServer + "maskAnnoucementAsReadByAnnoucementId";
   static const String apiGetListClassRooms= urlServer + "api/getListClassRooms";
+  static const String apiUpdateProfilePupil= urlServer + "updateProfilePupil";
 
 }

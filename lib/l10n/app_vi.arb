@@ -59,7 +59,7 @@
   "className": "Tên lớp",
   "status": "Trạng thái",
   "present": "Hiện diện",
-  "offStatus": "Vắng",
+  "offStatus": "Vắng mặt",
   "reason": "Lý do",
   "childHeight": "Chiều cao",
   "childWeight": "Cân nặng",
@@ -94,6 +94,5 @@
   "relationshipWithPupil": "Mối quan hệ với bé",
   "classAttendance" : "Điểm danh",
   "note" : "Ghi chú",
-  "available" : "Có mặt",
-  "absent" : "Vắng"
+  "requestPickup": "Yêu cầu đón trẻ"
 }

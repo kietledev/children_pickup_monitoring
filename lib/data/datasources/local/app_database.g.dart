@@ -90,7 +90,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `user_table` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `personId` INTEGER NOT NULL, `currentFirstName` TEXT NOT NULL, `currentLastName` TEXT NOT NULL, `currentMiddleName` TEXT, `loginTime` TEXT NOT NULL, `roleId` INTEGER NOT NULL, `roleName` TEXT NOT NULL, `roleAllowAdd` INTEGER NOT NULL, `roleAllowUpdate` INTEGER NOT NULL, `roleAllowDelete` INTEGER NOT NULL, `fromParentId` INTEGER NOT NULL, `toPupilId` INTEGER NOT NULL, `staffIdNumber` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `user_table` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `personId` INTEGER NOT NULL, `currentFirstName` TEXT NOT NULL, `currentLastName` TEXT NOT NULL, `currentMiddleName` TEXT, `loginTime` TEXT NOT NULL, `roleId` INTEGER NOT NULL, `roleName` TEXT NOT NULL, `roleAllowAdd` INTEGER NOT NULL, `roleAllowUpdate` INTEGER NOT NULL, `roleAllowDelete` INTEGER NOT NULL, `fromParentId` INTEGER NOT NULL, `toPupilId` INTEGER NOT NULL, `staffIdNumber` TEXT NOT NULL, `classId` INTEGER NOT NULL, `className` TEXT NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `qrgenerated_table` (`requestId` INTEGER PRIMARY KEY AUTOINCREMENT, `timePickUp` TEXT, `pupilId1` INTEGER, `pupilId2` INTEGER, `pupilId3` INTEGER, `cardId` TEXT, `datePickUp` TEXT, `placePickUp` TEXT, `parentId` INTEGER, `addressSchool` TEXT, `stringQrcode` TEXT, `status` INTEGER)');
         await database.execute(
@@ -153,7 +153,9 @@ class _$UserDao extends UserDao {
                   'roleAllowDelete': item.roleAllowDelete ? 1 : 0,
                   'fromParentId': item.fromParentId,
                   'toPupilId': item.toPupilId,
-                  'staffIdNumber': item.staffIdNumber
+                  'staffIdNumber': item.staffIdNumber,
+                  'classId': item.classId,
+                  'className': item.className
                 }),
         _userDeletionAdapter = DeletionAdapter(
             database,
@@ -173,7 +175,9 @@ class _$UserDao extends UserDao {
                   'roleAllowDelete': item.roleAllowDelete ? 1 : 0,
                   'fromParentId': item.fromParentId,
                   'toPupilId': item.toPupilId,
-                  'staffIdNumber': item.staffIdNumber
+                  'staffIdNumber': item.staffIdNumber,
+                  'classId': item.classId,
+                  'className': item.className
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -203,7 +207,9 @@ class _$UserDao extends UserDao {
             roleAllowDelete: (row['roleAllowDelete'] as int) != 0,
             fromParentId: row['fromParentId'] as int,
             toPupilId: row['toPupilId'] as int,
-            staffIdNumber: row['staffIdNumber'] as String));
+            staffIdNumber: row['staffIdNumber'] as String,
+            classId: row['classId'] as int,
+            className: row['className'] as String));
   }
 
   @override

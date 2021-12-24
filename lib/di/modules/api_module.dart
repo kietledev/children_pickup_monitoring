@@ -95,6 +95,9 @@ class ApiModule extends DIModule {
     /*get list class room */
     injector.registerSingleton<GetListClassRoomsApiService>(
         GetListClassRoomsApiService(injector()));
+    /*update pupil */
+    injector.registerSingleton<PostUpdateProfilePupilApiService>(
+        PostUpdateProfilePupilApiService(injector()));
   }
 
 }

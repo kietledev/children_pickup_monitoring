@@ -3,6 +3,7 @@ import 'package:children_pickup_monitoring/domain/usecases/message_detail_usecas
 import 'package:children_pickup_monitoring/domain/usecases/message_page_usecase.dart';
 import 'package:children_pickup_monitoring/domain/usecases/post_parent_usercase.dart';
 import 'package:children_pickup_monitoring/domain/usecases/post_profile_usercase.dart';
+import 'package:children_pickup_monitoring/domain/usecases/post_update_profile_pupil_usecase.dart';
 import 'package:children_pickup_monitoring/domain/usecases/usecases.dart';
 
 import '../injection.dart';
@@ -85,5 +86,6 @@ class UseCaseModule extends DIModule {
     injector.registerSingleton<MessageSendUseCase>(MessageSendUseCase(injector()));
     /*classRoom */
     injector.registerSingleton<GetListClassRoomUseCase>(GetListClassRoomUseCase(injector()));
+    injector.registerSingleton<PostUpdateProfilePupilUseCase>(PostUpdateProfilePupilUseCase(injector()));
   }
 }

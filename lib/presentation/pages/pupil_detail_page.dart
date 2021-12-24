@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/data/models/user_model.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/avatar_gender.dart';
 import 'package:children_pickup_monitoring/presentation/widgets/custom_appbar.dart';
@@ -13,68 +14,68 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class PupilDetailsPage extends StatefulWidget {
   const PupilDetailsPage({Key? key}) : super(key: key);
-
   @override
   State<PupilDetailsPage> createState() => _PupilDetailsState();
-  // @override
-  // Widget build(BuildContext context) {
-  //   final pupil = ModalRoute.of(context)!.settings.arguments as Pupil;
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       elevation: 0.0,
-  //       flexibleSpace: Container(
-  //       decoration: BoxDecoration(
-  //       image: DecorationImage(
-  //       image: AssetImage('assets/images/img_bg_detail_child_A.png'),
-  //       fit: BoxFit.cover,
-  //           ),
-  //         ),
-  //       ),
-  //       centerTitle: true,
-  //       title: LinearGradientMask(
-  //             firstColor: Color(0xFF1D61F2),
-  //             secondColor: Color(0xFF26ABFB),
-  //             child: Text(
-  //               pupil.getFullName(),
-  //               style: TextStyle(
-  //                   color: Colors.white,
-  //                   fontWeight: FontWeight.w600,
-  //                   fontFamily: FontsConstants.notoSans,
-  //                   fontSize: 20),
-  //             ),
-  //           ),
-  //         ),
-  //     body: PupilDetailsBody(
-  //       pupil: pupil,
-  //     ),
-  //   );
-  // }
-
-
 }
-
 class _PupilDetailsState extends State<PupilDetailsPage> {
+  Pupil? pupil;
+  Pupil? pupilReturn;
   bool _enabled = false;
-
-
-
-
+  int roleId = -1;
+  int personId = -1;
+  String _birthday = "";
+  String _weight = "";
+  String _height = "";
+  String avatar = "";
+  UserModel? userModel;
   @override
-  Widget build(BuildContext context) {
-    final pupil = ModalRoute
+  void initState() {
+    getUserId();
+    super.initState();
+  }
+  getUserId() async {
+    userModel = await getUser();
+    setState(() {
+      roleId = userModel!.roleId;
+      personId = userModel!.personId;
+    });
+    pupil = ModalRoute
         .of(context)!
         .settings
         .arguments as Pupil;
+    _birthday = pupil!.personDetail!.birthDate!;
+    _weight = pupil!.pupilWeight.toString();
+    _height = pupil!.pupilHeight.toString();
+    avatar = pupil!.personDetail!.avatarPicture!;
     bool _enabled = false;
-    return Scaffold(
-        appBar: WidgetAppBar(
-        title: (AppLocalizations.of(context)!.profile),
-    menuItem: [itemButtonRightAppBar()],
-    hideBack: true,
-    actionBack: () {
-    Navigator.pop(context);
-    },
-    ),
+  }
+  _getRequests(Pupil pupilReturn)async{
+    setState(() {
+      _height = pupilReturn.pupilHeight.toString();
+      _birthday = pupilReturn.personDetail!.birthDate!;
+      _weight = pupilReturn.pupilWeight.toString();
+      avatar = pupilReturn.personDetail!.avatarPicture!;
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    if (pupilReturn == null){
+      pupil = ModalRoute
+            .of(context)!
+            .settings
+            .arguments as Pupil;
+    }else{
+      pupil = pupilReturn;
+    }
+   return Scaffold(
+          appBar: WidgetAppBar(
+          title: pupil?.getFullName() ?? "",
+            menuItem: roleId == 2 ? [itemButtonRightAppBar(pupil!)]: [],
+            hideBack: true,
+            actionBack: () {
+            Navigator.pop(context);
+            },
+        ),
 
 
      body: SingleChildScrollView(
@@ -94,8 +95,8 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                 children: [
                   Center(
                     child: AvatarGender(
-                      genderId: pupil.personDetail!.currentGenderId!,
-                      avatar: pupil.personDetail!.avatarPicture!,
+                      genderId: pupil!.personDetail!.currentGenderId!,
+                      avatar: avatar,
                       avatarFemaleNull: 'assets/images/img_child_avt_gai.png',
                       avatarMaleNull: 'assets/images/img_child_avt_trai.png',
                     ),
@@ -106,7 +107,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                     style: ProfileStyle.contentStyle2,
                   ),
                   CustomTextFieldMenu(
-                      value: pupil.getFullName(), style: QRCodeStyle.contentStyle2),
+                      value: pupil!.getFullName(), style: QRCodeStyle.contentStyle2),
                   SizedBox(height: 24.h),
                   Row(
                     children: [
@@ -121,7 +122,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                             ),
                             CustomTextFieldMenu(
                                 value: Utils.formatDateTime(
-                                    pupil.personDetail!.birthDate!),
+                                    _birthday),
                                 style: QRCodeStyle.contentStyle2),
                           ],
                         ),
@@ -137,7 +138,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                               style:  ProfileStyle.contentStyle2,
                             ),
                             CustomTextFieldMenu(
-                                value: pupil.className!, style: QRCodeStyle.contentStyle2),
+                                value: pupil!.className!, style: QRCodeStyle.contentStyle2),
                           ],
                         ),
                       )
@@ -156,7 +157,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                               style:  ProfileStyle.contentStyle2,
                             ),
                             CustomTextFieldMenu(
-                                value: pupil
+                                value: pupil!
                                     .pupilToPupilStatusRelationshipTypeName!,
                                 style: QRCodeStyle.contentStyle2),
                           ],
@@ -165,7 +166,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                       SizedBox(width: 24.w),
                       Expanded(
                         flex: 1,
-                        child: pupil.pupilToPupilStatusRelationshipTypeName! ==
+                        child: pupil!.pupilToPupilStatusRelationshipTypeName! ==
                             "Hiện diện" ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -178,7 +179,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                               style:  ProfileStyle.contentStyle2,
                             ),
                             CustomTextFieldMenu(
-                                value: pupil.reason!, style: QRCodeStyle.contentStyle2),
+                                value: pupil!.reason!, style: QRCodeStyle.contentStyle2),
                           ],
                         ),
                       )
@@ -198,7 +199,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                               style:  ProfileStyle.contentStyle2,
                             ),
                             CustomTextFieldMenu(
-                                value: pupil.pupilHeight!.toString() + " cm",
+                                value:_height + " cm",
                                 style: QRCodeStyle.contentStyle2),
                           ],
                         ),
@@ -214,7 +215,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                               style:  ProfileStyle.contentStyle2,
                             ),
                             CustomTextFieldMenu(
-                                value: pupil.pupilWeight!.toString(),
+                                value: _weight.toString(),
                                 style: QRCodeStyle.contentStyle2),
                           ],
                         ),
@@ -234,7 +235,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                     style:  ProfileStyle.contentStyle2,
                   ),
                   CustomTextFieldMenu(
-                      value: pupil.getFullNameParent(), style: QRCodeStyle.contentStyle2),
+                      value: pupil!.getFullNameParent(), style: QRCodeStyle.contentStyle2),
                   SizedBox(height: 24.h),
                   Row(
                     children: [
@@ -248,7 +249,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                               style:  ProfileStyle.contentStyle2,
                             ),
                             CustomTextFieldMenu(
-                                value: pupil.currentPhoneNumber1Parent!,
+                                value: pupil!.currentPhoneNumber1Parent!,
                                 style: QRCodeStyle.contentStyle2),
                           ],
                         ),
@@ -264,7 +265,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                               style:  ProfileStyle.contentStyle2,
                             ),
                             CustomTextFieldMenu(
-                                value: pupil.currentPhoneNumber2Parent!,
+                                value: pupil!.currentPhoneNumber2Parent!,
                                 style: QRCodeStyle.contentStyle2),
                           ],
                         ),
@@ -278,7 +279,7 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
                   ),
 
                   CustomTextField(
-                      value: pupil.personDetail!.homeAddress1!,
+                      value: pupil!.personDetail!.homeAddress1!,
                       style: QRCodeStyle.contentStyle2,
                       numOfLine: 4),
                 ],
@@ -289,16 +290,20 @@ class _PupilDetailsState extends State<PupilDetailsPage> {
       )
     );
   }
-
-  Widget itemButtonRightAppBar() {
+  void goToSecondScreen(Pupil pupil1)async {
+    await Navigator.pushNamed(context, RouteConstants.editPupilDetail, arguments: pupil1).then((value) => setState(() {
+      pupilReturn = value as Pupil;
+      _getRequests(pupilReturn!);
+    }));
+  }
+  Widget itemButtonRightAppBar(Pupil pupil) {
     return Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
         child: _enabled
             ? null
             : TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, RouteConstants.editPupilDetail);
-
+            goToSecondScreen(pupil);
           },
           child: Text((AppLocalizations.of(context)!.edit),
               style: AppBarStyle.textButtonRightStyle),

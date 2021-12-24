@@ -90,6 +90,11 @@ Future<UserModel?> getUser() async {
   final UserModel? user = await preferences.getUserPreference();
   return user;
 }
+Future<int> getClassID() async {
+  final preferences = Preferences();
+  final int classID = await preferences.getClassID();
+  return classID;
+}
 Future<PersonModel?> getProfile() async {
   final preferences = Preferences();
   final PersonModel? user = await preferences.getProfilePreference();
@@ -99,6 +104,11 @@ Future<int> getPupilID() async {
   final preferences = Preferences();
   final int pupilID = await preferences.getIDpupil();
   return pupilID;
+}
+Future<List<int>> getListPupilID() async {
+  final preferences = Preferences();
+  final List<int> pupilIDs = await preferences.getListPupilId();
+  return pupilIDs;
 }
 Future<NotificationModel?> getNotification() async {
   final preferences = Preferences();

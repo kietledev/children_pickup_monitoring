@@ -1,6 +1,7 @@
 import 'package:children_pickup_monitoring/common/constants/constants.dart';
 import 'package:children_pickup_monitoring/common/core/widgets/appbar.dart';
 import 'package:children_pickup_monitoring/common/helpers/helpers.dart';
+import 'package:children_pickup_monitoring/data/models/user_model.dart';
 import 'package:children_pickup_monitoring/di/injection.dart';
 import 'package:children_pickup_monitoring/domain/entities/entities.dart';
 import 'package:children_pickup_monitoring/presentation/blocs/achievement/achievement_bloc.dart';
@@ -52,18 +53,30 @@ class ClassAttendancePage extends StatefulWidget {
 class _ClassAttendanceBody extends State<ClassAttendanceBody> {
   int currentIndex = -1;
   int _role = 2;
-  List<int> pupilIds = [1,2];
   int classId = -1;
+  int roleId = -1;
+  int personId = -1;
+  UserModel? userModel;
+
+
+
   @override
   void initState() {
     super.initState();
-    initBloc();
+    getUserId();
   }
-  initBloc() async{
-    // classId = await get();
-    print( DateTime.now().toString());
-    BlocProvider.of<PupilsBloc>(context).add(FetchPupils(classId: 5, date: DateTime.now().toString()));
+  getUserId() async {
+    userModel = await getUser();
+    classId = await getClassID();
+
+    setState(() {
+      roleId = userModel!.roleId;
+      personId = userModel!.personId;
+      classId = classId;
+    });
+    BlocProvider.of<PupilsBloc>(context).add(FetchPupils(classId: classId, date: DateTime.now().toString()));
   }
+
   DateTime selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async{
@@ -150,7 +163,9 @@ class _ClassAttendanceBody extends State<ClassAttendanceBody> {
                       return ItemAttencanceListView(
                         index: index,
                         genderId: item.personDetail!.currentGenderId!,
-                        pupilIds:pupilIds,
+                        pupilIds:[],
+                        pupilToPupilStatusRelationshipTypeId:item.pupilToPupilStatusRelationshipTypeId! ,
+                        pupilToPupilStatusRelationshipTypeName:item.pupilToPupilStatusRelationshipTypeName! ,
                         role: _role,
                         pupilId: item.pupilId,
                         avtDefaultMale: 'assets/images/img_child_avt_trai.png',

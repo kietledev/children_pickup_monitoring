@@ -8,6 +8,7 @@ class Preferences {
   static const String USER_PREFERENCE = 'USER_PREFERENCE';
   static const String LOGIN_TIME = 'LOGIN_TIME';
   static const String USER_ID = 'USER_ID';
+  static const String LIST_PUPIL_ID = 'LIST_PUPIL_ID';
   static const String PUPIL_ID = 'PUPIL_ID';
   static const String IS_REMEMBER = 'IS_REMEMBER';
   static const String IS_SCROLL = 'IS_SCROLL';
@@ -16,6 +17,7 @@ class Preferences {
   static const String PROFILE_PREFERENCE = 'PROFILE_PREFERENCE';
   static const String TOKEN_PREFERENCE = 'TOKEN_PREFERENCE';
   static const String PUPIL_PREFERENCE = 'PUPIL_PREFERENCE';
+  static const String CLASS_ID_PREFERENCE = 'CLASS_ID_PREFERENCE';
   static const String LANGUAGE_PREFERENCE = 'LANGUAGE_PREFERENCE';
   static const String NOTIFICATION_PREFERENCE = 'NOTIFICATION_PREFERENCE';
   /* Initial shared preferences */
@@ -89,6 +91,16 @@ class Preferences {
   Future<String> getUserId() async {
     return preferences.get(USER_ID);
   }
+  /* list Pupil id*/
+  void setListPupilId(List<int> value) {
+    preferences.set(LIST_PUPIL_ID, value);
+  }
+
+  Future<List<int>> getListPupilId() async {
+    final String listPupilId = await preferences.getObject(LIST_PUPIL_ID);
+    final List<int> data = json.decode(listPupilId).cast<int>();
+    return data;
+  }
 
   /* Pupil id*/
   void setPupilId(String value) {
@@ -124,11 +136,19 @@ class Preferences {
     final prefs = await _prefs;
     prefs.setInt(PUPIL_PREFERENCE, pupilID);
   }
-
+  Future setClassPupil(int classId) async {
+    final prefs = await _prefs;
+    prefs.setInt(CLASS_ID_PREFERENCE, classId);
+  }
   Future<int> getIDpupil() async {
     final prefs = await _prefs;
     final pupilID = prefs.getInt(PUPIL_PREFERENCE) ?? 0;
     return pupilID;
+  }
+  Future<int> getClassID() async {
+    final prefs = await _prefs;
+    final classID = prefs.getInt(CLASS_ID_PREFERENCE) ?? 0;
+    return classID;
   }
 
   /* School Finish Time */
